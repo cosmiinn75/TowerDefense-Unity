@@ -6,7 +6,7 @@ public class EnemyData : ScriptableObject
     public string enemyName;
     public float speed;
     public float health;
-    public Sprite enemyIcon;
-    public float goldReward;
+    public GameObject enemyPrefab;
+    public int goldReward;
     public Color enemyColor = Color.white;
 }

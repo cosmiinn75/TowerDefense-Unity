@@ -15,10 +15,14 @@ public class FollowPath : MonoBehaviour
     private void Update()
     {
         // If he reaches the final point
-        if (stats == null || currentIndex >= pathwayPoints.Count) {
-            Destroy(gameObject);
-            //Game Over         
-            return; 
+        if (currentIndex >= pathwayPoints.Count) {
+            if (stats != null)
+            {
+                stats.reachedEnd = true;
+                Destroy(gameObject);
+                //Game Over         
+                return;
+            }
         }
 
    

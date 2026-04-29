@@ -2,8 +2,10 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!78 &1
 TagManager:
-  serializedVersion: 2
-  tags: []
+  serializedVersion: 3
+  tags:
+  - isLastCube
+  - isKingTower
   layers:
   - Default
   - TransparentFX
@@ -38,6 +40,17 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 489496937
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Entities
+    uniqueID: 3911589985
+    locked: 0
+  - name: Buildings
+    uniqueID: 1445437473
+    locked: 0
+  m_RenderingLayers:
+  - Default

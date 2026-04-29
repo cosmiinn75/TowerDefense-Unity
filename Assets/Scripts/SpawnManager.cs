@@ -2,6 +2,9 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 using Unity.VisualScripting;
+using Assets.FantasyTowerDefense.Scripts.Demo;
+using UnityEditor;
+using JetBrains.Annotations;
 
 public class SpawnManager : MonoBehaviour
 {
@@ -24,13 +27,36 @@ public class SpawnManager : MonoBehaviour
     
     IEnumerator SpawnWave()
     {
-        while (true)
+        while (currentWave <= 5)
         {
             waveIsInProgess = true;
             activeEnemies = 0;
-            for(int i = 0; i < enemiesPerWave; i++)
+            List<EnemyData> enemiesToSpawn = null;
+            switch (currentWave)
             {
-                SpawnEnemy();
+                case 1:
+                    enemiesToSpawn = new List<EnemyData>{ availableEnemies[0] , availableEnemies[0]  , availableEnemies[0] , availableEnemies[0] };
+                    break;
+                case 2:
+                    enemiesToSpawn = new List<EnemyData> { availableEnemies[0], availableEnemies[1] , availableEnemies[0] , availableEnemies[0] , availableEnemies[0] };
+                    break;
+                case 3:
+                    enemiesToSpawn = new List<EnemyData> { availableEnemies[1], availableEnemies[0], availableEnemies[1], availableEnemies[0], availableEnemies[0] };
+                    break;
+                case 4:
+                    enemiesToSpawn = new List<EnemyData> { availableEnemies[0], availableEnemies[0], availableEnemies[1], availableEnemies[2], availableEnemies[0] };
+                    break;
+                case 5:
+                    enemiesToSpawn = new List<EnemyData> { availableEnemies[2], availableEnemies[1], availableEnemies[0], availableEnemies[1], availableEnemies[0] };
+                    break;
+                default:
+                    break;
+
+
+                }
+
+           foreach(var enemy in enemiesToSpawn) { 
+                SpawnEnemy(enemy);
                 activeEnemies++;
                 yield return new WaitForSeconds(timeBetweenEnemies);
             }
@@ -41,7 +67,7 @@ public class SpawnManager : MonoBehaviour
 
             waveIsInProgess = false;
             currentWave++;
-            enemiesPerWave += 2;
+            enemiesPerWave ++;
 
             yield return new WaitForSeconds(timeBetweenWaves);
 
@@ -50,32 +76,41 @@ public class SpawnManager : MonoBehaviour
 
     }
 
-    void SpawnEnemy()
+    void SpawnEnemy(EnemyData enemyData)
     {
-        int randomIndex = Random.Range(0, availableEnemies.Count);
-        EnemyData selectedData = availableEnemies[randomIndex]; // Selects random enemy type
+        if (enemyData != null)
+        {
+            GameObject newEnemy = Instantiate(enemyData.enemyPrefab, transform.position, Quaternion.identity);
+            EnemyStats stats = newEnemy.GetComponent<EnemyStats>();
 
-        //Spawns enemy at spawner locations
-        GameObject newEnemy = Instantiate(enemyPrefab, transform.position, Quaternion.identity);
+            stats.InitializeData(enemyData); // His stats are now as the random one 
+            var monsterLogic = newEnemy.GetComponent<Monster>();
 
-        EnemyStats stats = newEnemy.GetComponent<EnemyStats>();
-        
-        stats.InitializeData(selectedData); // His stats are now as the random one 
-        newEnemy.GetComponent<FollowPath>().pathwayPoints = wayPoints; 
-        ApplyWaveBuff(stats);
+            if (monsterLogic != null)
+            {
+                monsterLogic.Initialize(wayPoints);
+                monsterLogic.Speed = (int)stats.currentSpeed;
+                monsterLogic.SetStartingHealth((int)stats.currentHealth);
+            }
+        }
+
+
     }
 
-   
-    void ApplyWaveBuff(EnemyStats stats)
-    {
-        float healthMultiplier = 1f + (currentWave - 1) * 0.1f;
-        stats.currentHealth *= healthMultiplier; // Ups enemy's health 
-        float speedMultiplier = 1f + (currentWave - 1) * 0.1f;
-        stats.currentSpeed *= speedMultiplier; // Increases enemy's speed
-        
-    }
+
     public void EnemyDied()
     {
         activeEnemies--;
     }
+
+    void ApplyWaveBuff(EnemyStats stats)
+    {
+
+        float healthMultiplier = 1f + (currentWave - 1) * 0.1f;
+        stats.currentHealth *= healthMultiplier; // Ups enemy's health 
+        float speedMultiplier = 1f + (currentWave - 1) * 0.1f;
+        stats.currentSpeed *= speedMultiplier; // Increases enemy's speed
+
+    }
+
 }
