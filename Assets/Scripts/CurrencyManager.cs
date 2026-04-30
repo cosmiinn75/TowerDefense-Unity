@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -15,9 +16,10 @@ public class CurrencyManager : MonoBehaviour
         UpdateUI();
     }
 
-    public void AddGold(int amount)
+    public void AddGold(float amount)
     {
-        currentGold += amount;
+        int finalAmount = Mathf.RoundToInt(amount / 10f) * 10;
+        currentGold += finalAmount;
         UpdateUI();
     }
 
@@ -37,6 +39,7 @@ public class CurrencyManager : MonoBehaviour
 
     public void UpdateUI()
     {
+        Debug.Log(currentGold);
         goldText.text = "Gold: " + currentGold.ToString();
     }
 }
