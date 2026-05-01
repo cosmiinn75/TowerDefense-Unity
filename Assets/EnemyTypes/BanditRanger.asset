@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: BanditRanger
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
   enemyName: BanditRanger
-  speed: 5
-  health: 50
+  speed: 8
+  health: 350
   enemyPrefab: {fileID: 8669385262318456191, guid: f350bd973f9347e46869efb974777b8e, type: 3}
-  goldReward: 0
+  goldReward: 15
   enemyColor: {r: 1, g: 1, b: 1, a: 1}

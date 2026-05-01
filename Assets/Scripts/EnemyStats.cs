@@ -1,4 +1,5 @@
 
+using JetBrains.Annotations;
 using UnityEngine;
 
 public class EnemyStats : MonoBehaviour
@@ -10,7 +11,7 @@ public class EnemyStats : MonoBehaviour
     public bool reachedEnd = false;
     private void Start()
     {
-        spawner = FindFirstObjectByType<SpawnManager>(); 
+        spawner = FindFirstObjectByType<SpawnManager>();
     }
     public void InitializeData(EnemyData data)
     {
@@ -21,24 +22,27 @@ public class EnemyStats : MonoBehaviour
     }
     private void OnDestroy()
     {
-        if(spawner != null  && gameObject.scene.isLoaded)
+        if (spawner != null && gameObject.scene.isLoaded)
         {
             spawner.EnemyDied();
 
             if (!reachedEnd)
             {
-                CurrencyManager.Instance.AddGold(config.goldReward);
+                CurrencyManager.Instance.AddGold((int)config.goldReward);
                 Debug.Log("Am adaugat bani");
             }
             else
             {
                 DamageKingTower.Instance.TakeDamage(20);
                 Debug.Log("-hp pentru rege");
-
             }
         }
+
+  
+
     }
-
- 
-
+    public void KillKingTower()
+    {
+        DamageKingTower.Instance.TakeDamage(100);
+    }
 }

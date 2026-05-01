@@ -1431,6 +1431,7 @@ MonoBehaviour:
   Health: 200
   Damage: 10
   Speed: 3
+  _health: 0
 --- !u!114 &5560282715756665979
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1463,7 +1464,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
   currentHealth: 0
   currentSpeed: 0
-  config: {fileID: 11400000, guid: 0c46fbd6b369f08418d3d1778ab6c7e0, type: 2}
+  config: {fileID: 11400000, guid: ed23228739a98cd48b3d69273cdd3342, type: 2}
   reachedEnd: 0
 --- !u!1 &7819379457129244792
 GameObject:

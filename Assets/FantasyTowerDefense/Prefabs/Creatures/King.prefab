@@ -1576,6 +1576,7 @@ GameObject:
   - component: {fileID: 48707062}
   - component: {fileID: -6467616599567607060}
   - component: {fileID: -432272730277444173}
+  - component: {fileID: -4192611125940130186}
   m_Layer: 0
   m_Name: King
   m_TagString: Untagged
@@ -1704,6 +1705,7 @@ MonoBehaviour:
   Health: 100
   Damage: 10
   Speed: 4
+  _health: 0
 --- !u!114 &-432272730277444173
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1722,6 +1724,22 @@ MonoBehaviour:
   From: 1
   To: 1.1
   Dumping: 5
+--- !u!114 &-4192611125940130186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8669385262318456191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee34b59cf3aab7d428e1f1ccad938c46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
+  currentHealth: 0
+  currentSpeed: 0
+  config: {fileID: 11400000, guid: 53500be5ff536a0408231b503ec7f1e0, type: 2}
+  reachedEnd: 0
 --- !u!1 &8669385262572499705
 GameObject:
   m_ObjectHideFlags: 0

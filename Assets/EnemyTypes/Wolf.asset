@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Wolf
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
   enemyName: Wolf
-  speed: 10
-  health: 20
+  speed: 18
+  health: 40
   enemyPrefab: {fileID: 8315309802117694102, guid: ea9a6ef5ccd408b46acb94d4d5bf1593, type: 3}
-  goldReward: 0
+  goldReward: 5
   enemyColor: {r: 1, g: 1, b: 1, a: 1}

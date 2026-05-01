@@ -6,7 +6,6 @@ using Assets.FantasyTowerDefense.Scripts.Creature;
 using Assets.FantasyTowerDefense.Scripts.Fx;
 using UnityEngine;
 using Random = UnityEngine.Random;
-
 namespace Assets.FantasyTowerDefense.Scripts.Demo
 {
     public class Monster : MonoBehaviour
@@ -96,6 +95,15 @@ namespace Assets.FantasyTowerDefense.Scripts.Demo
 
                         var stats = GetComponent<EnemyStats>();
                         stats.reachedEnd = true;
+
+                        SpawnManager spawner = FindFirstObjectByType<SpawnManager>();
+                        if(spawner != null && spawner.currentWave >= 5)
+                        {
+                            if(DamageKingTower.Instance != null)
+                            {
+                                DamageKingTower.Instance.TakeDamage(10000);
+                            }
+                        }
                         Destroy(gameObject);
                         return;
                     }
@@ -113,7 +121,7 @@ namespace Assets.FantasyTowerDefense.Scripts.Demo
                 transform.position += _speed * Time.deltaTime * direction.normalized;
                 Animator.SetInteger(StateHash, (int)State);
             }
-        }   
+        }
 
         public void RotateTo(Vector2 direction)
         {
@@ -191,7 +199,7 @@ namespace Assets.FantasyTowerDefense.Scripts.Demo
 
         private IEnumerator Destroy()
         {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.2f);
 
             FxManager.Instance.CreateDeath(Center);
 
@@ -216,10 +224,10 @@ namespace Assets.FantasyTowerDefense.Scripts.Demo
 
             Destroy(gameObject);
         }
-    
 
 
-    public void SetStartingHealth(int newHealth)
+
+        public void SetStartingHealth(int newHealth)
         {
             Health = newHealth;
             _health = newHealth;

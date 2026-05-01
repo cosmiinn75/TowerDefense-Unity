@@ -1,5 +1,6 @@
 using Assets.FantasyTowerDefense.Scripts.Creature;
 using Assets.FantasyTowerDefense.Scripts.Demo;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -29,8 +30,13 @@ public class DamageKingTower : MonoBehaviour
 
         if (_kingMonster.State == CreatureState.Dead)
         {
+            StartCoroutine(Wait());
             Time.timeScale = 0;
             Debug.Log("GAME OVER");
         }
+    }
+    IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(1f);
     }
 }

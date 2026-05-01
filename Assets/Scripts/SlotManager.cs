@@ -20,7 +20,7 @@ public class SlotManager : MonoBehaviour
     public Canvas mainCanvas;
     private List<GameObject> towerType;
     private UpgradeSellMenu currentUpgradeSellMenu;
-
+    public GameObject dontHaveEnoughGoldText;
     [Header("Tower Prefabs")]
     public List<GameObject> cannonTowers;
     public List<GameObject> archerTowers;
@@ -32,6 +32,11 @@ public class SlotManager : MonoBehaviour
         myRenderer = GetComponent<SpriteRenderer>();
         baseColor = myRenderer.color;
         isPlaced = false;
+
+        if(dontHaveEnoughGoldText != null)
+        {
+            dontHaveEnoughGoldText.SetActive(false);
+        }
     }
 
 
@@ -97,6 +102,12 @@ public class SlotManager : MonoBehaviour
             myRenderer.enabled = false; 
             CloseCurrentMenu();
         }
+        else
+        {
+            dontHaveEnoughGoldText.SetActive(true);
+            dontHaveEnoughGoldText.GetComponent<TextFadeAnimation>()?.TriggerAnimation();
+
+        }
     }
 
     public void OnUpgrade()
@@ -117,6 +128,11 @@ public class SlotManager : MonoBehaviour
                 currentUpgradeSellMenu.UpdateUI(GetNextUpgradeCost()); // Shows next cost
 
             CloseCurrentMenu();
+        }
+        else
+        {
+            dontHaveEnoughGoldText.SetActive(true);
+            dontHaveEnoughGoldText.GetComponent<TextFadeAnimation>()?.TriggerAnimation();
         }
     }
 

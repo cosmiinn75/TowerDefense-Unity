@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Goblin
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
   enemyName: Goblin
-  speed: 8
-  health: 30
+  speed: 10
+  health: 150
   enemyPrefab: {fileID: 839762897476769452, guid: 0440515079d46e143bf22dd1dc8b4630, type: 3}
-  goldReward: 0
+  goldReward: 8
   enemyColor: {r: 1, g: 1, b: 1, a: 1}

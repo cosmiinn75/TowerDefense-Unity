@@ -62,7 +62,10 @@ namespace Assets.FantasyTowerDefense.Scripts.Demo
             var explosion = Instantiate(ExplosionPrefab, transform.position, Quaternion.identity, transform);
 
             Destroy(gameObject, 1);
-
+            
+            if(_target?.GetComponent<Monster>() == null) {
+                return;
+            }
             var monster = _target?.GetComponent<Monster>();
 
             if (monster)

@@ -104,6 +104,7 @@ GameObject:
   - component: {fileID: 718541343934004191}
   - component: {fileID: 7750883383027213983}
   - component: {fileID: 6473851042784945181}
+  - component: {fileID: -1702516890772047765}
   m_Layer: 0
   m_Name: CannonTower1
   m_TagString: Untagged
@@ -145,8 +146,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Source: {fileID: 1320282983333045060}
-  Damage: 20
-  Range: 15
+  Damage: 100
+  Range: 11
   FireInterval: 2
   ReloadTime: 1
   Cost: 100
@@ -246,6 +247,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Dynamic: 0
   Overlay: 0
+--- !u!114 &-1702516890772047765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5157675179194431159}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2931678a0df90af4a938877e0eb0ec27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  range: 15
 --- !u!1 &5179286818874232075
 GameObject:
   m_ObjectHideFlags: 0

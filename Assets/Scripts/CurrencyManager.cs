@@ -16,9 +16,9 @@ public class CurrencyManager : MonoBehaviour
         UpdateUI();
     }
 
-    public void AddGold(float amount)
+    public void AddGold(int amount)
     {
-        int finalAmount = Mathf.RoundToInt(amount / 10f) * 10;
+        int finalAmount = amount;
         currentGold += finalAmount;
         UpdateUI();
     }

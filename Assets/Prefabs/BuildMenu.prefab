@@ -170,7 +170,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 200g
+  m_text: 150g
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2a739cc51f3d6674a93ec299ea2eca41, type: 2}
   m_sharedMaterial: {fileID: 3975018958764591952, guid: 2a739cc51f3d6674a93ec299ea2eca41, type: 2}
@@ -197,8 +197,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 0.3
-  m_fontSizeBase: 0.3
+  m_fontSize: 0.5
+  m_fontSizeBase: 0.5
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -411,7 +411,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 3}
+  m_AnchoredPosition: {x: 0, y: 3.7}
   m_SizeDelta: {x: 1, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6200230139030559502
@@ -573,7 +573,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 100g
+  m_text: 60g
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2a739cc51f3d6674a93ec299ea2eca41, type: 2}
   m_sharedMaterial: {fileID: 3975018958764591952, guid: 2a739cc51f3d6674a93ec299ea2eca41, type: 2}
@@ -600,8 +600,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 0.3
-  m_fontSizeBase: 0.3
+  m_fontSize: 0.5
+  m_fontSizeBase: 0.5
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -843,7 +843,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 150g
+  m_text: 100g
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2a739cc51f3d6674a93ec299ea2eca41, type: 2}
   m_sharedMaterial: {fileID: 3975018958764591952, guid: 2a739cc51f3d6674a93ec299ea2eca41, type: 2}
@@ -870,8 +870,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 0.3
-  m_fontSizeBase: 0.3
+  m_fontSize: 0.5
+  m_fontSizeBase: 0.5
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
