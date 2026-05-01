@@ -81,3 +81,25 @@ Turret Economy: Implement the Shop UI and menus for purchasing, upgrading, and s
 Financial Incentive: Link the CurrencyManager to enemy deaths so players earn gold for every threat neutralized.
 
 UI/UX Overlay: Design and polish the HUD to track current Wave, Gold, and King's Health in real-time.
+
+🚀 Devlog: UI & Economic Foundations - 30.04.2026
+
+🟢 Progress Summary: Today, I laid the foundation for the game's economy and refined the user interface (UI/UX) interactions. I transitioned from basic structural logic to a fully integrated resource management system, ensuring a seamless dynamic between placing, upgrading, and selling towers.
+
+🛠️ Key Technical Solved / Implemented:
+
+Clean Economy & Refund System: Implemented a sell mechanic that returns 80% of the invested gold, automatically rounded to the nearest tens, for a clean and structured economy.
+
+Dynamic Upgrade & Build Menus: Fixed communication issues between SlotManager and the UpgradeSellMenu, ensuring real-time UI price updates without positional errors.
+
+Visual Optimization & State Management: Resolved bugs related to the visibility of construction ghosts and base slots by cleanly decoupling placement states, keeping hover animations intact.
+
+Currency Manager Synchronization: Optimized Spend and Add Gold methods to prevent edge-case locks when purchasing new defenses.
+
+📅 Next Steps:
+
+Wave Balancing: Synchronizing turret costs with enemy payout and wave progression.
+
+Audio Feedback: Adding audio cues for placing, upgrading, and selling towers.
+
+UI Polishing: Implementing animations (tweening) for pop-up UI menus.
