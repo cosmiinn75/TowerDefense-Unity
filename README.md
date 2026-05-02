@@ -103,3 +103,27 @@ Wave Balancing: Synchronizing turret costs with enemy payout and wave progressio
 Audio Feedback: Adding audio cues for placing, upgrading, and selling towers.
 
 UI Polishing: Implementing animations (tweening) for pop-up UI menus.
+
+
+🚀 Devlog: Wave Logic & Economic Integration - 01.05.2026
+
+🟢 Progress Summary:
+Today, I refined the core game balance and fixed several key architecture dependencies. I shifted focus to completing the tutorial pacing, ensuring that the economy, enemy stat scaling, and defeat conditions work in perfect harmony.
+
+🛠️ Key Technical Solved / Implemented:
+
+Wave Balancing & Standardization: Transitioned the tutorial level to a streamlined 5-wave structure, introducing the Goblin, Spider, Bandit Scout, and Troll.
+
+Economical Fixes & Event Cleanup: Removed the duplicate gold granting issue by updating the enemy death sequence and removing OnDestroy(), ensuring in-game funds are distributed exactly once per elimination.
+
+Instant Lose Condition: Linked the King's remaining defenses to the final wave, instantly triggering the defeat logic whenever a critical unit reaches the destination.
+
+User Interface Interactions: Introduced clear notifications for insufficient funds, providing better feedback during the build and upgrade phases.
+
+📅 Next Steps:
+
+Implement the ramification trees for magic towers (fire, poison, etc.).
+
+Add specific resistances like armor and magic immunity.
+
+Finalize the HUD and test the complete loop.
