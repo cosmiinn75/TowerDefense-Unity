@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Unity.VisualScripting;
+using UnityEngine;
 
 namespace Assets.FantasyTowerDefense.Scripts.Demo
 {
@@ -11,7 +12,8 @@ namespace Assets.FantasyTowerDefense.Scripts.Demo
         private Monster _target;
         private float _damage;
         private float _createTime;
-
+        [Header("Element Settings")]
+        public string elementType;
         public void Initialize(Tower tower, Monster target)
         {
             _createTime = Time.time;
@@ -71,6 +73,24 @@ namespace Assets.FantasyTowerDefense.Scripts.Demo
             if (monster)
             {
                 monster.GetDamage(_source.Damage);
+                if (!string.IsNullOrEmpty(elementType))
+                {
+                    if(elementType == "Ice")
+                    {
+                        monster.ApplyElementEffect("Ice", 3.0f);
+                    }
+                    else if(elementType == "Poison")
+                    {
+                        monster.ApplyElementEffect("Poison", 4.0f);
+                    }
+                    else if(elementType == "Lightning")
+                    {
+                        monster.ApplyElementEffect("Lightning", 1f);
+                    }
+
+
+
+                }
             }
         }
     }

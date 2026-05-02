@@ -470,11 +470,17 @@ MonoBehaviour:
   Source: {fileID: 7760484598023276356}
   Damage: 400
   Range: 20
-  FireInterval: 0.8
+  FireInterval: 1
   ReloadTime: 0
-  Cost: 450
+  Cost: 500
   ProjectilePrefab: {fileID: -4509245222062425876, guid: fd7ad579096c7b9448643ed755d60657, type: 3}
   SourcePrefab: {fileID: 2053747212182907002, guid: 2c13d4b034fdab14ca4ef4d43d996526, type: 3}
+  iceProjectile: {fileID: -6047141591012579526, guid: faea40d69d03a4a48bf999004c0ee7f4, type: 3}
+  lightningProjectile: {fileID: 2111587603553625390, guid: a2234110e0ad63f47894f9b85f45af6c, type: 3}
+  poisonProjectile: {fileID: -779050269647478102, guid: ff6e0df8b29873244bd4d868f14f535b, type: 3}
+  iceSource: {fileID: 6196753947050401441, guid: 53febc73518681a4db89e91e4436b5be, type: 3}
+  lightningSource: {fileID: 8570535521112069664, guid: 1e5805b5b8a8c1d4497a97ea275257bc, type: 3}
+  poisonSource: {fileID: 5736116380802925471, guid: 9e42bc55682452746ad04ba1cc787548, type: 3}
 --- !u!212 &1987322067850683976
 SpriteRenderer:
   serializedVersion: 2
@@ -522,7 +528,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: -1505930589, guid: b09ec1d0979463a4f9ded7aa905f17e4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

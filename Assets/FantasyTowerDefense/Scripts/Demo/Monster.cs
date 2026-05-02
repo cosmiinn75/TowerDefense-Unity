@@ -4,6 +4,8 @@ using System.Linq;
 using Assets.FantasyTowerDefense.Scripts.Common.Tween;
 using Assets.FantasyTowerDefense.Scripts.Creature;
 using Assets.FantasyTowerDefense.Scripts.Fx;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 namespace Assets.FantasyTowerDefense.Scripts.Demo
@@ -26,8 +28,20 @@ namespace Assets.FantasyTowerDefense.Scripts.Demo
         public int Damage;
         public int Speed;
 
+        [Header("Element Effect")]
+        public Color poisonColor = new Color(0.3f, 0.8f, 0.2f); //Green
+        public Color iceColor = new Color(0.2f, 0.6f, 1.0f); //Blue
+        public Color lightningColor = Color.white; //Stun color
 
+        public enum ElementState { None , Poisoned , Frosted, Stunned};
+        [HideInInspector] public ElementState currentElementalState = ElementState.None;
+        private Coroutine activeEffectCoroutine;
         public CreatureState State { get; private set; } = CreatureState.Run;
+
+        [Header("Stun Settings")]
+        [HideInInspector] public bool wasStunned = false;
+        public float stunCooldownDuration = 3.0f;
+
 
         public int _health;
         private int _damage;
@@ -84,7 +98,7 @@ namespace Assets.FantasyTowerDefense.Scripts.Demo
                 var targetPosition = target.transform.position + new Vector3(_offset, _offset);
 
 
-                if (Vector2.Distance(transform.position, targetPosition) < 0.1)
+                if (Vector2.Distance(transform.position, targetPosition) < 0.3)
                 {
                     transform.position = targetPosition;
 
@@ -161,7 +175,7 @@ namespace Assets.FantasyTowerDefense.Scripts.Demo
 
         public void Hit()
         {
-            StartCoroutine(nameof(Blink));
+            TriggerBlinkEffect();
             GetComponent<ScaleSpring>().enabled = true;
         }
 
@@ -177,6 +191,175 @@ namespace Assets.FantasyTowerDefense.Scripts.Demo
         private static Material _baseMaterial;
         private static Material _blinkMaterial;
 
+        public void ApplyElementEffect(string elementType, float duration)
+        {
+            if (elementType == "Lightning" && wasStunned)
+            {
+                return;
+            }
+
+            if (activeEffectCoroutine != null)
+            {
+                StopCoroutine(activeEffectCoroutine);
+                ResetMonsterStats();
+            }
+            switch (elementType)
+            {
+                case "Poison":
+                    currentElementalState = ElementState.Poisoned;
+                    activeEffectCoroutine = StartCoroutine(ApplyPoisonEffect(duration));
+                    break;
+                case "Ice":
+                    currentElementalState = ElementState.Frosted;
+                    activeEffectCoroutine = StartCoroutine(ApplyIceEffect(duration));
+                    break;
+                case "Lightning":
+                    currentElementalState = ElementState.Stunned;
+                    activeEffectCoroutine =StartCoroutine(ApplyStunEffect(duration));
+                    break;
+            }
+        }
+
+        private void ResetMonsterStats()
+        {
+          
+            _speed = Speed;
+
+            var renderers = GetComponentsInChildren<SpriteRenderer>();
+            foreach (var r in renderers)
+            {
+                if (r.transform.IsChildOf(Hud) || r.gameObject.name == "HUD")
+                {
+                    continue;
+                }
+                r.color = Color.white;
+            }
+        }
+
+        private IEnumerator ApplyPoisonEffect(float duration)
+        {
+            var renderers = GetComponentsInChildren<SpriteRenderer>();
+
+            foreach (var r in renderers)
+            {
+                if (r.transform.IsChildOf(Hud) || r.gameObject.name == "HUD")
+                {
+                    continue;
+                }
+                r.color = poisonColor;
+            }
+
+            // Aplicăm damage în timp
+            float damagePerTick = 20f; // Pune valoarea de damage pe secundă dorită
+            float interval = 1f;
+            float elapsed = 0f;
+
+            while (elapsed < duration)
+            {
+             
+                yield return new WaitForSeconds(interval);
+                elapsed += interval;
+
+              
+                GetDamage((int)damagePerTick);
+            }
+
+
+            foreach (var r in renderers)
+            {
+                if (r.transform.IsChildOf(Hud) || r.gameObject.name == "HUD")
+                {
+                    continue;
+                }
+                r.color = Color.white;
+            }
+
+            currentElementalState = ElementState.None;
+            activeEffectCoroutine = null;
+        }
+
+        private IEnumerator ApplyIceEffect(float duration)
+        {
+            var renderers = GetComponentsInChildren<SpriteRenderer>();
+
+       
+            int originalSpeed = _speed;
+        
+            float modifiedSpeed = _speed*0.8f;
+            _speed = (int)modifiedSpeed;
+            foreach (var r in renderers)
+            {
+                if (r.transform.IsChildOf(Hud) || r.gameObject.name == "HUD")
+                {
+                    continue;
+                }
+                r.color = iceColor;
+            }
+
+            yield return new WaitForSeconds(duration);
+
+
+            _speed = originalSpeed;
+
+            foreach (var r in renderers)
+            {
+                if (r.transform.IsChildOf(Hud) || r.gameObject.name == "HUD")
+                {
+                    continue;
+                }
+                r.color = Color.white;
+            }
+
+            currentElementalState = ElementState.None;
+            activeEffectCoroutine = null;
+        }
+
+        private IEnumerator ApplyStunEffect(float duration)
+        {
+            var renderers = GetComponentsInChildren<SpriteRenderer>();
+            float tempSpeed = _speed;
+            _speed = 0;
+            wasStunned = true;
+
+            float elapsed = 0f;
+            while (elapsed < duration)
+            {
+                foreach (var r in renderers)
+                {
+                    if (r.transform.IsChildOf(Hud) || r.gameObject.name == "HUD")
+                    {
+                        continue;
+                    }
+                    
+                    r.color = (elapsed % 0.2f < 0.1f) ? Color.yellow : new Color(0.8f, 0.9f, 1f);
+                }
+
+                elapsed += 0.1f;
+                yield return new WaitForSeconds(0.1f);
+            }
+
+            _speed = (int)tempSpeed;
+
+            foreach (var r in renderers)
+            {
+                if (r.transform.IsChildOf(Hud) || r.gameObject.name == "HUD")
+                {
+                    continue;
+                }
+                r.color = Color.white;
+            }
+
+            currentElementalState = ElementState.None;
+            activeEffectCoroutine = null;
+
+            StartCoroutine(StunCooldownRoutine());
+        }
+
+        private IEnumerator StunCooldownRoutine()
+        {
+            yield return new WaitForSeconds(stunCooldownDuration);
+            wasStunned = false;
+        }
         private IEnumerator Blink()
         {
             _baseMaterial ??= new Material(Shader.Find("Sprites/Default"));
@@ -236,6 +419,14 @@ namespace Assets.FantasyTowerDefense.Scripts.Demo
             if (HealthBar != null)
             {
                 HealthBar.size = new Vector2(1f, 0.2f);
+            }
+        }
+
+        public void TriggerBlinkEffect()
+        {
+            if(currentElementalState == ElementState.None)
+            {
+                StartCoroutine(nameof(Blink));
             }
         }
     }

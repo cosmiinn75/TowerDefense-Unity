@@ -255,7 +255,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Source: {fileID: 718541345435751346}
-  Damage: 40
+  Damage: 50
   Range: 17
   FireInterval: 0.15
   ReloadTime: 0.5

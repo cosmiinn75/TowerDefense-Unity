@@ -195,13 +195,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Source: {fileID: 121713561680584310}
-  Damage: 50
+  Damage: 60
   Range: 16
   FireInterval: 1.2
   ReloadTime: 0
   Cost: 150
   ProjectilePrefab: {fileID: -4509245222062425876, guid: fd7ad579096c7b9448643ed755d60657, type: 3}
   SourcePrefab: {fileID: 2053747212182907002, guid: 2c13d4b034fdab14ca4ef4d43d996526, type: 3}
+  iceProjectile: {fileID: 0}
+  lightningProjectile: {fileID: 0}
+  poisonProjectile: {fileID: 0}
+  iceSource: {fileID: 0}
+  lightningSource: {fileID: 0}
+  poisonSource: {fileID: 0}
 --- !u!212 &718541343934004191
 SpriteRenderer:
   serializedVersion: 2

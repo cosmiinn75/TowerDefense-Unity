@@ -199,7 +199,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 50
   m_TargetDisplay: 0
 --- !u!224 &60586474
 RectTransform:
@@ -672,7 +672,7 @@ Transform:
   m_GameObject: {fileID: 176581313}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -17.42, y: 11.7, z: 0}
+  m_LocalPosition: {x: -17.42, y: 11.38, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -846,7 +846,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 14.32}
+  m_AnchoredPosition: {x: 0, y: 14.320007}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &347904737
@@ -1119,7 +1119,7 @@ Transform:
   m_GameObject: {fileID: 415391217}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 16.59, y: -14.03, z: 0}
+  m_LocalPosition: {x: 16.86, y: -14.03, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1547,7 +1547,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 0000000069212d1d612026e921a02756
+  m_ApplyToSortingLayers: 0000000069212d1d612026e921a02756e50d7d6d
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -1935,7 +1935,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 715d2706b821fcd4494a9dc097d291f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  currentGold: 200
+  currentGold: 250
   goldText: {fileID: 2034418906}
 --- !u!4 &933126522
 Transform:
@@ -1987,6 +1987,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9fc28f0fa5a09294f9eda6d906dede86, type: 2}
   - {fileID: 11400000, guid: 95cdab169f5710f40a4669a958893e2c, type: 2}
   - {fileID: 11400000, guid: b808f09bc1ac730459e2d403fdf3d3ce, type: 2}
+  - {fileID: 11400000, guid: 53500be5ff536a0408231b503ec7f1e0, type: 2}
   wayPoints:
   - {fileID: 1613092001}
   - {fileID: 1078508660}
@@ -2048,7 +2049,7 @@ Transform:
   m_GameObject: {fileID: 1078508659}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 23.85, y: 7.45, z: 0}
+  m_LocalPosition: {x: 23.31, y: 6.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2211,8 +2212,8 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: 1836912101
+  m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!224 &1080678798
 RectTransform:
@@ -2222,7 +2223,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1080678794}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2424,6 +2425,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1080678797}
     - target: {fileID: 5015195902907727006, guid: f7a509ce41112ad4c852bc4858af26fc, type: 3}
+      propertyPath: chooseMagicMenu
+      value: 
+      objectReference: {fileID: 5386864394650107334, guid: f216953dd71aa4448b0ea38cdd793be8, type: 3}
+    - target: {fileID: 5015195902907727006, guid: f7a509ce41112ad4c852bc4858af26fc, type: 3}
       propertyPath: upgradeSellMenu
       value: 
       objectReference: {fileID: 7385067574607034216, guid: a5fb0a58c81dadb40bba59df0bd301b4, type: 3}
@@ -2498,6 +2503,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1080678797}
     - target: {fileID: 5015195902907727006, guid: f7a509ce41112ad4c852bc4858af26fc, type: 3}
+      propertyPath: chooseMagicMenu
+      value: 
+      objectReference: {fileID: 5386864394650107334, guid: f216953dd71aa4448b0ea38cdd793be8, type: 3}
+    - target: {fileID: 5015195902907727006, guid: f7a509ce41112ad4c852bc4858af26fc, type: 3}
       propertyPath: upgradeSellMenu
       value: 
       objectReference: {fileID: 7385067574607034216, guid: a5fb0a58c81dadb40bba59df0bd301b4, type: 3}
@@ -2543,7 +2552,7 @@ Transform:
   m_GameObject: {fileID: 1293680490}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.48, y: -10.58, z: 0}
+  m_LocalPosition: {x: 5.15, y: -10.58, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2734,7 +2743,7 @@ Transform:
   m_GameObject: {fileID: 1452016468}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 17.31, y: -10.2, z: 0}
+  m_LocalPosition: {x: 16.99, y: -10.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3036,6 +3045,10 @@ PrefabInstance:
       propertyPath: mainCanvas
       value: 
       objectReference: {fileID: 1080678797}
+    - target: {fileID: 5015195902907727006, guid: f7a509ce41112ad4c852bc4858af26fc, type: 3}
+      propertyPath: chooseMagicMenu
+      value: 
+      objectReference: {fileID: 5386864394650107334, guid: f216953dd71aa4448b0ea38cdd793be8, type: 3}
     - target: {fileID: 5015195902907727006, guid: f7a509ce41112ad4c852bc4858af26fc, type: 3}
       propertyPath: upgradeSellMenu
       value: 
@@ -3560,7 +3573,7 @@ Transform:
   m_GameObject: {fileID: 1897673837}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.6, y: 11.23, z: 0}
+  m_LocalPosition: {x: -0.6, y: 11.47, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3672,7 +3685,7 @@ Transform:
   m_GameObject: {fileID: 1957991027}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 22.6, y: -9.75, z: 0}
+  m_LocalPosition: {x: 22.6, y: -9.64, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3926,7 +3939,7 @@ Transform:
   m_GameObject: {fileID: 2075906878}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.6, y: -9.68, z: 0}
+  m_LocalPosition: {x: 0.35, y: -9.68, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4175,6 +4188,10 @@ PrefabInstance:
       propertyPath: mainCanvas
       value: 
       objectReference: {fileID: 1080678797}
+    - target: {fileID: 5015195902907727006, guid: f7a509ce41112ad4c852bc4858af26fc, type: 3}
+      propertyPath: chooseMagicMenu
+      value: 
+      objectReference: {fileID: 5386864394650107334, guid: f216953dd71aa4448b0ea38cdd793be8, type: 3}
     - target: {fileID: 5015195902907727006, guid: f7a509ce41112ad4c852bc4858af26fc, type: 3}
       propertyPath: upgradeSellMenu
       value: 

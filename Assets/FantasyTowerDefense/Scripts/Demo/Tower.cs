@@ -19,7 +19,6 @@ namespace Assets.FantasyTowerDefense.Scripts.Demo
 
         [Header("Prefabs")]
         public Projectile ProjectilePrefab;
-
         private float _fireTime;
         protected State _state;
 
