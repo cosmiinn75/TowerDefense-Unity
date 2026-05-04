@@ -266,4 +266,22 @@ Bug Fixes: Solved the target-locking issue with larger enemies near sensors by i
 
 Resistance Mechanics: Introduce armor ratings and magic immunity to diversify enemies.
 
+🚀 Devlog: Combat Enhancements & System Integration - 04.05.2026
+🟢 Progress Summary: Today, I focused on deep system integration and bug fixing to ensure the combat mechanics, dynamic stat scaling, and HUD elements work in perfect harmony. I transitioned to isolating system materials and properties to fix visual bugs, while fine-tuning our elemental resistances and balance framework.
+
+🛠️ Key Technical Solved / Implemented:
+Visual UI Bug Fix (Monster.cs): Solved a critical visual bug where the hit and elemental material states were overwriting the resist icons and HUD elements. Added an explicit isResist tag and HUD transform check to keep icons intact during animations.
+
+Dynamic Resistance Integration: Fully connected elemental resistances (Poison, Ice, Stun) to specific enemy classes, scaling down status effects depending on the target's resistances.
+
+Value Calculations & Sell Logic: Synchronized the economy loop to calculate proper sell refunds (80% rounded to the nearest tens) when a player removes a defense, accounting for dynamic upgrades and changing elements.
+
+Architecture Stabilization: Removed duplicate calls in the death and cleanup loop to prevent memory leaks and null references while checking unit states.
+
+📅 Next Steps:
+Audio Cues: Integrate sound effects for placing, upgrading, and selling towers, as well as distinct cues for elemental impacts.
+
+Finishing First Level: Complete balancing, ensure the tutorial loop works perfectly from the first to the final wave, and trigger the game loop conclusion properly.
+
+
 Audio-Visual Polishing: Add sound effects for elemental impacts and UI elements.
