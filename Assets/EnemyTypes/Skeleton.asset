@@ -18,3 +18,8 @@ MonoBehaviour:
   enemyPrefab: {fileID: 2080434227114776929, guid: be1ce225684613b4d9eb47026a5f2b36, type: 3}
   goldReward: 15
   enemyColor: {r: 1, g: 1, b: 1, a: 1}
+  isArmored: 0
+  hasMagicResistance: 0
+  hasSlowResistance: 0
+  hasPoisonResistance: 1
+  hasStunResistance: 0

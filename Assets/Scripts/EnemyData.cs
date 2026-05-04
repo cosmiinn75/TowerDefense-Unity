@@ -9,4 +9,9 @@ public class EnemyData : ScriptableObject
     public GameObject enemyPrefab;
     public int goldReward;
     public Color enemyColor = Color.white;
+    public bool isArmored;
+    public bool hasMagicResistance;
+    public bool hasSlowResistance;
+    public bool hasPoisonResistance;
+    public bool hasStunResistance;
 }

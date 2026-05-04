@@ -16,5 +16,10 @@ MonoBehaviour:
   speed: 6
   health: 15000
   enemyPrefab: {fileID: 8669385262318456191, guid: fecc84b06dc05434d982968c8ecd6753, type: 3}
-  goldReward: 500
+  goldReward: 1000
   enemyColor: {r: 1, g: 1, b: 1, a: 1}
+  isArmored: 1
+  hasMagicResistance: 1
+  hasSlowResistance: 1
+  hasPoisonResistance: 1
+  hasStunResistance: 1

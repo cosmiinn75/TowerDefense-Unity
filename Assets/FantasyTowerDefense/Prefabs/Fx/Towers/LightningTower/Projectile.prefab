@@ -168,6 +168,8 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   elementType: Lightning
+  affectedByArmor: 0
+  affectedByMagic: 1
 --- !u!114 &1824305149753188455
 MonoBehaviour:
   m_ObjectHideFlags: 0

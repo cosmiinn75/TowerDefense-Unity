@@ -1,4 +1,5 @@
-﻿using Unity.VisualScripting;
+﻿
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Assets.FantasyTowerDefense.Scripts.Demo
@@ -14,6 +15,9 @@ namespace Assets.FantasyTowerDefense.Scripts.Demo
         private float _createTime;
         [Header("Element Settings")]
         public string elementType;
+        [Header("Resistances")] 
+        public bool affectedByArmor;
+        public bool affectedByMagic;
         public void Initialize(Tower tower, Monster target)
         {
             _createTime = Time.time;
@@ -72,7 +76,20 @@ namespace Assets.FantasyTowerDefense.Scripts.Demo
 
             if (monster)
             {
-                monster.GetDamage(_source.Damage);
+                var enemyStats = monster.GetComponent<EnemyStats>();
+                float finalDamage = _source.Damage;
+                if (affectedByArmor && enemyStats.hasArmor)
+                {
+                     finalDamage = _source.Damage * 0.5f;
+                    Debug.Log("Armor res");
+              
+                }
+                else if(affectedByMagic && enemyStats.hasMagicResistance)
+                {
+                    finalDamage = _source.Damage * 0.5f;
+                    Debug.Log("Magic res");
+                }
+                monster.GetDamage((int)finalDamage);
                 if (!string.IsNullOrEmpty(elementType))
                 {
                     if(elementType == "Ice")

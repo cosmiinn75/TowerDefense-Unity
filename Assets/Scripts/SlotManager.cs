@@ -12,6 +12,7 @@ public class SlotManager : MonoBehaviour
     public Color hoverColor;
     private Color baseColor;
 
+    private int changeElementSpent = 0;
     private bool isPlaced;
     private int currentLevel = 0;
     [Header("UI Menu")]
@@ -167,13 +168,15 @@ public class SlotManager : MonoBehaviour
     public void OnSell()
     {
         float totalCost = 0;
+        totalCost += changeElementSpent;
         for (int i = 0; i <= currentLevel; i++)
         {
             totalCost += (int)towerType[i].GetComponent<Tower>().Cost;
         }
 
         CurrencyManager.Instance.AddGold(Mathf.RoundToInt(totalCost * 0.8f / 10f) * 10);
-
+        changeElementSpent = 0;
+            
         Destroy(tower);
         tower = null;
         currentLevel = 0;
@@ -195,14 +198,18 @@ public class SlotManager : MonoBehaviour
     {
         var script = tower.GetComponent<MagicTower>();
         int cost = 200;
+
         if (cost <= CurrencyManager.Instance.currentGold)
         {
+
             if (script != null)
             {
                 CurrencyManager.Instance.TrySpendGold(cost);
+                changeElementSpent += cost;
                 script.ChangeElement(elementType);
              
             }
+
             CloseCurrentMenu();
         }
         else

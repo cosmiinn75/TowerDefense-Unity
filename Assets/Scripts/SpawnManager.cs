@@ -44,6 +44,7 @@ public class SpawnManager : MonoBehaviour
             {
                 case 1:
                     // Wave 1: 6 Goblins
+              
                     enemiesToSpawn = FillWave(availableEnemies[0], 6);
                     break;
 

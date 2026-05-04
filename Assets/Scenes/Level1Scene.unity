@@ -636,6 +636,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Castle
       objectReference: {fileID: 0}
+    - target: {fileID: 5157675179194431159, guid: 51a425a0558df71498d79745e844c8a9, type: 3}
+      propertyPath: m_TagString
+      value: isKingTower
+      objectReference: {fileID: 0}
+    - target: {fileID: 8880368343167668352, guid: 51a425a0558df71498d79745e844c8a9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1935,7 +1943,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 715d2706b821fcd4494a9dc097d291f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  currentGold: 250
+  currentGold: 10000
   goldText: {fileID: 2034418906}
 --- !u!4 &933126522
 Transform:

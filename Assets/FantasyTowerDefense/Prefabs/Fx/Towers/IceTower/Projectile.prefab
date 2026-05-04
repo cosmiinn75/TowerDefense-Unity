@@ -5062,6 +5062,8 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   elementType: Ice
+  affectedByArmor: 0
+  affectedByMagic: 1
 --- !u!114 &6715471417902141833
 MonoBehaviour:
   m_ObjectHideFlags: 0

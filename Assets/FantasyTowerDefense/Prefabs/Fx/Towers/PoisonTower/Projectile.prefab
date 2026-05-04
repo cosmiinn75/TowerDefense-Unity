@@ -168,6 +168,8 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   elementType: Poison
+  affectedByArmor: 0
+  affectedByMagic: 1
 --- !u!114 &4101731094105494767
 MonoBehaviour:
   m_ObjectHideFlags: 0

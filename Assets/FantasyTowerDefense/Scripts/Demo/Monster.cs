@@ -23,7 +23,7 @@ namespace Assets.FantasyTowerDefense.Scripts.Demo
         public Transform[] BackWeapons;
         public Transform Hud;
         public SpriteRenderer HealthBar;
-
+        private EnemyStats enemyStats;
         public int Health;
         public int Damage;
         public int Speed;
@@ -78,6 +78,7 @@ namespace Assets.FantasyTowerDefense.Scripts.Demo
             _health = Health;
             _damage = Damage;
             _speed = Speed;
+            enemyStats = GetComponent<EnemyStats>();
         }
 
         public void OnDestroy()
@@ -210,6 +211,7 @@ namespace Assets.FantasyTowerDefense.Scripts.Demo
                     activeEffectCoroutine = StartCoroutine(ApplyPoisonEffect(duration));
                     break;
                 case "Ice":
+
                     currentElementalState = ElementState.Frosted;
                     activeEffectCoroutine = StartCoroutine(ApplyIceEffect(duration));
                     break;
@@ -228,7 +230,7 @@ namespace Assets.FantasyTowerDefense.Scripts.Demo
             var renderers = GetComponentsInChildren<SpriteRenderer>();
             foreach (var r in renderers)
             {
-                if (r.transform.IsChildOf(Hud) || r.gameObject.name == "HUD")
+                if (r.transform.IsChildOf(Hud) || r.gameObject.name == "HUD" || r.gameObject.CompareTag("isResist"))
                 {
                     continue;
                 }
@@ -242,18 +244,21 @@ namespace Assets.FantasyTowerDefense.Scripts.Demo
 
             foreach (var r in renderers)
             {
-                if (r.transform.IsChildOf(Hud) || r.gameObject.name == "HUD")
+                if (r.transform.IsChildOf(Hud) || r.gameObject.name == "HUD" || r.gameObject.CompareTag("isResist"))
                 {
                     continue;
                 }
                 r.color = poisonColor;
             }
 
-            // Aplicăm damage în timp
-            float damagePerTick = 20f; // Pune valoarea de damage pe secundă dorită
+            float damagePerTick = 50f;
             float interval = 1f;
             float elapsed = 0f;
-
+            if(enemyStats.hasPoisonResistance)
+            {
+                Debug.Log("Poison res");
+                damagePerTick = 20f;
+            }
             while (elapsed < duration)
             {
              
@@ -267,7 +272,7 @@ namespace Assets.FantasyTowerDefense.Scripts.Demo
 
             foreach (var r in renderers)
             {
-                if (r.transform.IsChildOf(Hud) || r.gameObject.name == "HUD")
+                if (r.transform.IsChildOf(Hud) || r.gameObject.name == "HUD" || r.gameObject.CompareTag("isResist"))
                 {
                     continue;
                 }
@@ -282,14 +287,21 @@ namespace Assets.FantasyTowerDefense.Scripts.Demo
         {
             var renderers = GetComponentsInChildren<SpriteRenderer>();
 
-       
-            int originalSpeed = _speed;
-        
-            float modifiedSpeed = _speed*0.8f;
+            float modifiedSpeed = _speed;
+            float originalSpeed = _speed;
+            if (!enemyStats.hasSlowResistance)
+            {
+               modifiedSpeed = _speed * 0.6f;
+                Debug.Log("slow res");
+            }
+            else
+            {
+                modifiedSpeed = _speed * 0.8f;
+            }
             _speed = (int)modifiedSpeed;
             foreach (var r in renderers)
             {
-                if (r.transform.IsChildOf(Hud) || r.gameObject.name == "HUD")
+                if (r.transform.IsChildOf(Hud) || r.gameObject.name == "HUD" || r.gameObject.CompareTag("isResist"))
                 {
                     continue;
                 }
@@ -299,11 +311,11 @@ namespace Assets.FantasyTowerDefense.Scripts.Demo
             yield return new WaitForSeconds(duration);
 
 
-            _speed = originalSpeed;
+            _speed = (int)originalSpeed;
 
             foreach (var r in renderers)
             {
-                if (r.transform.IsChildOf(Hud) || r.gameObject.name == "HUD")
+                if (r.transform.IsChildOf(Hud) || r.gameObject.name == "HUD" || r.gameObject.CompareTag("isResist"))
                 {
                     continue;
                 }
@@ -316,43 +328,46 @@ namespace Assets.FantasyTowerDefense.Scripts.Demo
 
         private IEnumerator ApplyStunEffect(float duration)
         {
-            var renderers = GetComponentsInChildren<SpriteRenderer>();
-            float tempSpeed = _speed;
-            _speed = 0;
-            wasStunned = true;
-
-            float elapsed = 0f;
-            while (elapsed < duration)
+            if (!enemyStats.hasStunResistance)
             {
+                var renderers = GetComponentsInChildren<SpriteRenderer>();
+                float tempSpeed = _speed;
+                _speed = 0;
+                wasStunned = true;
+
+                float elapsed = 0f;
+                while (elapsed < duration)
+                {
+                    foreach (var r in renderers)
+                    {
+                        if (r.transform.IsChildOf(Hud) || r.gameObject.name == "HUD" || r.gameObject.CompareTag("isResist"))
+                        {
+                            continue;
+                        }
+
+                        r.color = (elapsed % 0.2f < 0.1f) ? Color.yellow : new Color(0.8f, 0.9f, 1f);
+                    }
+
+                    elapsed += 0.1f;
+                    yield return new WaitForSeconds(0.1f);
+                }
+
+                _speed = (int)tempSpeed;
+
                 foreach (var r in renderers)
                 {
-                    if (r.transform.IsChildOf(Hud) || r.gameObject.name == "HUD")
+                    if (r.transform.IsChildOf(Hud) || r.gameObject.name == "HUD" || r.gameObject.CompareTag("isResist"))
                     {
                         continue;
                     }
-                    
-                    r.color = (elapsed % 0.2f < 0.1f) ? Color.yellow : new Color(0.8f, 0.9f, 1f);
+                    r.color = Color.white;
                 }
-
-                elapsed += 0.1f;
-                yield return new WaitForSeconds(0.1f);
             }
+                currentElementalState = ElementState.None;
+                activeEffectCoroutine = null;
 
-            _speed = (int)tempSpeed;
-
-            foreach (var r in renderers)
-            {
-                if (r.transform.IsChildOf(Hud) || r.gameObject.name == "HUD")
-                {
-                    continue;
-                }
-                r.color = Color.white;
-            }
-
-            currentElementalState = ElementState.None;
-            activeEffectCoroutine = null;
-
-            StartCoroutine(StunCooldownRoutine());
+                StartCoroutine(StunCooldownRoutine());
+           
         }
 
         private IEnumerator StunCooldownRoutine()
@@ -369,6 +384,10 @@ namespace Assets.FantasyTowerDefense.Scripts.Demo
 
             foreach (var r in renderers)
             {
+                if (r.gameObject.CompareTag("isResist"))
+                {
+                    continue;
+                }
                 r.material = _blinkMaterial;
             }
 
@@ -376,6 +395,10 @@ namespace Assets.FantasyTowerDefense.Scripts.Demo
 
             foreach (var r in renderers)
             {
+                if (r.gameObject.CompareTag("isResist"))
+                {
+                    continue;
+                }
                 r.material = _baseMaterial;
             }
         }

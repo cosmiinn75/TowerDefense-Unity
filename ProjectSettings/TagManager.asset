@@ -6,6 +6,7 @@ TagManager:
   tags:
   - isLastCube
   - isKingTower
+  - isResist
   layers:
   - Default
   - TransparentFX
