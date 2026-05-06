@@ -3,6 +3,8 @@ using System.Linq;
 using Assets.FantasyTowerDefense.Scripts.Creature;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.VisualScripting;
+using UnityEngine.Audio;
 
 namespace Assets.FantasyTowerDefense.Scripts.Demo
 {
@@ -94,9 +96,37 @@ namespace Assets.FantasyTowerDefense.Scripts.Demo
         {
             _state = State.Empty;
             _fireTime = Time.time;
-
+            PlayShootSound();
             Fire(() => Instantiate(ProjectilePrefab, Source.position, Quaternion.identity, transform).Initialize(this, target));
         }
+
+
+        private void PlayShootSound()
+        {
+            if(AudioManager.Instance != null)
+            {
+
+                if (name.Contains("Cannon"))
+                {
+                    AudioManager.Instance.PlaySFX(AudioManager.Instance.cannonClip);
+                } 
+                else if (name.Contains("Scorpion"))
+                {
+                    AudioManager.Instance.PlaySFX(AudioManager.Instance.archerClip);
+                }
+                else if(name.Contains("Magic"))
+                {
+                    AudioManager.Instance.PlaySFX(AudioManager.Instance.magicClip);
+                }
+
+
+
+            }
+
+
+
+        }
+
     }
 
 

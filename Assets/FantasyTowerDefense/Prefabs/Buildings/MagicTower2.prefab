@@ -470,7 +470,7 @@ MonoBehaviour:
   Source: {fileID: 7760484598023276356}
   Damage: 150
   Range: 18
-  FireInterval: 1
+  FireInterval: 1.25
   ReloadTime: 0
   Cost: 300
   ProjectilePrefab: {fileID: -4509245222062425876, guid: fd7ad579096c7b9448643ed755d60657, type: 3}

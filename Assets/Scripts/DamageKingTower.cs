@@ -30,9 +30,29 @@ public class DamageKingTower : MonoBehaviour
 
         if (_kingMonster.State == CreatureState.Dead)
         {
+          
+           
+            SpawnManager spawner = FindFirstObjectByType<SpawnManager>();
+            List<GameObject> enemiesLeft = new List<GameObject>(spawner.enemiesLeft);
+            if (spawner != null)
+            {
+                enemiesLeft = spawner.enemiesLeft;
+            }
+            foreach(var enemy in enemiesLeft)
+            {
+                if(enemy != null)
+                {
+                    var script = enemy.GetComponent<Monster>();
+                    if(script != null)
+                    {
+                        script.Die();
+                    }
+                }
+            }
             StartCoroutine(Wait());
-            Time.timeScale = 0;
-            Debug.Log("GAME OVER");
+            spawner.enemiesLeft.Clear();
+            Time.timeScale = 0f;
+
         }
     }
     IEnumerator Wait()

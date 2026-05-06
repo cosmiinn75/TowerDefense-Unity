@@ -255,11 +255,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Source: {fileID: 718541345435751346}
-  Damage: 100
+  Damage: 60
   Range: 19
   FireInterval: 0.1
   ReloadTime: 0.4
-  Cost: 200
+  Cost: 300
   ProjectilePrefab: {fileID: -9152024315256142421, guid: 51edcf749f769984897f0a751419f244, type: 3}
   Weapon: {fileID: 718541345435751341}
   WeaponSprites:

@@ -55,7 +55,7 @@ public class EnemyStats : MonoBehaviour
 
             if (!reachedEnd)
             {
-                CurrencyManager.Instance.AddGold((int)config.goldReward);
+                CurrencyManager.Instance.AddGold(config.goldReward);
                 Debug.Log("Am adaugat bani");
             }
             else

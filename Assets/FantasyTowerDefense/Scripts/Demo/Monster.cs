@@ -112,7 +112,7 @@ namespace Assets.FantasyTowerDefense.Scripts.Demo
                         stats.reachedEnd = true;
 
                         SpawnManager spawner = FindFirstObjectByType<SpawnManager>();
-                        if(spawner != null && spawner.currentWave >= 5)
+                        if(spawner != null && spawner.currentWave >= spawner.waveLevel)
                         {
                             if(DamageKingTower.Instance != null)
                             {
