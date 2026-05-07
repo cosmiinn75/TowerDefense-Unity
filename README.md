@@ -40,12 +40,6 @@ Modular Spawner Architecture: Refactored the spawning logic to track activeEnemi
 
 Instance-Based Stat Copying: Solved the "Scriptable Object Data Corruption" bug. Instead of modifying the SO file, EnemyStats now creates a local runtime copy of base stats, ensuring every enemy can be buffed individually without affecting others.
 
-Wave-Based Scaling: Implemented a mathematical multiplier for health and speed.
-
-healthMultiplier = 1f + (currentWave - 1) * 0.1f;
-
-This ensures a 10% difficulty increase per wave, keeping the gameplay challenging.
-
 Hierarchy Cleaning: Implemented a robust OnDestroy listener to ensure the SpawnManager always has an accurate count of active threats, even if an enemy is destroyed prematurely.
 
 📅 Next Steps:
