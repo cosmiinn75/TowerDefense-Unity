@@ -40,12 +40,6 @@ Modular Spawner Architecture: Refactored the spawning logic to track activeEnemi
 
 Instance-Based Stat Copying: Solved the "Scriptable Object Data Corruption" bug. Instead of modifying the SO file, EnemyStats now creates a local runtime copy of base stats, ensuring every enemy can be buffed individually without affecting others.
 
-Wave-Based Scaling: Implemented a mathematical multiplier for health and speed.
-
-healthMultiplier = 1f + (currentWave - 1) * 0.1f;
-
-This ensures a 10% difficulty increase per wave, keeping the gameplay challenging.
-
 Hierarchy Cleaning: Implemented a robust OnDestroy listener to ensure the SpawnManager always has an accurate count of active threats, even if an enemy is destroyed prematurely.
 
 📅 Next Steps:
@@ -280,6 +274,30 @@ Architecture Stabilization: Removed duplicate calls in the death and cleanup loo
 
 📅 Next Steps:
 Audio Cues: Integrate sound effects for placing, upgrading, and selling towers, as well as distinct cues for elemental impacts.
+
+
+Here is the devlog for 06.05.2026 translated and styled in the same technical format:
+
+🚀 Devlog: Level 1 Completion & Level 2 Optimization - 06.05.2026
+🟢 Progress Summary: Today marked an important milestone: we completed and stabilized Level 1, ensuring the core pacing is working exactly as intended. We also initiated the development of Level 2 and conducted an extensive balance pass on all game statistics (towers and enemies), ensuring that the economy remains strict and prevents players from purchasing advanced magic or elemental options too early.
+
+🛠️ Key Technical Solved / Implemented:
+
+Dynamic Wave Management: Rewrote the level initialization logic to support varying numbers of waves based on the current level (5 waves for Level 1, 6 waves for Level 2) without needing separate, hardcoded scripts for each map.
+
+King's Fate Wipeout System: Optimized the cleanup sequence upon the King's death. Converted the active enemy tracking into a safe list iteration using enemiesLeft.Clear() to prevent NullReferenceException errors between stages.
+
+Economic and Tower Balancing: Analyzed the data from the balance sheet and re-adjusted the cost-to-performance ratio, restricting access to elemental features and the Level 3 Magic Tower to ensure early-game progression relies heavily on basic, physical defenses.
+
+Performance & Time Management: Fixed the main update loop transition from Wave 5 to Wave 6 on Level 2, ensuring the final boss wave spawns properly.
+
+📅 Next Steps:
+
+Develop Levels 3 and 4 based on the established wave scaling foundations.
+
+Start working on the World Map / Level Select scene to enable a seamless multi-stage playthrough.
+
+Implement UI polish for level transition screens.
 
 Finishing First Level: Complete balancing, ensure the tutorial loop works perfectly from the first to the final wave, and trigger the game loop conclusion properly.
 
