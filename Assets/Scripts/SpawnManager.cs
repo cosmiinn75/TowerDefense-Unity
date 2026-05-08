@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using Assets.FantasyTowerDefense.Scripts.Demo;
 using TMPro;
+using Unity.VisualScripting;
 
 public class SpawnManager : MonoBehaviour
 {
@@ -14,17 +15,19 @@ public class SpawnManager : MonoBehaviour
     public List<EnemyData> availableEnemies; //Types of enemies
     public List<Transform> wayPoints; 
     [Header("Wave Settings")]
-    public float timeBetweenWaves = 5.0f;
-    public float timeBetweenEnemies = 1.5f;
+    private float timeBetweenWaves = 5.0f;
+    public float defaultTimeBetweenEnemies = 1.5f;
+    public float timeBetweenEnemies ;
     public int currentWave = 1;
     [Header("Tracking")]
     public int activeEnemies;// How many enemies are still alive
-    public List<GameObject> enemiesLeft;
+    public List<GameObject> enemiesLeft = new List<GameObject>();
     [Header("UI Menu")]
     public GameObject waveText;
     void Start() {
         waveText.SetActive(false);
         StartCoroutine(SpawnWave());
+        timeBetweenEnemies = defaultTimeBetweenEnemies;
       
     }
     
@@ -37,10 +40,12 @@ public class SpawnManager : MonoBehaviour
                 waveText.SetActive(true);
                 waveText.GetComponent<TextMeshProUGUI>().text = "Wave " + currentWave.ToString();
                 waveText.GetComponent<TextFadeAnimation>()?.TriggerAnimation();
-                yield return new WaitForSeconds(1f);
+                yield return new WaitForSeconds(3f);
             }
             yield return new WaitForSeconds(0.5f);
+
             activeEnemies = 0;
+            timeBetweenEnemies = defaultTimeBetweenEnemies;
             List<EnemyData> enemiesToSpawn = null;
 
             switch (currentLevel) {
@@ -51,7 +56,9 @@ public class SpawnManager : MonoBehaviour
                 case 2:
                     enemiesToSpawn = LoadLevel2();
                     break;
-
+                case 3:
+                    enemiesToSpawn = LoadLevel3();
+                    break;
                 default:
                     enemiesToSpawn = new List<EnemyData>();
                     break;
@@ -97,7 +104,7 @@ public class SpawnManager : MonoBehaviour
             enemiesLeft.Add(newEnemy);
             EnemyStats stats = newEnemy.GetComponent<EnemyStats>();
 
-            stats.InitializeData(enemyData); // His stats are now as the random one 
+            stats.InitializeData(enemyData); // His stats are now as the random one
             var monsterLogic = newEnemy.GetComponent<Monster>();
 
             if (monsterLogic != null)
@@ -150,6 +157,7 @@ public class SpawnManager : MonoBehaviour
 
             case 2:
                 // Wave 2: 10 Spiders
+                timeBetweenEnemies = 1f;
                 list = FillWave(availableEnemies[1], 10);
                 break;
 
@@ -167,7 +175,7 @@ public class SpawnManager : MonoBehaviour
 
             case 5:
                 // Wave 5: 1 Troll (Boss)
-                list = FillWave(availableEnemies[3], 1);
+                list = FillWave(availableEnemies[4], 1);
                 break;
 
             default:
@@ -191,6 +199,7 @@ public class SpawnManager : MonoBehaviour
 
             case 2:
                 // Wave 2: 12 wolves
+                timeBetweenEnemies = 1f;
                 list = FillWave(availableEnemies[16], 12);
                 break;
 
@@ -201,16 +210,14 @@ public class SpawnManager : MonoBehaviour
 
             case 4:
                 // Wave 4: 15 spiders
-
+                timeBetweenEnemies = 0.5f;
                 list = FillWave(availableEnemies[1], 15);
                 break;
 
             case 5:
                 // Wave 5: 4 bandit scouts + 2 bandit elders
-                AddEnemies(list, availableEnemies[2], 2);
-                AddEnemies(list, availableEnemies[5], 1);
-                AddEnemies(list, availableEnemies[2], 2);
-                AddEnemies(list, availableEnemies[5], 1);
+                AddEnemies(list, availableEnemies[2], 4);
+                AddEnemies(list, availableEnemies[5], 2);
                 break;
             case 6:
                 // Wave 6: 10 wolves + cyclops(boss)
@@ -226,4 +233,41 @@ public class SpawnManager : MonoBehaviour
         return list;
     }
 
+    private List<EnemyData> LoadLevel3()
+    {
+        List<EnemyData> list = new List<EnemyData>();
+
+        switch (currentWave)
+        {
+            case 1: // 12 Goblins
+                list = FillWave(availableEnemies[0], 12);
+                break;
+            case 2: // 6 Wargs
+                timeBetweenEnemies = 1f;
+                list = FillWave(availableEnemies[14], 6);
+                break;
+            case 3: //8 Skeletons + 4 Spiders
+                timeBetweenEnemies = 1f;
+                list = FillWave(availableEnemies[12], 8);
+                AddEnemies(list, availableEnemies[1], 4);
+                break;
+            case 4: //6 Bandit Rangers
+                timeBetweenEnemies = 1f;
+                list = FillWave(availableEnemies[4], 6);
+                break;
+            case 5: // 3 Wargs + 1 Bandit Leader(Boss)
+                timeBetweenEnemies = 1f;
+                list = FillWave(availableEnemies[14], 3);
+                AddEnemies(list, availableEnemies[6], 1);
+                break;
+
+            default:
+                list = new List<EnemyData>();
+                break;
+        }
+
+
+
+        return list;
+    }
 }

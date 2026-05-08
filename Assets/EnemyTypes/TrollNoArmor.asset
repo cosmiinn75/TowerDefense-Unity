@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: be2fd02a984bc7b4ba69dbc336ad3416, type: 3}
-  m_Name: Goblin
+  m_Name: TrollNoArmor
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
-  enemyName: Goblin
-  speed: 10
-  health: 150
-  enemyPrefab: {fileID: 839762897476769452, guid: 0440515079d46e143bf22dd1dc8b4630, type: 3}
-  goldReward: 10
+  enemyName: Troll
+  speed: 4
+  health: 2000
+  enemyPrefab: {fileID: 7819379457107753453, guid: 1d725853ec1316f419402b23cfa93b02, type: 3}
+  goldReward: 100
   enemyColor: {r: 1, g: 1, b: 1, a: 1}
   isArmored: 0
   hasMagicResistance: 0

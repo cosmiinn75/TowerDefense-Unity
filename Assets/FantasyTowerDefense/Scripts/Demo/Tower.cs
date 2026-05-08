@@ -54,10 +54,13 @@ namespace Assets.FantasyTowerDefense.Scripts.Demo
                 if (_target == null)
                 {
                     _target = Monster.Instances.Where(i => i.enabled && i.State < CreatureState.Dead).OrderBy(i => Vector2.Distance(i.transform.position, transform.position)).FirstOrDefault();
-                if (_target.CompareTag("isKingTower")){
-                    _target = null;
+                if (_target != null)
+                {
+                    if (_target.CompareTag("isKingTower") && _target.State <= CreatureState.Dead)
+                    {
+                        _target = null;
+                    }
                 }
-
                 }
 
                 if (_target != null && Vector2.Distance(_target.transform.position, transform.position) <= Range)

@@ -80,7 +80,7 @@ namespace Assets.FantasyTowerDefense.Scripts.Demo
                 float finalDamage = _source.Damage;
                 if (affectedByArmor && enemyStats.hasArmor)
                 {
-                     finalDamage = _source.Damage * 0.5f;
+                     finalDamage = _source.Damage * 0.75f;
                     Debug.Log("Armor res");
               
                 }

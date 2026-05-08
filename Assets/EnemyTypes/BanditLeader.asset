@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
   enemyName: BanditLeader
   speed: 4
-  health: 1000
+  health: 2000
   enemyPrefab: {fileID: 7819379457107753453, guid: 3f52da80f4414934bb4213de70b52a04, type: 3}
-  goldReward: 60
+  goldReward: 100
   enemyColor: {r: 1, g: 1, b: 1, a: 1}
   isArmored: 1
   hasMagicResistance: 0

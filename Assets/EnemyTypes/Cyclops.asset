@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
   enemyName: Cyclops
   speed: 4
-  health: 2750
+  health: 2500
   enemyPrefab: {fileID: 4726751785336576692, guid: 7c7b09e5fa2129c4daf42cbb42cca3dd, type: 3}
   goldReward: 120
   enemyColor: {r: 1, g: 1, b: 1, a: 1}
