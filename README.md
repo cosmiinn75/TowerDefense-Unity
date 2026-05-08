@@ -303,3 +303,32 @@ Finishing First Level: Complete balancing, ensure the tutorial loop works perfec
 
 
 Audio-Visual Polishing: Add sound effects for elemental impacts and UI elements.
+
+Iată propunerea pentru devlog-ul de astăzi, 08.05.2026, păstrând stilul tehnic, structura pe secțiuni și terminologia folosită anterior în proiectul tău:
+
+🚀 Devlog: Bug Squashing & Level 3 Strategic Foundations - 08.05.2026
+🟢 Progress Summary:
+Today was dedicated to system stability and expanding the content for the mid-game phase. I successfully resolved a critical NullReference bug that occurred during the endgame state and finalized the technical implementation of Level 3. The focus shifted towards a "Quality over Quantity" design philosophy for the new level, emphasizing strategic tower placement due to limited slot availability.
+
+🛠️ Key Technical Solved / Implemented:
+
+Endgame NullReference Fix: Solved a persistent crash in Tower.cs where towers would attempt to access a target's tag and state after the King's death. Implemented a robust null-safety check before CompareTag calls and integrated a Time.timeScale short-circuit to prevent unnecessary update cycles after a Game Over.
+
+Level 3 Logic & Wave Sequencing: Completed the LoadLevel3 configuration. Implemented a 5-wave structure that introduces the Bandit Leader (Boss) with 2000 HP and Armor. The wave pacing was adjusted to account for the map's unique "choke-point" layout.
+
+Armor-Archer Synergy Balancing: Fine-tuned the combat loop to reinforce the new elemental/physical priority. Validated that Archer Towers now act as the primary counter to Armored units (like Wargs and the Bandit Leader), while Cannons deal reduced damage to these specific types.
+
+Level 2 Stabilization: Successfully completed all playtests for Level 2, ensuring the 6-wave transition and the final boss cleanup logic are 100% stable.
+
+📂 Current Project State:
+
+Level 1: Completed & Balanced.
+
+Level 2: Completed & Balanced.
+
+Level 3: Code Logic implemented; Wave data verified via Spreadsheet.
+
+📅 Next Steps:
+
+Environment Art: Complete the background and visual assets for Level 3 to match the tactical layout.
+Next Levels: Continue working on the next 7 remaining levels before developing the world map.
