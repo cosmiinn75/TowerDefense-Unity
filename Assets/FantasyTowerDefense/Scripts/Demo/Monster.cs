@@ -182,11 +182,17 @@ namespace Assets.FantasyTowerDefense.Scripts.Demo
 
         public void Die()
         {
+            if (State >= CreatureState.Dead) return;
             enabled = false;
             State = CreatureState.Dead;
             Animator.SetInteger(StateHash, (int)State);
             Hud.gameObject.SetActive(false);
-            StartCoroutine(nameof(Destroy));
+
+            if (gameObject.activeInHierarchy)
+            {
+                StartCoroutine(nameof(Destroy));
+            }
+
         }
 
         private static Material _baseMaterial;

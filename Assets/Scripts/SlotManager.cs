@@ -2,6 +2,7 @@ using Assets.FantasyTowerDefense.Scripts.Demo;
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.Rendering;
+using System.Collections;
 
 public class SlotManager : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class SlotManager : MonoBehaviour
     public GameObject buildMenu;
     public GameObject upgradeSellMenu;
     private GameObject currentMenu;
+    public GameObject sellMenu;
     public Canvas mainCanvas;
     private List<GameObject> towerType;
     private UpgradeSellMenu currentUpgradeSellMenu;
@@ -30,6 +32,8 @@ public class SlotManager : MonoBehaviour
     public List<GameObject> magicTowers;
     public GameObject underConstructionPrefab;
 
+    private float timeTillClosedMenu = 5f;
+    private Coroutine menuTimerCoroutine;
     private void Start()
     {
         myRenderer = GetComponent<SpriteRenderer>();
@@ -99,13 +103,20 @@ public class SlotManager : MonoBehaviour
                 }
 
             }
+            else if(currentLevel == 2)
+            {
+                OpenSellMenu();
+            }
             else
             {
                 OpenUpgradeSellMenu();
             }
 
         }
-
+        if(currentMenu != null)
+        {
+            ResetMenuTimer();
+        }
     }
 
     public void OnButtonClicked(string towerToBuild)
@@ -137,6 +148,7 @@ public class SlotManager : MonoBehaviour
             dontHaveEnoughGoldText.GetComponent<TextFadeAnimation>()?.TriggerAnimation();
 
         }
+
     }
 
     public void OnUpgrade()
@@ -163,6 +175,7 @@ public class SlotManager : MonoBehaviour
             dontHaveEnoughGoldText.SetActive(true);
             dontHaveEnoughGoldText.GetComponent<TextFadeAnimation>()?.TriggerAnimation();
         }
+   
     }
 
     public void OnSell()
@@ -190,8 +203,8 @@ public class SlotManager : MonoBehaviour
             Destroy(currentUnderConstruction); 
         }
         currentUnderConstruction = Instantiate(underConstructionPrefab, transform.position, Quaternion.identity);
-
         CloseCurrentMenu();
+    
     }
 
     public void OnSelectElement(string elementType)
@@ -219,7 +232,20 @@ public class SlotManager : MonoBehaviour
         }
     }
 
-
+    private void ResetMenuTimer()
+    {
+        if(menuTimerCoroutine != null)
+        {
+            StopCoroutine(menuTimerCoroutine);
+        }
+        menuTimerCoroutine = StartCoroutine(CloseMenuAfterTime());
+    }
+    private IEnumerator CloseMenuAfterTime()
+    {
+        yield return new WaitForSeconds(timeTillClosedMenu);
+        CloseCurrentMenu();
+        menuTimerCoroutine = null;
+    }
     private void CloseCurrentMenu()
     {
         if (currentMenu == null) return;
@@ -237,7 +263,13 @@ public class SlotManager : MonoBehaviour
         currentMenu.GetComponent<BuildMenu>().SetSlot(this);
 
     }
-
+    public void OpenSellMenu()
+    {
+        currentMenu = Instantiate(sellMenu, mainCanvas.transform);
+        currentMenu.transform.position = transform.position;
+        var script = currentMenu.GetComponent<SellMenu>();
+        script.SetSlot(this);
+    }
     public void OpenUpgradeSellMenu()
     {
         currentMenu = Instantiate(upgradeSellMenu, mainCanvas.transform);

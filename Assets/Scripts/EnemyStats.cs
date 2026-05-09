@@ -2,7 +2,7 @@
 using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine;
-
+using Assets.FantasyTowerDefense.Scripts.Creature;
 public class EnemyStats : MonoBehaviour
 {
     public float currentHealth;
@@ -53,15 +53,21 @@ public class EnemyStats : MonoBehaviour
         {
             spawner.EnemyDied();
 
+
+
+            var king = DamageKingTower.Instance._kingMonster;
+            if(king == null || king.State >= CreatureState.Dead)
+            {
+                return;
+            }
             if (!reachedEnd)
             {
+                
                 CurrencyManager.Instance.AddGold(config.goldReward);
-                Debug.Log("Am adaugat bani");
             }
             else
             {
                 DamageKingTower.Instance.TakeDamage(20);
-                Debug.Log("-hp pentru rege");
             }
         }
 

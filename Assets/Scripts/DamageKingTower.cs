@@ -7,7 +7,7 @@ using UnityEngine;
 public class DamageKingTower : MonoBehaviour
 {
     public static DamageKingTower Instance;
-    private Monster _kingMonster;
+    public Monster _kingMonster;
 
     private void Awake()
     {
@@ -37,6 +37,7 @@ public class DamageKingTower : MonoBehaviour
             if (spawner != null)
             {
                 enemiesLeft = spawner.enemiesLeft;
+                spawner.StopAllCoroutines(); 
             }
             foreach(var enemy in enemiesLeft)
             {
@@ -49,14 +50,15 @@ public class DamageKingTower : MonoBehaviour
                     }
                 }
             }
-            StartCoroutine(Wait());
+            
             spawner.enemiesLeft.Clear();
-            Time.timeScale = 0f;
+            StartCoroutine(WaitAndEnd());
 
         }
     }
-    IEnumerator Wait()
+    IEnumerator WaitAndEnd()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSecondsRealtime(1.5f);
+         Time.timeScale = 0f;
     }
 }

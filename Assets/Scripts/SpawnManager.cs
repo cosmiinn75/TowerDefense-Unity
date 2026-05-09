@@ -19,6 +19,7 @@ public class SpawnManager : MonoBehaviour
     public float defaultTimeBetweenEnemies = 1.5f;
     public float timeBetweenEnemies ;
     public int currentWave = 1;
+    public float secondsBeforeFirstWave;
     [Header("Tracking")]
     public int activeEnemies;// How many enemies are still alive
     public List<GameObject> enemiesLeft = new List<GameObject>();
@@ -37,10 +38,11 @@ public class SpawnManager : MonoBehaviour
         {
             if (currentWave == 1)
             {
+             
                 waveText.SetActive(true);
                 waveText.GetComponent<TextMeshProUGUI>().text = "Wave " + currentWave.ToString();
                 waveText.GetComponent<TextFadeAnimation>()?.TriggerAnimation();
-                yield return new WaitForSeconds(3f);
+                yield return new WaitForSeconds(secondsBeforeFirstWave);
             }
             yield return new WaitForSeconds(0.5f);
 
@@ -58,6 +60,9 @@ public class SpawnManager : MonoBehaviour
                     break;
                 case 3:
                     enemiesToSpawn = LoadLevel3();
+                    break;
+                case 4:
+                    enemiesToSpawn = LoadLevel4();
                     break;
                 default:
                     enemiesToSpawn = new List<EnemyData>();
@@ -259,6 +264,44 @@ public class SpawnManager : MonoBehaviour
                 timeBetweenEnemies = 1f;
                 list = FillWave(availableEnemies[14], 3);
                 AddEnemies(list, availableEnemies[6], 1);
+                break;
+
+            default:
+                list = new List<EnemyData>();
+                break;
+        }
+
+
+
+        return list;
+    }
+    private List<EnemyData> LoadLevel4()
+    {
+        List<EnemyData> list = new List<EnemyData>();
+
+        switch (currentWave)
+        {
+            case 1: // 20 Goblins
+                timeBetweenEnemies = 0.8f;
+                list = FillWave(availableEnemies[0], 20);
+                break;
+            case 2: // 15 Wolves
+                timeBetweenEnemies = 0.5f;
+                list = FillWave(availableEnemies[16], 15);
+                break;
+            case 3: //10 Enemy Archers + 10 Skeletons
+                timeBetweenEnemies = 1f;
+                list = FillWave(availableEnemies[8], 10);
+                AddEnemies(list, availableEnemies[12], 10);
+                break;
+            case 4: //15 Bandit Rangers
+                timeBetweenEnemies = 1f;
+                list = FillWave(availableEnemies[4], 15);
+                break;
+            case 5: // 5 Bandit Elder + 10 Skeletons
+                timeBetweenEnemies = 1f;
+                list = FillWave(availableEnemies[5], 5);
+                AddEnemies(list, availableEnemies[12], 10);
                 break;
 
             default:
