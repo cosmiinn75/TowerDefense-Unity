@@ -363,3 +363,41 @@ Desert Biome (Levels 5-7): Transitioning to the new environment, featuring high 
 Dark Forest Biome (Levels 8-10): Designing the final stretch of levels leading up to the Level 10 showdown with the King.
 
 World Map System: Developing the level selection scene to bridge the completed stages.
+
+
+🚀 Devlog: Desert Biome Conclusion & Magical Forest Foundations - 13.05.2026
+
+🟢 Progress Summary:
+Today officially marks the end of the Desert chapter. I have successfully finalized and stabilized Levels 6 and 7. The core focus was calibrating difficulty for long, winding paths where I maximized the use of Mech Spiders and Armored units. With the desert biome closed, I have begun transitioning into the final zone of the game: the Dark Forest / Magical Theme, preparing the infrastructure for new magic-specific gameplay mechanics.
+
+🛠️ Key Technical Solved / Implemented:
+
+Desert Biome Completion (Levels 6 & 7):
+
+Level 6 Stabilization: Implemented a 7-wave structure focused on a balanced mix of speed (Wargs) and durability (TrollNoRes). Starting gold was set to $750 to allow for tactical flexibility.
+
+Level 7 "Long Path" Logic: Configured waves to take advantage of the long layout with the oasis. I increased Mech Spider density (over 50 units total) to create a "mechanical invasion" atmosphere, forcing the player to manage sustained pressure.
+
+Specific Level 7 Balancing (Armor Focus):
+
+As a strategic choice for Level 7, I removed all enemies with Magic Resistance. This was done to explicitly highlight the efficiency of Level 3 Magic Towers against heavy armor units (Trolls, Bandit Leaders). This validated the damage priority system and gave the player a satisfying "power trip" before the next biome's difficulty spike.
+
+Biome Transition Logic: Prepared the scene loading system for the visual environment shift. I have begun defining parameters for Dark Forest enemies, where I plan to reintroduce high magic resistances to shift the tactical focus back toward physical defenses.
+
+Gold Curve Optimization: Synchronized gold rewards across the last two desert levels to ensure the player finishes the biome with a clear understanding of Level 3 upgrade values before entering the high-stakes final three levels.
+
+📂 Current Project State:
+
+Levels 1-7: Fully completed, tested, and balanced (Tutorial, Meadow, Desert).
+
+Enemy Database: Boss-type units (Bandit Leader, Cyclops) are fully integrated into the wave spawner logic.
+
+Visuals: Desert Theme finalized (Oasis, cacti, skeletons).
+
+📅 Next Steps:
+
+Dark Forest Biome (Levels 8-10): Designing magic-themed maps and introducing forest-specific visual obstacles.
+
+Final Boss Integration: Preparing special logic for Level 10, where the King will serve as the ultimate victory/defeat condition.
+
+World Map / Level Select: Developing the level selection scene to bridge all 10 stages into a cohesive campaign.
