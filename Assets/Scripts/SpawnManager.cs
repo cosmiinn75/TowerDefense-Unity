@@ -64,6 +64,9 @@ public class SpawnManager : MonoBehaviour
                 case 4:
                     enemiesToSpawn = LoadLevel4();
                     break;
+                case 5:
+                    enemiesToSpawn = LoadLevel5();
+                    break;
                 default:
                     enemiesToSpawn = new List<EnemyData>();
                     break;
@@ -312,5 +315,59 @@ public class SpawnManager : MonoBehaviour
 
 
         return list;
+    }
+    private List<EnemyData> LoadLevel5()
+    {
+        List<EnemyData> list = new List<EnemyData>();
+
+        switch (currentWave)
+        {
+            case 1: // 12 Goblins
+                timeBetweenEnemies = 0.8f;
+                list = FillWave(availableEnemies[0], 12);
+                break;
+            case 2: // 10 Skeletons
+                list = FillWave(availableEnemies[12], 10);
+                break;
+            case 3: // 12 Wargs
+                timeBetweenEnemies = 0.8f;
+                list = FillWave(availableEnemies[14], 8);
+               // AddEnemies(list, availableEnemies[14], 4);
+                break;
+            case 4: //5 Mages + 10 Spiders
+        
+                list = FillWave(availableEnemies[10], 5);
+                AddEnemies(list, availableEnemies[1], 10);
+                break;
+            case 5: // 5 Mech Spiders + 3 Bandit Elders
+                list = FillWave(availableEnemies[11], 5);
+                AddEnemies(list, availableEnemies[5], 3);
+         
+                break;
+            case 6: // 8 Wargs + 5 Enemy Archer
+                timeBetweenEnemies = 0.9f;
+                list = FillWave(availableEnemies[14], 8);
+                AddEnemies(list, availableEnemies[8], 5);
+                break;
+            case 7: // Troll + Bandit Leader
+                timeBetweenEnemies = 3f;
+                list = FillWave(availableEnemies[3], 1);
+                AddEnemies(list, availableEnemies[6], 1);
+                break;
+            default:
+                list = new List<EnemyData>();
+                break;
+        }
+
+
+
+        return list;
+    }
+
+    public IEnumerator WaitAndEnd()
+    {
+        yield return new WaitForSecondsRealtime(1f);
+        Debug.Log("Am oprit timpul");
+        Time.timeScale = 0f;
     }
 }

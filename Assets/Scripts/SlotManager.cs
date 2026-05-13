@@ -81,7 +81,10 @@ public class SlotManager : MonoBehaviour
             CloseCurrentMenu();
             return;
         }
-
+        if(Time.timeScale == 0)
+        {
+            return;
+        }
 
         if (!isPlaced)
         {

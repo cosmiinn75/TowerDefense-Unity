@@ -50,15 +50,16 @@ public class DamageKingTower : MonoBehaviour
                     }
                 }
             }
-            
+            Debug.Log("A ajuns aici");
+            if (spawner != null)
+            {
+                spawner.StartCoroutine(spawner.WaitAndEnd());
+            }
+            Debug.Log("Si aici ar trebui");
             spawner.enemiesLeft.Clear();
-            StartCoroutine(WaitAndEnd());
+           
 
         }
     }
-    IEnumerator WaitAndEnd()
-    {
-        yield return new WaitForSecondsRealtime(1.5f);
-         Time.timeScale = 0f;
-    }
+ 
 }
