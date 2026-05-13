@@ -1,6 +1,6 @@
 🛡️ Kingdom Defense: Tactical Evolution
 A strategic Tower Defense game built in Unity 6, featuring modular enemy scaling and a scriptable wave management system.
-
+Note: Paid graphics/audio assets have been excluded via .gitignore to comply with store licenses.
 ✨ Features
 Scriptable Enemy Architecture: Utilizes Scriptable Objects (EnemyData) to define health, speed, and visual identity, allowing for rapid iteration of new enemy types.
 
