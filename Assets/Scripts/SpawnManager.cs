@@ -67,6 +67,12 @@ public class SpawnManager : MonoBehaviour
                 case 5:
                     enemiesToSpawn = LoadLevel5();
                     break;
+                case 6:
+                    enemiesToSpawn = LoadLevel6();
+                    break;
+                case 7:
+                    enemiesToSpawn = LoadLevel7();
+                    break;
                 default:
                     enemiesToSpawn = new List<EnemyData>();
                     break;
@@ -301,10 +307,10 @@ public class SpawnManager : MonoBehaviour
                 timeBetweenEnemies = 1f;
                 list = FillWave(availableEnemies[4], 15);
                 break;
-            case 5: // 5 Bandit Elder + 10 Skeletons
+            case 5: // 3 Bandit Elder + 6 Skeletons
                 timeBetweenEnemies = 1f;
-                list = FillWave(availableEnemies[5], 5);
-                AddEnemies(list, availableEnemies[12], 10);
+                list = FillWave(availableEnemies[5], 3);
+                AddEnemies(list, availableEnemies[12], 6);
                 break;
 
             default:
@@ -363,7 +369,97 @@ public class SpawnManager : MonoBehaviour
 
         return list;
     }
+    private List<EnemyData> LoadLevel6()
+    {
+        List<EnemyData> list = new List<EnemyData>();
 
+        switch (currentWave)
+        {
+            case 1: // 12 Skeletons
+                timeBetweenEnemies = 0.8f;
+                list = FillWave(availableEnemies[12], 12);
+                break;
+            case 2: // 10 Wargs
+                timeBetweenEnemies = 0.4f;
+                list = FillWave(availableEnemies[14], 10);
+                break;
+            case 3: // 6 Mages + 10 Goblins
+                timeBetweenEnemies = 0.7f;
+                list = FillWave(availableEnemies[10], 6);
+                AddEnemies(list, availableEnemies[0], 10);
+                break;
+            case 4: //6 Mech Spiders + 4 Witches    
+                timeBetweenEnemies = 0.9f;
+                list = FillWave(availableEnemies[11], 6);
+                AddEnemies(list, availableEnemies[15], 4);
+                break;
+            case 5: // 5 Bandit Elders + 6 Wargs
+                timeBetweenEnemies = 0.6f;
+                list = FillWave(availableEnemies[5], 5);
+                AddEnemies(list, availableEnemies[14], 6);
+
+                break;
+            case 6: //2  Bandit Leaders +  5 Mages
+                timeBetweenEnemies = 0.8f;
+                list = FillWave(availableEnemies[6], 2);
+                AddEnemies(list, availableEnemies[10], 5);
+                break;
+            case 7: // 2 Cyclops + 2 TrollNoRes
+                timeBetweenEnemies = 1f;
+                list = FillWave(availableEnemies[17], 2);
+                AddEnemies(list, availableEnemies[18], 2);
+                break;
+            default:
+                list = new List<EnemyData>();
+                break;
+        }
+
+
+
+        return list;
+    }
+    private List<EnemyData> LoadLevel7()
+    {
+        List<EnemyData> list = new List<EnemyData>();
+
+        switch (currentWave)
+        {
+            case 1: //12 Bandit Rangers
+                timeBetweenEnemies = 1f;
+                list = FillWave(availableEnemies[4], 15);
+                break;
+            case 2: // 2 Trolls + 12 Goblins
+                
+                list = FillWave(availableEnemies[3], 2);
+                AddEnemies(list, availableEnemies[0], 12);
+                break;
+            case 3: // 10 Mech Spider + 15 Wargs
+                timeBetweenEnemies = 1.2f;
+                list = FillWave(availableEnemies[11], 10);
+                AddEnemies(list, availableEnemies[14], 15);
+                break;
+            case 4: // 5 Bandit Leader + 4 Mech Spider   
+                timeBetweenEnemies = 1f;
+                list = FillWave(availableEnemies[6], 5);
+                AddEnemies(list, availableEnemies[11], 4);
+                break;
+            case 5: // 4 Trolls + 3 Bandit Leaders + 5 Mech Spiders
+
+                list = FillWave(availableEnemies[3], 4);
+                AddEnemies(list, availableEnemies[6], 3);
+                AddEnemies(list, availableEnemies[11], 5);
+
+                break;
+         
+            default:
+                list = new List<EnemyData>();
+                break;
+        }
+
+
+
+        return list;
+    }
     public IEnumerator WaitAndEnd()
     {
         yield return new WaitForSecondsRealtime(1f);

@@ -39,7 +39,7 @@ public class CurrencyManager : MonoBehaviour
 
     public void UpdateUI()
     {
-        Debug.Log(currentGold);
+    
         goldText.text = "Gold: " + currentGold.ToString();
     }
 }

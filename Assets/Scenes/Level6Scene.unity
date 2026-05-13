@@ -1461,7 +1461,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 715d2706b821fcd4494a9dc097d291f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  currentGold: 500
+  currentGold: 700
   goldText: {fileID: 2034418906}
 --- !u!4 &933126522
 Transform:
@@ -1728,7 +1728,7 @@ PrefabInstance:
       objectReference: {fileID: 347904735}
     - target: {fileID: 1193549303504718135, guid: abae92ec918b1664aae7961347f6dde4, type: 3}
       propertyPath: waveLevel
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 1193549303504718135, guid: abae92ec918b1664aae7961347f6dde4, type: 3}
       propertyPath: currentLevel
@@ -1790,6 +1790,18 @@ PrefabInstance:
       propertyPath: 'wayPoints.Array.data[11]'
       value: 
       objectReference: {fileID: 4217559854036837095}
+    - target: {fileID: 1193549303504718135, guid: abae92ec918b1664aae7961347f6dde4, type: 3}
+      propertyPath: availableEnemies.Array.size
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1193549303504718135, guid: abae92ec918b1664aae7961347f6dde4, type: 3}
+      propertyPath: 'availableEnemies.Array.data[17]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 21f64ed4c8cf75b45a6b7b13d273f8e6, type: 2}
+    - target: {fileID: 1193549303504718135, guid: abae92ec918b1664aae7961347f6dde4, type: 3}
+      propertyPath: 'availableEnemies.Array.data[18]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 41f5c5c8014ff5842b3131b630626531, type: 2}
     - target: {fileID: 1471247815982431998, guid: abae92ec918b1664aae7961347f6dde4, type: 3}
       propertyPath: m_LocalPosition.x
       value: -34.9
@@ -1931,7 +1943,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 837001172039024257, guid: f7a509ce41112ad4c852bc4858af26fc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -36.56
+      value: -27.59
       objectReference: {fileID: 0}
     - target: {fileID: 837001172039024257, guid: f7a509ce41112ad4c852bc4858af26fc, type: 3}
       propertyPath: m_LocalPosition.y
