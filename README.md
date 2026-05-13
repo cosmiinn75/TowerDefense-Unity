@@ -332,3 +332,34 @@ Level 3: Code Logic implemented; Wave data verified via Spreadsheet.
 
 Environment Art: Complete the background and visual assets for Level 3 to match the tactical layout.
 Next Levels: Continue working on the next 7 remaining levels before developing the world map.
+
+🚀 Devlog: Level 4 Completion & UI State Optimization - 09.05.2026
+
+🟢 Progress Summary:
+Today marked a major milestone in content expansion as I successfully completed the implementation and balancing for Level 3 and Level 4. Beyond map expansion, I focused on refining the User Experience (UX) by optimizing the construction menus for max-tier towers, ensuring a cleaner interface and preventing logic redundancies.
+
+🛠️ Key Technical Solved / Implemented:
+
+Level 3 & 4 Finalization: Integrated the wave sequences for both levels. Level 4 has been specifically tuned to reward Physical Tower (Archer/Cannon) Level 3 upgrades while making advanced magic elements economically difficult to obtain, forcing a more tactical use of basic slots.
+
+Max-Level UI State Logic: Refactored the UpgradeSellMenu logic. When a tower reaches Level 3 (Max), the script now dynamically hides the "Upgrade" button and its associated costs, displaying only the Sell option. This ensures the player cannot attempt invalid upgrades and declutters the UI.
+
+Minor Bug Squashing:
+
+Monster Death Routine: Fixed a race condition in the Die() method where the script would occasionally throw a null reference when trying to stop coroutines on a disabled object.
+
+📂 Current Project State:
+
+Levels 1-4: Fully playable and balanced.
+
+Tower Systems: Level 3 progression complete with context-sensitive menus.
+
+Enemy Variety: Index 0-17 units are now fully integrated into the wave spawner logic.
+
+📅 Next Steps:
+
+Desert Biome (Levels 5-7): Transitioning to the new environment, featuring high Magic Resistance enemies and heat-themed maps.
+
+Dark Forest Biome (Levels 8-10): Designing the final stretch of levels leading up to the Level 10 showdown with the King.
+
+World Map System: Developing the level selection scene to bridge the completed stages.
