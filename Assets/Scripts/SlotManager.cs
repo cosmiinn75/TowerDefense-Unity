@@ -8,14 +8,16 @@ public class SlotManager : MonoBehaviour
 {
     private GameObject tower;
     private GameObject currentUnderConstruction;
-
+    public Sprite lockedRenderer;
+    private Sprite unlockedRenderer;
     private SpriteRenderer myRenderer; //Object renderer
     public Color hoverColor;
     private Color baseColor;
-
+    public int unlockCost = 500;
     private int changeElementSpent = 0;
     private bool isPlaced;
     private int currentLevel = 0;
+    public bool isLocked = false;
     [Header("UI Menu")]
     public GameObject buildMenu;
     public GameObject upgradeSellMenu;
@@ -26,6 +28,7 @@ public class SlotManager : MonoBehaviour
     private UpgradeSellMenu currentUpgradeSellMenu;
     public GameObject dontHaveEnoughGoldText;
     public GameObject chooseMagicMenu;
+    public GameObject unlockMenu;
     [Header("Tower Prefabs")]
     public List<GameObject> cannonTowers;
     public List<GameObject> archerTowers;
@@ -43,6 +46,14 @@ public class SlotManager : MonoBehaviour
         if(dontHaveEnoughGoldText != null)
         {
             dontHaveEnoughGoldText.SetActive(false);
+        }
+        unlockedRenderer = myRenderer.sprite;
+        if (isLocked) {
+            myRenderer.sprite = lockedRenderer;
+        }
+        else
+        {
+            myRenderer.sprite = unlockedRenderer;
         }
     }
 
@@ -76,13 +87,26 @@ public class SlotManager : MonoBehaviour
 
     private void OnMouseDown()
     {
+
         if (currentMenu != null)
         {
             CloseCurrentMenu();
             return;
         }
+
         if(Time.timeScale == 0)
         {
+            return;
+        }
+
+
+
+        HandleMenus();
+    }
+    void HandleMenus() {
+
+        if (isLocked) {
+            OpenUnlockMenu();
             return;
         }
 
@@ -93,10 +117,10 @@ public class SlotManager : MonoBehaviour
         else
         {
             MagicTower magicTower = tower.GetComponent<MagicTower>();
-            if(magicTower != null)
+            if (magicTower != null)
             {
 
-                if(currentLevel == 2)
+                if (currentLevel == 2)
                 {
                     OpenChooseMagicMenu();
                 }
@@ -106,7 +130,7 @@ public class SlotManager : MonoBehaviour
                 }
 
             }
-            else if(currentLevel == 2)
+            else if (currentLevel == 2)
             {
                 OpenSellMenu();
             }
@@ -116,12 +140,28 @@ public class SlotManager : MonoBehaviour
             }
 
         }
-        if(currentMenu != null)
+
+        if (currentMenu != null)
         {
             ResetMenuTimer();
         }
+
     }
 
+    public void OnUnlock()
+    {
+        if (CurrencyManager.Instance.currentGold < unlockCost) {
+            dontHaveEnoughGoldText.SetActive(true);
+            dontHaveEnoughGoldText.GetComponent<TextFadeAnimation>()?.TriggerAnimation();
+            CloseCurrentMenu();
+            return;
+        }
+        CurrencyManager.Instance.TrySpendGold(unlockCost);
+        myRenderer.sprite = unlockedRenderer;
+        isLocked = false;
+        CloseCurrentMenu();
+
+    }
     public void OnButtonClicked(string towerToBuild)
     {
         if (isPlaced) return; // If there already exists a turret return
@@ -266,6 +306,14 @@ public class SlotManager : MonoBehaviour
         currentMenu.GetComponent<BuildMenu>().SetSlot(this);
 
     }
+    public void OpenUnlockMenu()
+    {
+        currentMenu = Instantiate(unlockMenu, mainCanvas.transform);
+        currentMenu.transform.position = transform.position;
+      currentMenu.GetComponent<UnlockMenu>().SetSlot(this);
+
+    }
+
     public void OpenSellMenu()
     {
         currentMenu = Instantiate(sellMenu, mainCanvas.transform);
@@ -298,7 +346,7 @@ public class SlotManager : MonoBehaviour
         if (towerType == null || currentLevel >= towerType.Count - 1) return 0;
         return (int)towerType[currentLevel + 1].GetComponent<Tower>().Cost;
     }
-
+   
 
 
 }

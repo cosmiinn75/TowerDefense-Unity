@@ -73,6 +73,13 @@ public class SpawnManager : MonoBehaviour
                 case 7:
                     enemiesToSpawn = LoadLevel7();
                     break;
+                case 8:
+                    enemiesToSpawn = LoadLevel8();
+                    break;
+                case 9:
+                    break;
+                case 10:
+                    break;
                 default:
                     enemiesToSpawn = new List<EnemyData>();
                     break;
@@ -457,6 +464,63 @@ public class SpawnManager : MonoBehaviour
         }
 
 
+
+        return list;
+    }
+    private List<EnemyData> LoadLevel8()
+    {
+        List<EnemyData> list = new List<EnemyData>();
+
+        switch (currentWave)
+        {
+            case 1: // 15 Skeletons + 10 Mages
+                timeBetweenEnemies = 0.8f;
+                list = FillWave(availableEnemies[12], 15); // Skeleton
+                AddEnemies(list, availableEnemies[10], 10); // Mage
+                break;
+
+            case 2: // 15 Wargs + 5 Bandit Leaders
+                timeBetweenEnemies = 0.6f;
+                list = FillWave(availableEnemies[14], 15); // Warg
+                AddEnemies(list, availableEnemies[6], 5); // Bandit Leader
+                break;
+
+            case 3: // 12 Witches + 15 Mech Spiders
+                timeBetweenEnemies = 0.8f;
+                list = FillWave(availableEnemies[15], 12); // Witch
+                AddEnemies(list, availableEnemies[11], 15); // Mech Spider
+                break;
+
+            case 4: // 2 Warriors + 20 Goblins
+                timeBetweenEnemies = 1.0f;
+                list = FillWave(availableEnemies[13], 2); // Warrior 
+                AddEnemies(list, availableEnemies[0], 20); // Goblin
+                break;
+
+            case 5: // 4 Cyclops + 6 Trolls
+                timeBetweenEnemies = 1.2f;
+                list = FillWave(availableEnemies[17], 4); // Cyclops  
+                AddEnemies(list, availableEnemies[3], 6); // Troll
+                break;
+
+            case 6: // 10 Witches + 10 Mages + 10 Bandit Elders
+                timeBetweenEnemies = 0.7f;
+                list = FillWave(availableEnemies[15], 10); // Witch
+                AddEnemies(list, availableEnemies[10], 10); // Mage
+                AddEnemies(list, availableEnemies[5], 10); // Bandit Elder
+                break;
+
+            case 7: // 3 Warriors + 8 Bandit Leaders + 5 Cyclops
+                timeBetweenEnemies = 1.0f;
+                list = FillWave(availableEnemies[13], 3); // Warrior
+                AddEnemies(list, availableEnemies[6], 8); // Bandit Leader
+                AddEnemies(list, availableEnemies[17], 5); // Cyclops
+                break;
+
+            default:
+                list = new List<EnemyData>();
+                break;
+        }
 
         return list;
     }
