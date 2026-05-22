@@ -401,3 +401,38 @@ Dark Forest Biome (Levels 8-10): Designing magic-themed maps and introducing for
 Final Boss Integration: Preparing special logic for Level 10, where the King will serve as the ultimate victory/defeat condition.
 
 World Map / Level Select: Developing the level selection scene to bridge all 10 stages into a cohesive campaign.
+
+🚀 Devlog: Level 8 Completion & Unlockable Slots Feature - 18.05.2026
+
+🟢 Progress Summary:
+Today marks a major tactical milestone as I officially entered the Dark Forest biome, successfully completing and balancing Level 8. To address late-game economic surpluses and prevent map overcrowding, I introduced a major new gameplay mechanic: Unlockable Slots. The player must now strategically manage their gold to clear environmental obstacles before gaining access to premium tower placements, shifting the late-game focus from mindless "tower spamming" to calculated spatial progression.
+
+🛠️ Key Technical Solved / Implemented:
+
+Unlockable Slots Mechanics (Clear Obstacles): Designed and integrated a "Deforestation Fee" system. Certain high-value building spots are now blocked by thematic obstacles ("Corrupted Trees").
+
+Implemented an isLocked state variable directly into the core TowerSlot architecture to prevent complex and expensive runtime Instantiate/Destroy routines.
+
+The player can click on a locked slot to open a dedicated context-sensitive UI menu showing a shovel icon and a clearing cost ($500 gold). Upon payment, the overlay sprite vanishes via SetActive(false), seamlessly enabling the slot's standard construction behavior.
+
+HandleMenus Refactoring (Spaghetti Code Elimination): Cleaned up the heavily nested if-else blocks inside HandleMenus() by implementing Guard Clauses.
+
+Isolated state evaluation into specialized, single-responsibility methods (HandlePlacedTowerMenus() and ResetMenuTimerIfActive()). The method now checks for the isLocked state at the very top and short-circuits execution with a clean return, making the entire UI state machine robust and infinitely easier to extend.
+
+Level 8 Layout & Balancing: Configured a challenging 5-wave structure tailored to the Dark Forest theme. Adjusted the starting gold curve to account for the clearing costs of premium slots. Towers placed inside the large inner loops of the path now require Level 3 range upgrades to be fully effective, creating a perfect balance between clearing the environment and upgrading physical structures.
+
+📂 Current Project State:
+
+Levels 1-8: Fully playable, stabilized, and balanced.
+
+Slot Architecture: Refactored universal slot system supporting both default open spots and locked environment hazards.
+
+UI Systems: Context-aware Upgrade/Sell, Choose Magic, and the new Shovel-themed Unlock menus are completely synchronized.
+
+📅 Next Steps:
+
+Level 9 & 10 Development: Design the final stretch of maps for the Dark Forest biome, tuning the scaling for dual-element options.
+
+Final Boss Integration: Write the custom logic for Level 10, connecting the King as the ultimate active threat on the battlefield.
+
+World Map Campaign: Connect all 10 finalized levels into a smooth, playable progression scene.
