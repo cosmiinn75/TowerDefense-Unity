@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
   enemyName: King(Boss)
   speed: 4
-  health: 15000
-  enemyPrefab: {fileID: 8669385262318456191, guid: fecc84b06dc05434d982968c8ecd6753, type: 3}
-  goldReward: 1000
+  health: 28000
+  enemyPrefab: {fileID: 8669385262318456191, guid: 610fa005d67cd1f4dacffa7f9cb2fbbb, type: 3}
+  goldReward: 0
   enemyColor: {r: 1, g: 1, b: 1, a: 1}
   isArmored: 1
   hasMagicResistance: 1

@@ -4,20 +4,22 @@ using UnityEngine;
 using Assets.FantasyTowerDefense.Scripts.Demo;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEngine.UI;
+using Unity.Collections;
 
 public class SpawnManager : MonoBehaviour
 {
     [Header("Level Settings")]
     public int currentLevel;
-    public int waveLevel ;
+    public int waveLevel;
     [Header("Enemy Settings")]
     public GameObject enemyPrefab;
     public List<EnemyData> availableEnemies; //Types of enemies
-    public List<Transform> wayPoints; 
+    public List<Transform> wayPoints;
     [Header("Wave Settings")]
     private float timeBetweenWaves = 5.0f;
     public float defaultTimeBetweenEnemies = 1.5f;
-    public float timeBetweenEnemies ;
+    public float timeBetweenEnemies;
     public int currentWave = 1;
     public float secondsBeforeFirstWave;
     [Header("Tracking")]
@@ -25,98 +27,103 @@ public class SpawnManager : MonoBehaviour
     public List<GameObject> enemiesLeft = new List<GameObject>();
     [Header("UI Menu")]
     public GameObject waveText;
+    public GameObject bossHealthUI;
+
     void Start() {
         waveText.SetActive(false);
         StartCoroutine(SpawnWave());
         timeBetweenEnemies = defaultTimeBetweenEnemies;
-      
+        
     }
-    
+
     IEnumerator SpawnWave()
     {
         while (currentWave <= waveLevel)
         {
+ 
+            UpdateWaveUI();
+
             if (currentWave == 1)
             {
-             
-                waveText.SetActive(true);
-                waveText.GetComponent<TextMeshProUGUI>().text = "Wave " + currentWave.ToString();
-                waveText.GetComponent<TextFadeAnimation>()?.TriggerAnimation();
                 yield return new WaitForSeconds(secondsBeforeFirstWave);
             }
-            yield return new WaitForSeconds(0.5f);
+            else
+            {
+                yield return new WaitForSeconds(0.5f);
+            }
 
             activeEnemies = 0;
             timeBetweenEnemies = defaultTimeBetweenEnemies;
-            List<EnemyData> enemiesToSpawn = null;
+            List<EnemyData> enemiesToSpawn = LoadLevelData(currentLevel);
 
-            switch (currentLevel) {
-                case 1:
-                    enemiesToSpawn = LoadLevel1();
-                    break;
-
-                case 2:
-                    enemiesToSpawn = LoadLevel2();
-                    break;
-                case 3:
-                    enemiesToSpawn = LoadLevel3();
-                    break;
-                case 4:
-                    enemiesToSpawn = LoadLevel4();
-                    break;
-                case 5:
-                    enemiesToSpawn = LoadLevel5();
-                    break;
-                case 6:
-                    enemiesToSpawn = LoadLevel6();
-                    break;
-                case 7:
-                    enemiesToSpawn = LoadLevel7();
-                    break;
-                case 8:
-                    enemiesToSpawn = LoadLevel8();
-                    break;
-                case 9:
-                    break;
-                case 10:
-                    break;
-                default:
-                    enemiesToSpawn = new List<EnemyData>();
-                    break;
-                    
-            }
-            foreach (var enemy in enemiesToSpawn) { 
+            foreach (var enemy in enemiesToSpawn)
+            {
                 SpawnEnemy(enemy);
                 activeEnemies++;
                 yield return new WaitForSeconds(timeBetweenEnemies);
             }
-            while(activeEnemies > 0)
+
+    
+            while (activeEnemies > 0)
             {
-                yield return new WaitForSeconds(0.05f); // Checks if there are enemies left
+                yield return new WaitForSeconds(0.1f);
             }
 
-
             currentWave++;
+
             if (currentWave <= waveLevel)
             {
                 enemiesLeft.Clear();
-                waveText.SetActive(true);
-                waveText.GetComponent<TextMeshProUGUI>().text = "Wave " + currentWave.ToString();
-                waveText.GetComponent<TextFadeAnimation>()?.TriggerAnimation();
+       
+                yield return new WaitForSeconds(timeBetweenWaves);
             }
             else
             {
-                yield return new WaitForSeconds(1.0f);
-                Time.timeScale = 0;
+           
+                if (GameManager.Instance != null)
+                {
+                    GameManager.Instance.gameOver = true;
+                    GameManager.Instance.win = true;
+                }
+                StartCoroutine(WaitAndEnd());
+                yield break; 
             }
-
-            yield return new WaitForSeconds(timeBetweenWaves);
-
         }
-
-
     }
 
+    private void UpdateWaveUI()
+    {
+        if (waveText != null)
+        {
+            waveText.SetActive(true);
+            TextMeshProUGUI tmp = waveText.GetComponent<TextMeshProUGUI>();
+            if (tmp != null) tmp.text = "Wave " + currentWave.ToString();
+
+
+            if (waveText.TryGetComponent<TextFadeAnimation>(out var anim))
+            {
+                anim.TriggerAnimation();
+            }
+        }
+    }
+
+    private List<EnemyData> LoadLevelData(int level)
+    {
+        return level switch
+        {
+            1 => LoadLevel1(),
+            2 => LoadLevel2(),
+            3 => LoadLevel3(),
+            4 => LoadLevel4(),
+            5 => LoadLevel5(),
+            6 => LoadLevel6(),
+            7 => LoadLevel7(),
+            8 => LoadLevel8(),
+            9 => LoadLevel9(),
+            10 => LoadLevel10(),
+            _ => new List<EnemyData>(),
+        };
+    }
     void SpawnEnemy(EnemyData enemyData)
     {
         if (enemyData != null)
@@ -127,6 +134,31 @@ public class SpawnManager : MonoBehaviour
 
             stats.InitializeData(enemyData); // His stats are now as the random one
             var monsterLogic = newEnemy.GetComponent<Monster>();
+
+            if (stats != null && (enemyPrefab.name.Contains("King") || stats.config.name.Contains("King"))) { 
+                if(bossHealthUI != null)
+                {
+                    bossHealthUI.SetActive(true);
+                    Slider slider = bossHealthUI.GetComponent<Slider>();
+                    if (slider != null) {
+
+                        slider.maxValue = stats.currentHealth;
+                        slider.value = stats.currentHealth;
+
+                        stats.OnHealthChanged += (currentHp) =>
+                        {
+                            slider.value = currentHp;
+                        
+                        };
+
+
+                        stats.OnDeath += () => { bossHealthUI.SetActive(false); };
+
+                    }
+
+                } 
+            }
+
 
             if (monsterLogic != null)
             {
@@ -156,9 +188,9 @@ public class SpawnManager : MonoBehaviour
         }
         return waveList;
     }
-    private void AddEnemies(List <EnemyData> list , EnemyData enemyType , int count)
+    private void AddEnemies(List<EnemyData> list, EnemyData enemyType, int count)
     {
-        for(int i= 0; i < count; i++)
+        for (int i = 0; i < count; i++)
         {
             list.Add(enemyType);
         }
@@ -189,7 +221,7 @@ public class SpawnManager : MonoBehaviour
 
             case 4:
                 // Wave 4: 4 Goblins and 4 Bandit Scouts
-        
+
                 AddEnemies(list, availableEnemies[0], 4);
                 AddEnemies(list, availableEnemies[2], 4);
                 break;
@@ -345,17 +377,17 @@ public class SpawnManager : MonoBehaviour
             case 3: // 12 Wargs
                 timeBetweenEnemies = 0.8f;
                 list = FillWave(availableEnemies[14], 8);
-               // AddEnemies(list, availableEnemies[14], 4);
+                // AddEnemies(list, availableEnemies[14], 4);
                 break;
             case 4: //5 Mages + 10 Spiders
-        
+
                 list = FillWave(availableEnemies[10], 5);
                 AddEnemies(list, availableEnemies[1], 10);
                 break;
             case 5: // 5 Mech Spiders + 3 Bandit Elders
                 list = FillWave(availableEnemies[11], 5);
                 AddEnemies(list, availableEnemies[5], 3);
-         
+
                 break;
             case 6: // 8 Wargs + 5 Enemy Archer
                 timeBetweenEnemies = 0.9f;
@@ -436,7 +468,7 @@ public class SpawnManager : MonoBehaviour
                 list = FillWave(availableEnemies[4], 15);
                 break;
             case 2: // 2 Trolls + 12 Goblins
-                
+
                 list = FillWave(availableEnemies[3], 2);
                 AddEnemies(list, availableEnemies[0], 12);
                 break;
@@ -457,7 +489,7 @@ public class SpawnManager : MonoBehaviour
                 AddEnemies(list, availableEnemies[11], 5);
 
                 break;
-         
+
             default:
                 list = new List<EnemyData>();
                 break;
@@ -524,9 +556,207 @@ public class SpawnManager : MonoBehaviour
 
         return list;
     }
+
+    private List<EnemyData> LoadLevel9()
+    {
+        List<EnemyData> list = new List<EnemyData>();
+
+        switch (currentWave)
+        {
+            case 1:
+                // Wave 1: 15 Mages + 10 Skeletons
+                timeBetweenEnemies = 1.2f;
+                list = FillWave(availableEnemies[10], 15);   // Mage (Index 10)
+                AddEnemies(list, availableEnemies[12], 10);  // Skeleton (Index 12)
+                break;
+
+            case 2:
+                // Wave 2: 20 Wargs + 5 Trolls
+                timeBetweenEnemies = 0.6f;
+                list = FillWave(availableEnemies[14], 20);   // Warg (Index 14)
+                AddEnemies(list, availableEnemies[3], 5);    // Troll (Index 3)
+                break;
+
+            case 3:
+                // Wave 3: 15 Mech Spiders + 10 Witches
+                timeBetweenEnemies = 0.7f;
+                list = FillWave(availableEnemies[11], 15);   // Mech Spider (Index 11)
+                AddEnemies(list, availableEnemies[15], 10);  // Witch (Index 15)
+                break;
+
+            case 4:
+                // Wave 4: 4 Cyclops + 6 Bandit Leaders
+                timeBetweenEnemies = 1.2f;
+                list = FillWave(availableEnemies[17], 4);     // Cyclops (Index 17)
+                AddEnemies(list, availableEnemies[6], 6);    // Bandit Leader (Index 6)
+                break;
+
+            case 5:
+                // Wave 5: 25 Goblins + 15 Bandit Elders
+                timeBetweenEnemies = 0.5f;
+                list = FillWave(availableEnemies[0], 25);    // Goblin (Index 0)
+                AddEnemies(list, availableEnemies[5], 15);   // Bandit Elder (Index 5)
+                break;
+
+            case 6:
+                // Wave 6: 15 Witches + 10 Mages
+                timeBetweenEnemies = 0.7f;
+                list = FillWave(availableEnemies[15], 7);   // Witch (Index 15)
+                AddEnemies(list, availableEnemies[10], 10);  // Mage (Index 10)
+                AddEnemies(list, availableEnemies[15], 8);
+                break;
+
+            case 7:
+                // Wave 7: 4 Warriors + 10 Enemy Archers
+                timeBetweenEnemies = 1.0f;
+                list = FillWave(availableEnemies[13], 4);    // Warrior (Index 13)
+                AddEnemies(list, availableEnemies[8], 10);   // Enemy Archer (Index 8)
+                break;
+
+            case 8:
+                // Wave 8: 5 Warriors + 8 Cyclops + 10 Bandit Leaders
+                list = FillWave(availableEnemies[13], 5);    // Warrior (Index 13)
+                AddEnemies(list, availableEnemies[17], 8);     // Cyclops (Index 17)
+                AddEnemies(list, availableEnemies[6], 10);   // Bandit Leader (Index 6)
+                break;
+
+            default:
+                list = new List<EnemyData>();
+                break;
+        }
+
+        return list;
+    }
+    private List<EnemyData> LoadLevel10()
+    {
+        List<EnemyData> list = new List<EnemyData>();
+
+        switch (currentWave)
+        {
+            case 1:
+                // Wave 1: 3 Wargs -> 3 Mages -> 3 Wargs -> 3 Mages (repetat de 2 ori)
+                timeBetweenEnemies = 1.0f;
+                for (int i = 0; i < 2; i++)
+                {
+                    AddEnemies(list, availableEnemies[14], 3); // Warg
+                    AddEnemies(list, availableEnemies[10], 3); // Mage
+                }
+                break;
+
+            case 2:
+                // Wave 2: 1 Troll -> 5 Skeletons (repetat de 4 ori, total: 4 Trolls + 20 Skeletons)
+                timeBetweenEnemies = 0.8f;
+                for (int i = 0; i < 4; i++)
+                {
+                    AddEnemies(list, availableEnemies[3], 1);  // Troll
+                    AddEnemies(list, availableEnemies[12], 5); // Skeleton
+                }
+                break;
+
+            case 3:
+                // Wave 3: 3 Bandit Rangers -> 2 Bandit Elders -> 1 Bandit Leader (repetat de 4 ori) + 3 Rangers la final
+                timeBetweenEnemies = 0.9f;
+                for (int i = 0; i < 4; i++)
+                {
+                    AddEnemies(list, availableEnemies[4], 3); // Bandit Ranger
+                    AddEnemies(list, availableEnemies[5], 2); // Bandit Elder
+                    AddEnemies(list, availableEnemies[6], 1); // Bandit Leader
+                }
+                AddEnemies(list, availableEnemies[4], 3); // Cei 3 Rangers rămași
+                break;
+
+            case 4:
+                // Wave 4: 3 Mech Spiders -> 2 Witches (repetat de 5 ori) + 2 Mech Spiders
+                timeBetweenEnemies = 0.7f;
+                for (int i = 0; i < 5; i++)
+                {
+                    AddEnemies(list, availableEnemies[11], 3); // Mech Spider
+                    AddEnemies(list, availableEnemies[15], 2); // Witch
+                }
+                AddEnemies(list, availableEnemies[11], 2);
+                break;
+
+            case 5:
+                // Wave 5: Spărgătorul de economie (4 Warriors, 8 Cyclops) intercalat
+                timeBetweenEnemies = 1.2f;
+                for (int i = 0; i < 4; i++)
+                {
+                    AddEnemies(list, availableEnemies[13], 1); // Warrior
+                    AddEnemies(list, availableEnemies[17], 2); // Cyclops
+                }
+                break;
+
+            case 6:
+                // Wave 6: 5 Wargs -> 3 Witches -> 5 Wargs -> 3 Witches (repetat de 5 ori)
+                timeBetweenEnemies = 0.5f;
+                for (int i = 0; i < 5; i++)
+                {
+                    AddEnemies(list, availableEnemies[14], 5); // Warg
+                    AddEnemies(list, availableEnemies[15], 3); // Witch
+                }
+                break;
+
+            case 7:
+                // Wave 7: 2 Warriors -> 4 Mages -> 4 Enemy Archers (repetat de 3 ori)
+                timeBetweenEnemies = 0.8f;
+                for (int i = 0; i < 3; i++)
+                {
+                    AddEnemies(list, availableEnemies[13], 2); // Warrior
+                    AddEnemies(list, availableEnemies[10], 4); // Mage
+                    AddEnemies(list, availableEnemies[8], 4);  // Enemy Archer
+                }
+                break;
+
+            case 8:
+                // Wave 8: 2 Bandit Leaders -> 2 Cyclops -> 1 Troll (repetat de 4 ori)
+                timeBetweenEnemies = 1.0f;
+                for (int i = 0; i < 4; i++)
+                {
+                    AddEnemies(list, availableEnemies[6], 2);  // Bandit Leader
+                    AddEnemies(list, availableEnemies[17], 2); // Cyclops
+                    AddEnemies(list, availableEnemies[3], 1);  // Troll
+                }
+                break;
+
+            case 9:
+                // Wave 9: 1 Warrior -> 2 Witches -> 3 Mech Spiders (repetat de 5 ori)
+                timeBetweenEnemies = 0.7f;
+                for (int i = 0; i < 5; i++)
+                {
+                    AddEnemies(list, availableEnemies[19], 1); // Warrior
+                    AddEnemies(list, availableEnemies[15], 2); // Witch
+                    AddEnemies(list, availableEnemies[11], 3); // Mech Spider
+                }
+                break;
+
+            case 10:
+                // Wave 10: REGELE ESTE TRIMIS ULTIMUL.
+                // Întâi trimitem armata lui de elită intercalată pentru a distrage atenția turnurilor și a consuma cooldown-urile.
+                //timeBetweenEnemies = 2f;
+                //for (int i = 0; i < 4; i++)
+                //{
+                //    AddEnemies(list, availableEnemies[19], 1); // Warrior
+                //    AddEnemies(list, availableEnemies[22], 1); // Cyclops
+                //}
+
+                AddEnemies(list, availableEnemies[9], 1);
+                break;
+
+            default:
+                list = new List<EnemyData>();
+                break;
+        }
+
+        return list;
+    }
     public IEnumerator WaitAndEnd()
     {
-        yield return new WaitForSecondsRealtime(1f);
+     
+        yield return new WaitForSecondsRealtime(2f);
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.OpenWinLosePanel();
+        }
         Debug.Log("Am oprit timpul");
         Time.timeScale = 0f;
     }

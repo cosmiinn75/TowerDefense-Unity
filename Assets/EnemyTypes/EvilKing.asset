@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be2fd02a984bc7b4ba69dbc336ad3416, type: 3}
+  m_Name: EvilKing
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyData
+  enemyName: King(Boss)
+  speed: 4
+  health: 28000
+  enemyPrefab: {fileID: 8669385262318456191, guid: 610fa005d67cd1f4dacffa7f9cb2fbbb, type: 3}
+  goldReward: 0
+  enemyColor: {r: 1, g: 1, b: 1, a: 1}
+  isArmored: 1
+  hasMagicResistance: 1
+  hasSlowResistance: 1
+  hasPoisonResistance: 1
+  hasStunResistance: 1

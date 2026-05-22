@@ -1,8 +1,7 @@
 
-using JetBrains.Annotations;
-using Unity.VisualScripting;
 using UnityEngine;
 using Assets.FantasyTowerDefense.Scripts.Creature;
+using System;
 public class EnemyStats : MonoBehaviour
 {
     public float currentHealth;
@@ -23,7 +22,8 @@ public class EnemyStats : MonoBehaviour
     public GameObject poisonIcon;
     public GameObject stunIcon;
 
-
+    public event Action<float> OnHealthChanged;
+    public event Action OnDeath;
     private void Start()
     {
         spawner = FindFirstObjectByType<SpawnManager>();
@@ -47,14 +47,26 @@ public class EnemyStats : MonoBehaviour
         currentSpeed = data.speed;
 
     }
+
+    public void TakeDamage(float damage) {
+        currentHealth -= damage;
+
+        if (currentHealth < 0) currentHealth = 0;
+
+        OnHealthChanged?.Invoke(currentHealth);
+
+        if (currentHealth <= 0) {
+
+            OnDeath?.Invoke();
+
+        }
+
+    }
     private void OnDestroy()
     {
         if (spawner != null && gameObject.scene.isLoaded)
         {
             spawner.EnemyDied();
-
-
-
             var king = DamageKingTower.Instance._kingMonster;
             if(king == null || king.State >= CreatureState.Dead)
             {
