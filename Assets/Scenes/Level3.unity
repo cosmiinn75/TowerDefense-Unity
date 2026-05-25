@@ -3195,6 +3195,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 3079042122263623909, guid: 80e1a66543f3cec41a69613fe138ffeb, type: 3}
+      propertyPath: stars
+      value: 
+      objectReference: {fileID: 1747622134}
+    - target: {fileID: 3079042122263623909, guid: 80e1a66543f3cec41a69613fe138ffeb, type: 3}
       propertyPath: winPanel
       value: 
       objectReference: {fileID: 1747622132}
@@ -13484,6 +13488,11 @@ GameObject:
 --- !u!1 &1747622133 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5547388412219659276, guid: b5be027082ddc5c43949087a5d3ada4d, type: 3}
+  m_PrefabInstance: {fileID: 1747622129}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1747622134 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5568472483118205063, guid: b5be027082ddc5c43949087a5d3ada4d, type: 3}
   m_PrefabInstance: {fileID: 1747622129}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1749304956

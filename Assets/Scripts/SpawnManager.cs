@@ -3,9 +3,7 @@ using System.Collections;
 using UnityEngine;
 using Assets.FantasyTowerDefense.Scripts.Demo;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine.UI;
-using Unity.Collections;
 
 public class SpawnManager : MonoBehaviour
 {
@@ -24,7 +22,6 @@ public class SpawnManager : MonoBehaviour
     public float secondsBeforeFirstWave;
     [Header("Tracking")]
     public int activeEnemies;// How many enemies are still alive
-    public List<GameObject> enemiesLeft = new List<GameObject>();
     [Header("UI Menu")]
     public GameObject waveText;
     public GameObject bossHealthUI;
@@ -72,9 +69,7 @@ public class SpawnManager : MonoBehaviour
             currentWave++;
 
             if (currentWave <= waveLevel)
-            {
-                enemiesLeft.Clear();
-       
+            {     
                 yield return new WaitForSeconds(timeBetweenWaves);
             }
             else
@@ -129,7 +124,6 @@ public class SpawnManager : MonoBehaviour
         if (enemyData != null)
         {
             GameObject newEnemy = Instantiate(enemyData.enemyPrefab, transform.position, Quaternion.identity);
-            enemiesLeft.Add(newEnemy);
             EnemyStats stats = newEnemy.GetComponent<EnemyStats>();
 
             stats.InitializeData(enemyData); // His stats are now as the random one
