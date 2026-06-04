@@ -823,6 +823,14 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: OnNextLevel
       objectReference: {fileID: 0}
+    - target: {fileID: 3382767951615156175, guid: b5be027082ddc5c43949087a5d3ada4d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 89287059}
+    - target: {fileID: 3382767951615156175, guid: b5be027082ddc5c43949087a5d3ada4d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnNextLevel
+      objectReference: {fileID: 0}
     - target: {fileID: 5547388412219659276, guid: b5be027082ddc5c43949087a5d3ada4d, type: 3}
       propertyPath: m_Name
       value: WinLosePanel 1

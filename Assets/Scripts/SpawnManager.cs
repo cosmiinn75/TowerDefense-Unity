@@ -268,6 +268,7 @@ public class SpawnManager : MonoBehaviour
                 break;
             case 6:
                 // Wave 6: 10 wolves + cyclops(boss)
+                timeBetweenEnemies =  0.8f;
                 AddEnemies(list, availableEnemies[16], 10);
                 AddEnemies(list, availableEnemies[7], 1);
                 break;

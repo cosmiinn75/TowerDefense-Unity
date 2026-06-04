@@ -1675,6 +1675,14 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: OnNextLevel
       objectReference: {fileID: 0}
+    - target: {fileID: 3382767951615156175, guid: b5be027082ddc5c43949087a5d3ada4d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2033225699}
+    - target: {fileID: 3382767951615156175, guid: b5be027082ddc5c43949087a5d3ada4d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnNextLevel
+      objectReference: {fileID: 0}
     - target: {fileID: 5547388412219659276, guid: b5be027082ddc5c43949087a5d3ada4d, type: 3}
       propertyPath: m_Name
       value: WinLosePanel 1
@@ -2840,7 +2848,7 @@ SpriteRenderer:
   m_SortingOrder: -10000
   m_MaskInteraction: 0
   m_Sprite: {fileID: 3922823387165081814, guid: 49a409f7694106b42a911710d96c35d1, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 0.9098039, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

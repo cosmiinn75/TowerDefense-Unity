@@ -35,8 +35,9 @@ public class DamageKingTower : MonoBehaviour
 
         if (_kingMonster.State == CreatureState.Dead)
         {
-            GameManager.Instance.gameOver = true;
             GameManager.Instance.win = false;
+            GameManager.Instance.gameOver = true;
+
 
             OnKingDeath?.Invoke();
 

@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
         isPaused = false;
         Time.timeScale = 1f;
         gameOver = false;
-       
+      
     }
 
     public void OpenWinLosePanel() {
@@ -67,10 +67,11 @@ public class GameManager : MonoBehaviour
 
         int nextIndex = currentLevelIndex + 1;
 
-
-
+  
         if (nextIndex< SceneManager.sceneCountInBuildSettings)
         {
+            PlayerPrefs.SetInt("LastAccesedLevel", nextIndex);
+            PlayerPrefs.Save();
             SceneManager.LoadScene(nextIndex);
         }
     }
@@ -122,6 +123,8 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene("WorldMap");
+        PlayerPrefs.SetInt("LastAccesedLevel", currentLevelIndex);
+        PlayerPrefs.Save();
     }
 
 
