@@ -436,3 +436,33 @@ Level 9 & 10 Development: Design the final stretch of maps for the Dark Forest b
 Final Boss Integration: Write the custom logic for Level 10, connecting the King as the ultimate active threat on the battlefield.
 
 World Map Campaign: Connect all 10 finalized levels into a smooth, playable progression scene.
+
+
+🚀 Devlog: Campaign Completion & World Map Integration - 25.05.2026
+
+🟢 Progress Summary:
+Today marks the completion of the core content pipeline. I have finalized Levels 9 and 10, bringing the total campaign to 10 playable stages. Additionally, I successfully integrated the World Map system, bridging all levels into a cohesive progression flow. With the gameplay loop now fully functional from start to finish, the project has shifted into the final polishing and asset-standardization phase.
+
+🛠️ Key Technical Solved / Implemented:
+
+World Map System: Developed a dynamic WorldMapManager that tracks player progress via MainGameManager. Implemented a "Lock/Unlock" logic: levels above the maxLevelReached now display a visual Padlock icon, preventing unauthorized access and guiding the player through the campaign.
+
+10-Level Campaign Finalization: Completed the balancing pass for the final two levels in the Dark Forest biome. Level 10 is now tuned as the ultimate defensive challenge, requiring optimized usage of all tower types and elemental resistances.
+
+Progression Synchronization: Linked the UnlockNextLevel logic to the victory state of each level, ensuring a seamless transition from the gameplay scene back to the World Map with updated progression states.
+
+📂 Current Project State:
+
+Levels 1-10: Fully functional, balanced, and integrated into the World Map.
+
+World Map: Level selection, progression tracking, and locked/unlocked state visualization (Padlock system) are live.
+
+Core Loop: The transition between stages, world map selection, and victory/defeat cycles is stable.
+
+📅 Next Steps (The Polish Phase):
+
+Visual Consistency Pass: Begin the refactor of background art for Levels 1-5. The goal is to migrate them from the legacy "cartoonish" style to match the detailed, painterly aesthetic established in the later biomes (Levels 6-10).
+
+Main Menu: Design and implement the primary entry point for the game.
+
+Final Polish: Systematic review of all UI/UX elements, particle effect timing, and audio feedback to unify the user experience.
