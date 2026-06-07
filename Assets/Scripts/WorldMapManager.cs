@@ -12,7 +12,7 @@ public class WorldMapManager : MonoBehaviour
     public GameObject startLevelPanel;
     public TextMeshProUGUI levelText;
     public Image filledStarImage;
-
+    public Button backArrow;
     [Header("Map")]
     [SerializeField] ScrollRect mapScrollRect;
     [SerializeField] RectTransform mapContent;
@@ -33,6 +33,7 @@ public class WorldMapManager : MonoBehaviour
 
     private void Start()
     {
+        AudioManager.Instance.PlayMusic();
         startLevelPanel.SetActive(false);
 
         OnMapInitialized += SetLastLevelIndex;
@@ -154,6 +155,7 @@ public class WorldMapManager : MonoBehaviour
 
         levelText.text = $"Level {levelNum}";
 
+        backArrow.gameObject.SetActive(false);
         startLevelPanel.SetActive(true);
 
         FocusOnLevel(levelNum);
@@ -175,6 +177,10 @@ public class WorldMapManager : MonoBehaviour
 
     public void OnBack()
     {
+        backArrow.gameObject.SetActive(true);
         startLevelPanel.SetActive(false);
+    }
+    public void OnMainMenu() {
+        SceneManager.LoadScene("MainMenu");
     }
 }

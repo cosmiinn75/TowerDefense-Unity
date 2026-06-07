@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
+        AudioManager.Instance.StopMusic();
         winLosePanel.SetActive(false);
         winPanel.SetActive(false);
         losePanel.SetActive(false);
