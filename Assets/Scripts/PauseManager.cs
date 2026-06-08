@@ -1,0 +1,46 @@
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class PauseManager : Menu
+{
+    public GameObject pauseMenu;
+    public GameObject optionsMenu;
+
+    private void Start()
+    {
+        pauseMenu.SetActive(true);
+        optionsMenu.SetActive(false);
+    }
+   
+    public void OnSettings()
+    {
+        pauseMenu.SetActive(false);
+        optionsMenu.SetActive(true);
+    }
+    public void OnBack() {
+
+        pauseMenu.SetActive(true);
+        optionsMenu.SetActive(false);
+    }
+
+    public void OnResume()
+    {
+        OnBack();
+        Time.timeScale = 1.0f;
+        gameObject.SetActive(false);
+    }
+
+    public void OnMasterChanged(float sliderValue)
+    {
+        AudioManager.Instance.SetMasterVolume(sliderValue);
+    }
+    public void OnMusicChanged(float sliderValue)
+    {
+        AudioManager.Instance.SetMusicVolume(sliderValue);
+    }
+    public void OnSFXChanged(float sliderValue)
+    {
+        AudioManager.Instance.SetSFXVolume(sliderValue);
+    }
+
+}

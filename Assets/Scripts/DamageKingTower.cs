@@ -1,10 +1,8 @@
 using Assets.FantasyTowerDefense.Scripts.Creature;
 using Assets.FantasyTowerDefense.Scripts.Demo;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using System.Runtime.CompilerServices;
 
 public class DamageKingTower : MonoBehaviour
 {
@@ -32,6 +30,7 @@ public class DamageKingTower : MonoBehaviour
 
         _kingMonster.GetDamage(healtLost);
 
+        AudioManager.Instance?.PlaySFX(AudioManager.Instance.damageKingClip);
 
         if (_kingMonster.State == CreatureState.Dead)
         {

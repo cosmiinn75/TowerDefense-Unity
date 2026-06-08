@@ -1,5 +1,4 @@
-using System;
-using System.Security.Cryptography.X509Certificates;
+
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -17,7 +16,7 @@ public class GameManager : MonoBehaviour
     public bool win;
     private bool isPaused = false;
     public GameObject stars;
-    private int currentLevelIndex;
+    public int currentLevelIndex;
     private void Awake()
     {
         if (Instance == null) { Instance = this;
@@ -55,26 +54,6 @@ public class GameManager : MonoBehaviour
             losePanel.SetActive(true);
         }
         
-    }
-
-    public void OnRetry() {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
-
-    public void OnNextLevel() {
-        Time.timeScale = 1f;
-
-
-        int nextIndex = currentLevelIndex + 1;
-
-  
-        if (nextIndex< SceneManager.sceneCountInBuildSettings)
-        {
-            PlayerPrefs.SetInt("LastAccesedLevel", nextIndex);
-            PlayerPrefs.Save();
-            SceneManager.LoadScene(nextIndex);
-        }
     }
     private void Stars()
     {
@@ -115,18 +94,7 @@ public class GameManager : MonoBehaviour
 
         }
     }
-    public void OnBack()
-    {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene("MainMenu");
-    }
-    public void OnWorldMap()
-    {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene("WorldMap");
-        PlayerPrefs.SetInt("LastAccesedLevel", currentLevelIndex);
-        PlayerPrefs.Save();
-    }
+
 
 
     public void OnPause(InputValue inputValue) {
@@ -134,6 +102,12 @@ public class GameManager : MonoBehaviour
         if (inputValue.isPressed && !gameOver) {
             
             isPaused = !isPaused;
+            PauseManager pauseManager = GetComponent<PauseManager>();
+            if(pauseManager != null)
+            {
+                pauseManager.OnBack();
+            }
+
             pausePanel.SetActive(isPaused);
             if(isPaused)
             {
@@ -146,15 +120,6 @@ public class GameManager : MonoBehaviour
             }
         }
 
-    }
-
-    public void OnResume()
-    {
-        Debug.Log("Apasat ce are");
-        Time.timeScale = 1.0f;
-        isPaused = false;
-        pausePanel.SetActive(false);
-        
     }
 
 }

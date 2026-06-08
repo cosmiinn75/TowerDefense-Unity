@@ -19,6 +19,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip backgroundClip;
     public AudioClip buttonClick;
     public AudioClip lockedClick;
+    public AudioClip damageKingClip;
     private void Awake()
     {
         if(Instance == null)
