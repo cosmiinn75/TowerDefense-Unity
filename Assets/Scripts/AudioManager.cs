@@ -20,6 +20,9 @@ public class AudioManager : MonoBehaviour
     public AudioClip buttonClick;
     public AudioClip lockedClick;
     public AudioClip damageKingClip;
+    public AudioClip buyClip;
+    public AudioClip sellClip;
+    public AudioClip inGameClip;
     private void Awake()
     {
         if(Instance == null)
@@ -30,6 +33,7 @@ public class AudioManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+            return;
         }
     }
 
@@ -85,12 +89,13 @@ public class AudioManager : MonoBehaviour
         sfxSource.PlayOneShot(lockedClick);
     }
 
-    public void PlayMusic()
+    public void PlayMusic(AudioClip clipToPlay)
     {
         if (!musicSource.isPlaying)
         {
-            musicSource.clip = backgroundClip;
+            musicSource.clip = clipToPlay;
             musicSource.Play();
         }
     }
+  
 }

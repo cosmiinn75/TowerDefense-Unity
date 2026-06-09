@@ -17,11 +17,17 @@ public class ButtonSoundClick : MonoBehaviour
 
     void PlaySoundClick()
     {
-        AudioManager.Instance.PlayClick();
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayClick();
+        }
     }
     void PlayLockedClick()
     {
-        AudioManager.Instance.PlayLockedClick();
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayLockedClick();
+        }
     }
     void PlaySound()
     {

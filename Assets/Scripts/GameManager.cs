@@ -27,7 +27,11 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
-        AudioManager.Instance.StopMusic();
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.StopMusic();
+            AudioManager.Instance.PlayMusic(AudioManager.Instance.inGameClip);
+        }
         winLosePanel.SetActive(false);
         winPanel.SetActive(false);
         losePanel.SetActive(false);
@@ -98,6 +102,15 @@ public class GameManager : MonoBehaviour
 
 
     public void OnPause(InputValue inputValue) {
+
+        if(SceneTransitionerManager.Instance!= null)
+        {
+            if (SceneTransitionerManager.Instance.isTransitioning)
+            {
+                return;
+            }
+        }
+
 
         if (inputValue.isPressed && !gameOver) {
             

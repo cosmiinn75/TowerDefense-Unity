@@ -9,6 +9,10 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] Button resetButton;
     private void Start()
     {
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayMusic(AudioManager.Instance.backgroundClip);
+        }
         settingsMenu.SetActive(false);
     }
     public void OnSettings()
@@ -31,7 +35,7 @@ public class MainMenuManager : MonoBehaviour
     }
     public void OnWorldMap()
     {
-        SceneManager.LoadScene("WorldMap");
+        SceneTransitionerManager.Instance?.LoadScene("WorldMap");
         Time.timeScale = 1f;
     }
     

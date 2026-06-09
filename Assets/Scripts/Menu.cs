@@ -6,24 +6,30 @@ public class Menu : MonoBehaviour
 {
     public void OnWorldMap()
     {
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.StopMusic();
+        }
         Time.timeScale = 1f;
-        SceneManager.LoadScene("WorldMap");
+        SceneTransitionerManager.Instance?.LoadScene("WorldMap");
     }
     public void OnMainMenu()
     {
+        if(AudioManager.Instance != null)
+        {
+            AudioManager.Instance.StopMusic();
+        }
         Time.timeScale = 1f;
-        SceneManager.LoadScene("MainMenu");
+        SceneTransitionerManager.Instance?.LoadScene("MainMenu");
     }
     public void OnRetry()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneTransitionerManager.Instance?.LoadScene(SceneManager.GetActiveScene().name);
     }
     public void OnNextLevel()
     {
         Time.timeScale = 1f;
-
-
         int nextIndex = GameManager.Instance.currentLevelIndex + 1;
 
 
@@ -31,7 +37,7 @@ public class Menu : MonoBehaviour
         {
             PlayerPrefs.SetInt("LastAccesedLevel", nextIndex);
             PlayerPrefs.Save();
-            SceneManager.LoadScene(nextIndex);
+            SceneTransitionerManager.Instance?.LoadScene("Level" + nextIndex);
         }
     }
 }

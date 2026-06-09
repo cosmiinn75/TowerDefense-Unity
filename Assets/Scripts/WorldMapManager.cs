@@ -33,7 +33,10 @@ public class WorldMapManager : MonoBehaviour
 
     private void Start()
     {
-        AudioManager.Instance.PlayMusic();
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayMusic(AudioManager.Instance.backgroundClip);
+        }
         startLevelPanel.SetActive(false);
 
         OnMapInitialized += SetLastLevelIndex;
@@ -171,7 +174,7 @@ public class WorldMapManager : MonoBehaviour
 
         PlayerPrefs.Save();
 
-        SceneManager.LoadScene(
+        SceneTransitionerManager.Instance?.LoadScene(
             "Level" + selectedLevelIndex);
     }
 

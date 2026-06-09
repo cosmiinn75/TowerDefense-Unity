@@ -30,8 +30,10 @@ public class DamageKingTower : MonoBehaviour
 
         _kingMonster.GetDamage(healtLost);
 
-        AudioManager.Instance?.PlaySFX(AudioManager.Instance.damageKingClip);
-
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySFX(AudioManager.Instance.damageKingClip);
+        }
         if (_kingMonster.State == CreatureState.Dead)
         {
             GameManager.Instance.win = false;

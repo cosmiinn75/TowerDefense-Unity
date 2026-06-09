@@ -365,14 +365,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 3462186050902665833}
         m_TargetAssemblyTypeName: BuildMenu, Assembly-CSharp
-        m_MethodName: OnArcherTowerButton
-        m_Mode: 1
+        m_MethodName: BuyTower
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: archerTowers
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!1 &2528443008173052933
@@ -498,14 +498,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 3462186050902665833}
         m_TargetAssemblyTypeName: BuildMenu, Assembly-CSharp
-        m_MethodName: OnCannonTowerButton
-        m_Mode: 1
+        m_MethodName: BuyTower
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 1
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: cannonTowers
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!1 &2771207154981707770
@@ -768,14 +768,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 3462186050902665833}
         m_TargetAssemblyTypeName: BuildMenu, Assembly-CSharp
-        m_MethodName: OnMagicTowerButton
-        m_Mode: 1
+        m_MethodName: BuyTower
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 2
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: magicTowers
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!1 &8851040301074320220

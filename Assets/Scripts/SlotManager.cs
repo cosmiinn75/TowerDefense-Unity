@@ -164,7 +164,7 @@ public class SlotManager : MonoBehaviour
     }
     public void OnButtonClicked(string towerToBuild)
     {
-        if (isPlaced) return; // If there already exists a turret return
+        if (isPlaced) return; 
 
         if (towerToBuild == nameof(cannonTowers)) towerType = cannonTowers;
         else if (towerToBuild == nameof(archerTowers)) towerType = archerTowers;
@@ -179,7 +179,7 @@ public class SlotManager : MonoBehaviour
 
         
             if (currentUnderConstruction != null) Destroy(currentUnderConstruction);
-
+            PlayBuySound();
             tower = Instantiate(prefabToBuild, transform.position, Quaternion.identity);
             isPlaced = true;
             myRenderer.enabled = false; 
@@ -206,6 +206,7 @@ public class SlotManager : MonoBehaviour
             CurrencyManager.Instance.TrySpendGold((int)towerScript.Cost);
             Destroy(tower);
             currentLevel++;
+            PlayBuySound();
             tower = Instantiate(towerType[currentLevel], transform.position, Quaternion.identity);
 
             if (currentUpgradeSellMenu != null)
@@ -229,7 +230,7 @@ public class SlotManager : MonoBehaviour
         {
             totalCost += (int)towerType[i].GetComponent<Tower>().Cost;
         }
-
+        PlaySellSound();
         CurrencyManager.Instance.AddGold(Mathf.RoundToInt(totalCost * 0.8f / 10f) * 10);
         changeElementSpent = 0;
             
@@ -346,7 +347,21 @@ public class SlotManager : MonoBehaviour
         if (towerType == null || currentLevel >= towerType.Count - 1) return 0;
         return (int)towerType[currentLevel + 1].GetComponent<Tower>().Cost;
     }
-   
 
+    private void PlayBuySound()
+    {
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySFX(AudioManager.Instance.buyClip);
+        }
+    }
+    private void PlaySellSound()
+    {
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySFX(AudioManager.Instance.sellClip);
+        }
+
+    }
 
 }

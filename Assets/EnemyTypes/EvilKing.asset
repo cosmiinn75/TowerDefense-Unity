@@ -15,7 +15,7 @@ MonoBehaviour:
   enemyName: King(Boss)
   speed: 4
   health: 28000
-  enemyPrefab: {fileID: 8669385262318456191, guid: 610fa005d67cd1f4dacffa7f9cb2fbbb, type: 3}
+  enemyPrefab: {fileID: 8669385262318456191, guid: e4c422f69c03be048b10b32521dda3c8, type: 3}
   goldReward: 0
   enemyColor: {r: 1, g: 1, b: 1, a: 1}
   isArmored: 1
