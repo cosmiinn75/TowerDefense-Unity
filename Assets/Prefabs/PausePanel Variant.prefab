@@ -88,9 +88,37 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5539259587117025460, guid: e4705b953405adb4aa83ae8843f7d76a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5539259587117025460, guid: e4705b953405adb4aa83ae8843f7d76a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 5539259587117025460, guid: e4705b953405adb4aa83ae8843f7d76a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: MainMenu
+      objectReference: {fileID: 0}
     - target: {fileID: 8937680948945261367, guid: e4705b953405adb4aa83ae8843f7d76a, type: 3}
       propertyPath: m_Name
       value: PausePanel Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 8937680948945261367, guid: e4705b953405adb4aa83ae8843f7d76a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8983944532371365654, guid: e4705b953405adb4aa83ae8843f7d76a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8983944532371365654, guid: e4705b953405adb4aa83ae8843f7d76a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 8983944532371365654, guid: e4705b953405adb4aa83ae8843f7d76a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: WorldMap
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

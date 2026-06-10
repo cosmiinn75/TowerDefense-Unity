@@ -77,10 +77,14 @@ public class SpawnManager : MonoBehaviour
            
                 if (GameManager.Instance != null)
                 {
-                    GameManager.Instance.gameOver = true;
-                    GameManager.Instance.win = true;
+                    if (!GameManager.Instance.gameOver)
+                    {
+                        GameManager.Instance.gameOver = true;
+                        GameManager.Instance.win = true;
+                        StartCoroutine(WaitAndEnd());
+                    }
                 }
-                StartCoroutine(WaitAndEnd());
+            
                 yield break; 
             }
         }
@@ -245,14 +249,14 @@ public class SpawnManager : MonoBehaviour
                 break;
 
             case 2:
-                // Wave 2: 12 wolves
+                // Wave 2: 10 wolves
                 timeBetweenEnemies = 1f;
-                list = FillWave(availableEnemies[16], 12);
+                list = FillWave(availableEnemies[16], 10);
                 break;
 
             case 3:
-                // Wave 3: 6 bandit rangers
-                list = FillWave(availableEnemies[4], 6);
+                // Wave 3: 5 bandit rangers
+                list = FillWave(availableEnemies[4], 5);
                 break;
 
             case 4:
@@ -294,9 +298,9 @@ public class SpawnManager : MonoBehaviour
                 timeBetweenEnemies = 1f;
                 list = FillWave(availableEnemies[14], 6);
                 break;
-            case 3: //8 Skeletons + 4 Spiders
+            case 3: //6 Skeletons + 4 Spiders
                 timeBetweenEnemies = 1f;
-                list = FillWave(availableEnemies[12], 8);
+                list = FillWave(availableEnemies[12], 6);
                 AddEnemies(list, availableEnemies[1], 4);
                 break;
             case 4: //6 Bandit Rangers

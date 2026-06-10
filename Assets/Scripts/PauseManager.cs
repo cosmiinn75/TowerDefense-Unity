@@ -32,15 +32,24 @@ public class PauseManager : Menu
 
     public void OnMasterChanged(float sliderValue)
     {
-        AudioManager.Instance.SetMasterVolume(sliderValue);
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.SetMasterVolume(sliderValue);
+        }
     }
     public void OnMusicChanged(float sliderValue)
     {
-        AudioManager.Instance.SetMusicVolume(sliderValue);
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.SetMusicVolume(sliderValue);
+        }
     }
     public void OnSFXChanged(float sliderValue)
     {
-        AudioManager.Instance.SetSFXVolume(sliderValue);
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.SetSFXVolume(sliderValue);
+        }
     }
 
 }

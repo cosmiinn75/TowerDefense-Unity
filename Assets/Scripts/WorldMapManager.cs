@@ -8,20 +8,20 @@ using UnityEngine.UI;
 public class WorldMapManager : MonoBehaviour
 {
     [Header("UI Elements")]
-    public Button[] levelButtons;
-    public GameObject startLevelPanel;
-    public TextMeshProUGUI levelText;
-    public Image filledStarImage;
-    public Button backArrow;
+    [SerializeField] private Button[] levelButtons;
+    [SerializeField] private GameObject startLevelPanel;
+    [SerializeField]  private TextMeshProUGUI levelText;
+    [SerializeField] private Image filledStarImage;
+    [SerializeField] private Button backArrow;
     [Header("Map")]
-    [SerializeField] ScrollRect mapScrollRect;
-    [SerializeField] RectTransform mapContent;
-    [SerializeField] RectTransform mapViewport;
-    [SerializeField] RectTransform[] levelPositions;
+    [SerializeField] private ScrollRect mapScrollRect;
+    [SerializeField] private RectTransform mapContent;
+    [SerializeField] private RectTransform mapViewport;
+    [SerializeField] private RectTransform[] levelPositions;
 
     [Header("Animation")]
-    [SerializeField] float animationDuration = 1f;
-    public AnimationCurve animationCurve =
+    [SerializeField] private float animationDuration = 1f;
+    [SerializeField] private AnimationCurve animationCurve =
         AnimationCurve.EaseInOut(0, 0, 1, 1);
 
     public int lastLevelIndex;
@@ -29,7 +29,7 @@ public class WorldMapManager : MonoBehaviour
     private int selectedLevelIndex;
     private Coroutine scrollCoroutine;
 
-    public event Action<int> OnMapInitialized;
+    private event Action<int> OnMapInitialized;
 
     private void Start()
     {

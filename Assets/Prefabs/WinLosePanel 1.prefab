@@ -15,7 +15,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2313198892754890041
 RectTransform:
   m_ObjectHideFlags: 0
@@ -526,14 +526,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7179972802640946713}
         m_TargetAssemblyTypeName: WinLoseManager, Assembly-CSharp
-        m_MethodName: OnWorldMap
-        m_Mode: 1
+        m_MethodName: OnMenu
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: WorldMap
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &8213743643274706114
@@ -779,14 +779,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7179972802640946713}
         m_TargetAssemblyTypeName: WinLoseManager, Assembly-CSharp
-        m_MethodName: OnWorldMap
-        m_Mode: 1
+        m_MethodName: OnMenu
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: WorldMap
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &7335816516815420472
@@ -895,14 +895,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7179972802640946713}
         m_TargetAssemblyTypeName: WinLoseManager, Assembly-CSharp
-        m_MethodName: OnMainMenu
-        m_Mode: 1
+        m_MethodName: OnMenu
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: MainMenu
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &6297855916156335068
@@ -1527,14 +1527,14 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7179972802640946713}
         m_TargetAssemblyTypeName: WinLoseManager, Assembly-CSharp
-        m_MethodName: OnMainMenu
-        m_Mode: 1
+        m_MethodName: OnMenu
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: MainMenu
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1999877652789458601
@@ -2247,7 +2247,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6632846196631764102
 RectTransform:
   m_ObjectHideFlags: 0

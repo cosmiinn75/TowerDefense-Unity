@@ -13,7 +13,7 @@ public class SlotManager : MonoBehaviour
     private SpriteRenderer myRenderer; //Object renderer
     public Color hoverColor;
     private Color baseColor;
-    public int unlockCost = 500;
+    public int unlockCost;
     private int changeElementSpent = 0;
     private bool isPlaced;
     private int currentLevel = 0;
@@ -35,8 +35,45 @@ public class SlotManager : MonoBehaviour
     public List<GameObject> magicTowers;
     public GameObject underConstructionPrefab;
 
-    private float timeTillClosedMenu = 5f;
+    private float timeTillClosedMenu = 4f;
     private Coroutine menuTimerCoroutine;
+
+
+    private GameObject localBuildMenu;
+    private GameObject localUpgradeSellMenu;
+    private GameObject localSellMenu;
+    private GameObject localChooseMagicMenu;
+    private GameObject localUnlockMenu;
+
+    private void Awake()
+    {
+        if (buildMenu && mainCanvas)
+        {
+            localBuildMenu = Instantiate(buildMenu, mainCanvas.transform);
+            localBuildMenu.SetActive(false);
+        }
+        if (upgradeSellMenu && mainCanvas)
+        {
+            localUpgradeSellMenu = Instantiate(upgradeSellMenu, mainCanvas.transform);
+            localUpgradeSellMenu.SetActive(false);
+        }
+        if (chooseMagicMenu && mainCanvas)
+        {
+            localChooseMagicMenu = Instantiate(chooseMagicMenu, mainCanvas.transform);
+            localChooseMagicMenu.SetActive(false);
+        }
+        if (sellMenu && mainCanvas)
+        {
+            localSellMenu = Instantiate(sellMenu, mainCanvas.transform);
+            localSellMenu.SetActive(false);
+        }
+        if (unlockMenu && mainCanvas)
+        {
+            localUnlockMenu = Instantiate(unlockMenu, mainCanvas.transform);
+            localUnlockMenu.SetActive(false);
+        }
+    }
+
     private void Start()
     {
         myRenderer = GetComponent<SpriteRenderer>();
@@ -55,6 +92,9 @@ public class SlotManager : MonoBehaviour
         {
             myRenderer.sprite = unlockedRenderer;
         }
+
+    
+
     }
 
 
@@ -151,9 +191,7 @@ public class SlotManager : MonoBehaviour
     public void OnUnlock()
     {
         if (CurrencyManager.Instance.currentGold < unlockCost) {
-            dontHaveEnoughGoldText.SetActive(true);
-            dontHaveEnoughGoldText.GetComponent<TextFadeAnimation>()?.TriggerAnimation();
-            CloseCurrentMenu();
+            NotEnoughGold();
             return;
         }
         CurrencyManager.Instance.TrySpendGold(unlockCost);
@@ -187,9 +225,8 @@ public class SlotManager : MonoBehaviour
         }
         else
         {
-            dontHaveEnoughGoldText.SetActive(true);
-            dontHaveEnoughGoldText.GetComponent<TextFadeAnimation>()?.TriggerAnimation();
-
+            NotEnoughGold();
+            return;
         }
 
     }
@@ -216,8 +253,8 @@ public class SlotManager : MonoBehaviour
         }
         else
         {
-            dontHaveEnoughGoldText.SetActive(true);
-            dontHaveEnoughGoldText.GetComponent<TextFadeAnimation>()?.TriggerAnimation();
+            NotEnoughGold();
+            return;
         }
    
     }
@@ -239,7 +276,7 @@ public class SlotManager : MonoBehaviour
         currentLevel = 0;
         isPlaced = false;
 
-        myRenderer.enabled = false;
+        myRenderer.enabled = true;
         myRenderer.color = baseColor;
 
         if (currentUnderConstruction != null) 
@@ -271,8 +308,8 @@ public class SlotManager : MonoBehaviour
         }
         else
         {
-            dontHaveEnoughGoldText.SetActive(true);
-            dontHaveEnoughGoldText.GetComponent<TextFadeAnimation>()?.TriggerAnimation();
+            NotEnoughGold();
+            return;
         }
     }
 
@@ -295,37 +332,41 @@ public class SlotManager : MonoBehaviour
         if (currentMenu == null) return;
         MenuFadeAnimation anim = currentMenu.GetComponent<MenuFadeAnimation>();
         if (anim != null) anim.CloseMenu();
-        else Destroy(currentMenu);
+        else currentMenu.SetActive(false);
         currentMenu = null;
   
     }
 
     public void OpenBuildMenu()
     {
-        currentMenu = Instantiate(buildMenu, mainCanvas.transform);
+        currentMenu = localBuildMenu;
         currentMenu.transform.position = transform.position;
+        currentMenu.SetActive(true);
         currentMenu.GetComponent<BuildMenu>().SetSlot(this);
 
     }
     public void OpenUnlockMenu()
     {
-        currentMenu = Instantiate(unlockMenu, mainCanvas.transform);
+        currentMenu = localUnlockMenu;
         currentMenu.transform.position = transform.position;
-      currentMenu.GetComponent<UnlockMenu>().SetSlot(this);
+        currentMenu.SetActive(true);
+         currentMenu.GetComponent<UnlockMenu>().SetSlot(this);
 
     }
 
     public void OpenSellMenu()
     {
-        currentMenu = Instantiate(sellMenu, mainCanvas.transform);
+        currentMenu = localSellMenu;
         currentMenu.transform.position = transform.position;
+        currentMenu.SetActive(true);
         var script = currentMenu.GetComponent<SellMenu>();
         script.SetSlot(this);
     }
     public void OpenUpgradeSellMenu()
     {
-        currentMenu = Instantiate(upgradeSellMenu, mainCanvas.transform);
+        currentMenu = localUpgradeSellMenu;
         currentMenu.transform.position = transform.position;
+        currentMenu.SetActive(true);
         var script = currentMenu.GetComponent<UpgradeSellMenu>();
         script.SetSlot(this);
         currentUpgradeSellMenu = script;
@@ -333,9 +374,10 @@ public class SlotManager : MonoBehaviour
     }
     public void OpenChooseMagicMenu()
     {
-        currentMenu = Instantiate(chooseMagicMenu, mainCanvas.transform);
+        currentMenu = localChooseMagicMenu;
         Vector3 menuPos = transform.position;
         currentMenu.transform.position = menuPos;
+        currentMenu.SetActive(true);
         var script = currentMenu.GetComponent<ChooseMagicMenu>();
         script.SetSlot(this);
 
@@ -362,6 +404,15 @@ public class SlotManager : MonoBehaviour
             AudioManager.Instance.PlaySFX(AudioManager.Instance.sellClip);
         }
 
+    }
+    private void NotEnoughGold() {
+        dontHaveEnoughGoldText.SetActive(true);
+        dontHaveEnoughGoldText.GetComponent<TextFadeAnimation>()?.TriggerAnimation();
+        if(AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySFX(AudioManager.Instance.notEnoughGoldClip);
+        }
+        CloseCurrentMenu();
     }
 
 }

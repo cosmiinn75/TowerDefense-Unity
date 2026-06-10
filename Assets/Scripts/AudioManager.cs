@@ -1,5 +1,4 @@
-using Unity.VisualScripting;
-using UnityEditor;
+
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -23,6 +22,9 @@ public class AudioManager : MonoBehaviour
     public AudioClip buyClip;
     public AudioClip sellClip;
     public AudioClip inGameClip;
+    public AudioClip notEnoughGoldClip;
+    public AudioClip loseClip;
+    public AudioClip winClip;
     private void Awake()
     {
         if(Instance == null)
@@ -32,7 +34,7 @@ public class AudioManager : MonoBehaviour
         }
         else
         {
-            Destroy(gameObject);
+            DestroyImmediate(gameObject);
             return;
         }
     }

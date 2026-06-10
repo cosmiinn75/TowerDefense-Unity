@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
+        win = false;
         if (AudioManager.Instance != null)
         {
             AudioManager.Instance.StopMusic();
@@ -49,12 +50,20 @@ public class GameManager : MonoBehaviour
         {
             Stars();
             winPanel.SetActive(true);
+            if(AudioManager.Instance != null)
+            {
+                AudioManager.Instance.PlaySFX(AudioManager.Instance.winClip);
+            }
             if(MainGameManager.Instance != null)
             {
                 MainGameManager.Instance.UnlockNextLevel(currentLevelIndex);
             }
         }
         else {
+            if (AudioManager.Instance != null)
+            {
+                AudioManager.Instance.PlaySFX(AudioManager.Instance.loseClip);
+            }
             losePanel.SetActive(true);
         }
         

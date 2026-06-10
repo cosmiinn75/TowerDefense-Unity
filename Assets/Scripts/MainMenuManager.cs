@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class MainMenuManager : MonoBehaviour
+public class MainMenuManager : Menu
 {
     [SerializeField] GameObject settingsMenu;
     [SerializeField] GameObject resetMenu;
@@ -32,11 +32,6 @@ public class MainMenuManager : MonoBehaviour
     public void OnReset()
     {
         resetMenu.SetActive(true);
-    }
-    public void OnWorldMap()
-    {
-        SceneTransitionerManager.Instance?.LoadScene("WorldMap");
-        Time.timeScale = 1f;
     }
     
 }
