@@ -378,13 +378,13 @@ public class SpawnManager : MonoBehaviour
                 list = FillWave(availableEnemies[14], 8);
                 // AddEnemies(list, availableEnemies[14], 4);
                 break;
-            case 4: //5 Mages + 10 Spiders
+            case 4: //3 Mages + 8 Spiders
 
-                list = FillWave(availableEnemies[10], 5);
-                AddEnemies(list, availableEnemies[1], 10);
+                list = FillWave(availableEnemies[10], 3);
+                AddEnemies(list, availableEnemies[1], 8);
                 break;
-            case 5: // 5 Mech Spiders + 3 Bandit Elders
-                list = FillWave(availableEnemies[11], 5);
+            case 5: // 4 Mech Spiders + 3 Bandit Elders
+                list = FillWave(availableEnemies[11], 4);
                 AddEnemies(list, availableEnemies[5], 3);
 
                 break;
@@ -729,14 +729,6 @@ public class SpawnManager : MonoBehaviour
                 break;
 
             case 10:
-                // Wave 10: REGELE ESTE TRIMIS ULTIMUL.
-                // Întâi trimitem armata lui de elită intercalată pentru a distrage atenția turnurilor și a consuma cooldown-urile.
-                //timeBetweenEnemies = 2f;
-                //for (int i = 0; i < 4; i++)
-                //{
-                //    AddEnemies(list, availableEnemies[19], 1); // Warrior
-                //    AddEnemies(list, availableEnemies[22], 1); // Cyclops
-                //}
 
                 AddEnemies(list, availableEnemies[9], 1);
                 break;
@@ -756,7 +748,7 @@ public class SpawnManager : MonoBehaviour
         {
             GameManager.Instance.OpenWinLosePanel();
         }
-        Debug.Log("Am oprit timpul");
+     
         Time.timeScale = 0f;
     }
 }

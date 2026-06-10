@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -7,6 +8,7 @@ public class MainMenuManager : Menu
     [SerializeField] GameObject settingsMenu;
     [SerializeField] GameObject resetMenu;
     [SerializeField] Button resetButton;
+    [SerializeField] GameObject tutorialMenu;
     private void Start()
     {
         if (AudioManager.Instance != null)
@@ -14,6 +16,7 @@ public class MainMenuManager : Menu
             AudioManager.Instance.PlayMusic(AudioManager.Instance.backgroundClip);
         }
         settingsMenu.SetActive(false);
+        tutorialMenu.SetActive(false);
     }
     public void OnSettings()
     {
@@ -33,5 +36,8 @@ public class MainMenuManager : Menu
     {
         resetMenu.SetActive(true);
     }
-    
+    public void OnTutorial()
+    {
+        tutorialMenu.SetActive(true);
+    }   
 }

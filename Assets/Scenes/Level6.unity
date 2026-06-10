@@ -471,15 +471,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5157675179194431156, guid: 51a425a0558df71498d79745e844c8a9, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.5
+      value: 1.4
       objectReference: {fileID: 0}
     - target: {fileID: 5157675179194431156, guid: 51a425a0558df71498d79745e844c8a9, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.5
+      value: 1.4
       objectReference: {fileID: 0}
     - target: {fileID: 5157675179194431156, guid: 51a425a0558df71498d79745e844c8a9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 31.13
+      value: 30.22
       objectReference: {fileID: 0}
     - target: {fileID: 5157675179194431156, guid: 51a425a0558df71498d79745e844c8a9, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1203,7 +1203,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 22
+  orthographic size: 23
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1512,7 +1512,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 20, y: -126}
+  m_AnchoredPosition: {x: 5, y: -107}
   m_SizeDelta: {x: 400, y: 150}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &825361877
@@ -2194,7 +2194,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 837001172039024257, guid: f7a509ce41112ad4c852bc4858af26fc, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6.53
+      value: 6.93
       objectReference: {fileID: 0}
     - target: {fileID: 837001172039024257, guid: f7a509ce41112ad4c852bc4858af26fc, type: 3}
       propertyPath: m_LocalPosition.z

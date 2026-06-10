@@ -133,7 +133,7 @@ public class GameManager : MonoBehaviour
             pausePanel.SetActive(isPaused);
             if(isPaused)
             {
-                Debug.Log("Pauza");
+              
                 Time.timeScale = 0.0f;
             }
             else
