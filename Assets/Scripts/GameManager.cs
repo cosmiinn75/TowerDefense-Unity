@@ -4,13 +4,12 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UnityEngine.Windows.Speech;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     public bool gameOver;
-    private float currentSpeed = 1f;
+    [HideInInspector]public float currentSpeed = 1f;
     [SerializeField] private TextMeshProUGUI speedText;
     [SerializeField] private Button speedButton;
     [Header("Panels")]

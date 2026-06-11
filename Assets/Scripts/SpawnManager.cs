@@ -37,7 +37,6 @@ public class SpawnManager : MonoBehaviour
     {
         while (currentWave <= waveLevel)
         {
- 
             UpdateWaveUI();
 
             if (currentWave == 1)
@@ -60,7 +59,7 @@ public class SpawnManager : MonoBehaviour
                 yield return new WaitForSeconds(timeBetweenEnemies);
             }
 
-    
+  
             while (activeEnemies > 0)
             {
                 yield return new WaitForSeconds(0.1f);
@@ -68,24 +67,21 @@ public class SpawnManager : MonoBehaviour
 
             currentWave++;
 
+
             if (currentWave <= waveLevel)
-            {     
+            {
                 yield return new WaitForSeconds(timeBetweenWaves);
             }
-            else
+        }
+
+
+        if (GameManager.Instance != null)
+        {
+            if (!GameManager.Instance.gameOver)
             {
-           
-                if (GameManager.Instance != null)
-                {
-                    if (!GameManager.Instance.gameOver)
-                    {
-                        GameManager.Instance.gameOver = true;
-                        GameManager.Instance.win = true;
-                        StartCoroutine(WaitAndEnd());
-                    }
-                }
-            
-                yield break; 
+                GameManager.Instance.gameOver = true;
+                GameManager.Instance.win = true;
+                StartCoroutine(WaitAndEnd());
             }
         }
     }
@@ -146,11 +142,13 @@ public class SpawnManager : MonoBehaviour
                         stats.OnHealthChanged += (currentHp) =>
                         {
                             slider.value = currentHp;
-                        
+                         
                         };
 
 
-                        stats.OnDeath += () => { bossHealthUI.SetActive(false); };
+                        stats.OnDeath += () => { bossHealthUI.SetActive(false);
+                            EnemyDied();
+                        };
 
                     }
 
@@ -476,15 +474,15 @@ public class SpawnManager : MonoBehaviour
                 list = FillWave(availableEnemies[11], 8);
                 AddEnemies(list, availableEnemies[14], 15);
                 break;
-            case 4: // 4 Bandit Leader + 4 Mech Spider   
+            case 4: // 3 Bandit Leader + 4 Mech Spider   
                 timeBetweenEnemies = 1f;
-                list = FillWave(availableEnemies[6], 4);
+                list = FillWave(availableEnemies[6], 3);
                 AddEnemies(list, availableEnemies[11], 4);
                 break;
-            case 5: // 4 Trolls + 3 Bandit Leaders + 3 Mech Spiders
+            case 5: // 4 Trolls + 2 Bandit Leaders + 3 Mech Spiders
 
                 list = FillWave(availableEnemies[3], 4);
-                AddEnemies(list, availableEnemies[6], 3);
+                AddEnemies(list, availableEnemies[6], 2);
                 AddEnemies(list, availableEnemies[11], 3);
 
                 break;
@@ -614,8 +612,9 @@ public class SpawnManager : MonoBehaviour
 
             case 8:
                 // Wave 8: 5 Warriors + 8 Cyclops + 10 Bandit Leaders
-                list = FillWave(availableEnemies[13], 5);    // Warrior (Index 13)
-                AddEnemies(list, availableEnemies[17], 8);     // Cyclops (Index 17)
+                list = FillWave(availableEnemies[13], 3);    // Warrior (Index 13)
+                AddEnemies(list, availableEnemies[17], 8);// Cyclops (Index 17)
+                AddEnemies(list, availableEnemies[13], 2);
                 AddEnemies(list, availableEnemies[6], 10);   // Bandit Leader (Index 6)
                 break;
 

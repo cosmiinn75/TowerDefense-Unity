@@ -26,7 +26,14 @@ public class PauseManager : Menu
     public void OnResume()
     {
         OnBack();
-        Time.timeScale = 1.0f;
+        if (GameManager.Instance != null)
+        {
+            Time.timeScale = GameManager.Instance.currentSpeed;
+        }
+        else
+        {
+            Time.timeScale = 1f;
+        }
         gameObject.SetActive(false);
     }
 
