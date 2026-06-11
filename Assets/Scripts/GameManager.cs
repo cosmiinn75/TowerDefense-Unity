@@ -1,20 +1,25 @@
 
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.Windows.Speech;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     public bool gameOver;
+    private float currentSpeed = 1f;
+    [SerializeField] private TextMeshProUGUI speedText;
+    [SerializeField] private Button speedButton;
     [Header("Panels")]
     public GameObject winLosePanel;
     public GameObject winPanel;
     public GameObject losePanel;
     public GameObject pausePanel;
     public bool win;
-    private bool isPaused = false;
+    [HideInInspector] public bool isPaused = false;
     public GameObject stars;
     public int currentLevelIndex;
     private void Awake()
@@ -27,6 +32,7 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
+        speedText.text = "1.0x";
         win = false;
         if (AudioManager.Instance != null)
         {
@@ -138,8 +144,24 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                Time.timeScale = 1.0f;
+                Time.timeScale = currentSpeed;
             }
+        }
+
+    }
+
+
+   public void OnSpeed()
+    {
+        if (!isPaused)
+        {
+            currentSpeed += 0.25f;
+            if (currentSpeed > 1.5f)
+            {
+                currentSpeed = 1f;
+            }
+            speedText.text = currentSpeed.ToString() + "x";
+            Time.timeScale = currentSpeed;
         }
 
     }

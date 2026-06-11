@@ -49,27 +49,27 @@ public class SlotManager : MonoBehaviour
     {
         if (buildMenu && mainCanvas)
         {
-            localBuildMenu = Instantiate(buildMenu, mainCanvas.transform);
+            localBuildMenu = Instantiate(buildMenu, mainCanvas.transform,false);
             localBuildMenu.SetActive(false);
         }
         if (upgradeSellMenu && mainCanvas)
         {
-            localUpgradeSellMenu = Instantiate(upgradeSellMenu, mainCanvas.transform);
+            localUpgradeSellMenu = Instantiate(upgradeSellMenu, mainCanvas.transform,false);
             localUpgradeSellMenu.SetActive(false);
         }
         if (chooseMagicMenu && mainCanvas)
         {
-            localChooseMagicMenu = Instantiate(chooseMagicMenu, mainCanvas.transform);
+            localChooseMagicMenu = Instantiate(chooseMagicMenu, mainCanvas.transform,false);
             localChooseMagicMenu.SetActive(false);
         }
         if (sellMenu && mainCanvas)
         {
-            localSellMenu = Instantiate(sellMenu, mainCanvas.transform);
+            localSellMenu = Instantiate(sellMenu, mainCanvas.transform,false);
             localSellMenu.SetActive(false);
         }
         if (unlockMenu && mainCanvas)
         {
-            localUnlockMenu = Instantiate(unlockMenu, mainCanvas.transform);
+            localUnlockMenu = Instantiate(unlockMenu, mainCanvas.transform,false);
             localUnlockMenu.SetActive(false);
         }
     }
@@ -128,6 +128,13 @@ public class SlotManager : MonoBehaviour
     private void OnMouseDown()
     {
 
+        if(GameManager.Instance != null)
+        {
+            if (GameManager.Instance.isPaused)
+            {
+                return;
+            }
+        }
         if (currentMenu != null)
         {
             CloseCurrentMenu();
@@ -339,49 +346,34 @@ public class SlotManager : MonoBehaviour
 
     public void OpenBuildMenu()
     {
-        currentMenu = localBuildMenu;
-        currentMenu.transform.position = transform.position;
-        currentMenu.SetActive(true);
+        PositionAndShowMenu(localBuildMenu);
         currentMenu.GetComponent<BuildMenu>().SetSlot(this);
-
     }
+
     public void OpenUnlockMenu()
     {
-        currentMenu = localUnlockMenu;
-        currentMenu.transform.position = transform.position;
-        currentMenu.SetActive(true);
-         currentMenu.GetComponent<UnlockMenu>().SetSlot(this);
-
+        PositionAndShowMenu(localUnlockMenu);
+        currentMenu.GetComponent<UnlockMenu>().SetSlot(this);
     }
 
     public void OpenSellMenu()
     {
-        currentMenu = localSellMenu;
-        currentMenu.transform.position = transform.position;
-        currentMenu.SetActive(true);
-        var script = currentMenu.GetComponent<SellMenu>();
-        script.SetSlot(this);
+        PositionAndShowMenu(localSellMenu);
+        currentMenu.GetComponent<SellMenu>().SetSlot(this);
     }
+
     public void OpenUpgradeSellMenu()
     {
-        currentMenu = localUpgradeSellMenu;
-        currentMenu.transform.position = transform.position;
-        currentMenu.SetActive(true);
+        PositionAndShowMenu(localUpgradeSellMenu);
         var script = currentMenu.GetComponent<UpgradeSellMenu>();
         script.SetSlot(this);
         currentUpgradeSellMenu = script;
- 
     }
+
     public void OpenChooseMagicMenu()
     {
-        currentMenu = localChooseMagicMenu;
-        Vector3 menuPos = transform.position;
-        currentMenu.transform.position = menuPos;
-        currentMenu.SetActive(true);
-        var script = currentMenu.GetComponent<ChooseMagicMenu>();
-        script.SetSlot(this);
-
-  
+        PositionAndShowMenu(localChooseMagicMenu);
+        currentMenu.GetComponent<ChooseMagicMenu>().SetSlot(this);
     }
     public void SetUpgradeSellMenu(UpgradeSellMenu menu) { currentUpgradeSellMenu = menu; }
     public int GetNextUpgradeCost()
@@ -414,5 +406,13 @@ public class SlotManager : MonoBehaviour
         }
         CloseCurrentMenu();
     }
-
+    private void PositionAndShowMenu(GameObject menu)
+    {
+        currentMenu = menu;
+        currentMenu.transform.position = transform.position;
+        Vector3 localPos = currentMenu.transform.localPosition;
+        localPos.z = -5f;
+        currentMenu.transform.localPosition = localPos;
+        currentMenu.SetActive(true);
+    }
 }

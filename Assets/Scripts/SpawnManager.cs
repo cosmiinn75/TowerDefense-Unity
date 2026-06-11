@@ -471,21 +471,21 @@ public class SpawnManager : MonoBehaviour
                 list = FillWave(availableEnemies[3], 2);
                 AddEnemies(list, availableEnemies[0], 12);
                 break;
-            case 3: // 10 Mech Spider + 15 Wargs
+            case 3: // 8 Mech Spider + 15 Wargs
                 timeBetweenEnemies = 1.2f;
-                list = FillWave(availableEnemies[11], 10);
+                list = FillWave(availableEnemies[11], 8);
                 AddEnemies(list, availableEnemies[14], 15);
                 break;
-            case 4: // 5 Bandit Leader + 4 Mech Spider   
+            case 4: // 4 Bandit Leader + 4 Mech Spider   
                 timeBetweenEnemies = 1f;
-                list = FillWave(availableEnemies[6], 5);
+                list = FillWave(availableEnemies[6], 4);
                 AddEnemies(list, availableEnemies[11], 4);
                 break;
-            case 5: // 4 Trolls + 3 Bandit Leaders + 5 Mech Spiders
+            case 5: // 4 Trolls + 3 Bandit Leaders + 3 Mech Spiders
 
                 list = FillWave(availableEnemies[3], 4);
                 AddEnemies(list, availableEnemies[6], 3);
-                AddEnemies(list, availableEnemies[11], 5);
+                AddEnemies(list, availableEnemies[11], 3);
 
                 break;
 
