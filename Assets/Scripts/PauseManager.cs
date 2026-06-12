@@ -34,6 +34,7 @@ public class PauseManager : Menu
         {
             Time.timeScale = 1f;
         }
+        GameManager.Instance.isPaused = false;
         gameObject.SetActive(false);
     }
 

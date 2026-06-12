@@ -2040,7 +2040,7 @@ PrefabInstance:
       objectReference: {fileID: 4217559854036837095}
     - target: {fileID: 1193549303504718135, guid: abae92ec918b1664aae7961347f6dde4, type: 3}
       propertyPath: availableEnemies.Array.size
-      value: 19
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 1193549303504718135, guid: abae92ec918b1664aae7961347f6dde4, type: 3}
       propertyPath: 'availableEnemies.Array.data[17]'
@@ -2050,6 +2050,10 @@ PrefabInstance:
       propertyPath: 'availableEnemies.Array.data[18]'
       value: 
       objectReference: {fileID: 11400000, guid: 41f5c5c8014ff5842b3131b630626531, type: 2}
+    - target: {fileID: 1193549303504718135, guid: abae92ec918b1664aae7961347f6dde4, type: 3}
+      propertyPath: 'availableEnemies.Array.data[19]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 44393c0d5db619440a5cdb6d3e0ba207, type: 2}
     - target: {fileID: 1471247815982431998, guid: abae92ec918b1664aae7961347f6dde4, type: 3}
       propertyPath: m_LocalPosition.x
       value: -34.9

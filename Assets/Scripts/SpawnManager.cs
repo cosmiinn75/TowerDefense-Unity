@@ -364,9 +364,9 @@ public class SpawnManager : MonoBehaviour
 
         switch (currentWave)
         {
-            case 1: // 12 Goblins
+            case 1: // 6 Goblins
                 timeBetweenEnemies = 0.8f;
-                list = FillWave(availableEnemies[0], 12);
+                list = FillWave(availableEnemies[18], 6);
                 break;
             case 2: // 10 Skeletons
                 list = FillWave(availableEnemies[12], 10);
@@ -393,7 +393,7 @@ public class SpawnManager : MonoBehaviour
                 break;
             case 7: // Troll + Bandit Leader
                 timeBetweenEnemies = 3f;
-                list = FillWave(availableEnemies[3], 1);
+                list = FillWave(availableEnemies[3], 2);
                 AddEnemies(list, availableEnemies[6], 1);
                 break;
             default:
@@ -419,10 +419,10 @@ public class SpawnManager : MonoBehaviour
                 timeBetweenEnemies = 0.4f;
                 list = FillWave(availableEnemies[14], 10);
                 break;
-            case 3: // 6 Mages + 10 Goblins
+            case 3: // 6 Mages + 6 Mad Goblins
                 timeBetweenEnemies = 0.7f;
                 list = FillWave(availableEnemies[10], 6);
-                AddEnemies(list, availableEnemies[0], 10);
+                AddEnemies(list, availableEnemies[19], 6);
                 break;
             case 4: //6 Mech Spiders + 4 Witches    
                 timeBetweenEnemies = 0.9f;
@@ -440,10 +440,11 @@ public class SpawnManager : MonoBehaviour
                 list = FillWave(availableEnemies[6], 2);
                 AddEnemies(list, availableEnemies[10], 5);
                 break;
-            case 7: // 2 Cyclops + 2 TrollNoRes
-                timeBetweenEnemies = 1f;
-                list = FillWave(availableEnemies[17], 2);
-                AddEnemies(list, availableEnemies[18], 2);
+            case 7: // 4 Cyclops + 3 TrollNoRes
+                timeBetweenEnemies = 2f;
+                list = FillWave(availableEnemies[17], 4);
+                AddEnemies(list, availableEnemies[18], 3);
+                AddEnemies(list, availableEnemies[19], 6);
                 break;
             default:
                 list = new List<EnemyData>();
@@ -464,10 +465,11 @@ public class SpawnManager : MonoBehaviour
                 timeBetweenEnemies = 1f;
                 list = FillWave(availableEnemies[4], 15);
                 break;
-            case 2: // 2 Trolls + 12 Goblins
+            case 2: // 2 Trolls + 4 Mad Goblins + 3 Goblins
 
                 list = FillWave(availableEnemies[3], 2);
-                AddEnemies(list, availableEnemies[0], 12);
+                AddEnemies(list, availableEnemies[19], 4);
+                AddEnemies(list, availableEnemies[0], 3);
                 break;
             case 3: // 8 Mech Spider + 15 Wargs
                 timeBetweenEnemies = 1.2f;
@@ -520,10 +522,10 @@ public class SpawnManager : MonoBehaviour
                 AddEnemies(list, availableEnemies[11], 15); // Mech Spider
                 break;
 
-            case 4: // 2 Warriors + 20 Goblins
+            case 4: // 2 Warriors + 14 Mad Goblins
                 timeBetweenEnemies = 1.0f;
                 list = FillWave(availableEnemies[13], 2); // Warrior 
-                AddEnemies(list, availableEnemies[0], 20); // Goblin
+                AddEnemies(list, availableEnemies[19], 14); // MadGoblin
                 break;
 
             case 5: // 4 Cyclops + 6 Trolls
@@ -541,9 +543,10 @@ public class SpawnManager : MonoBehaviour
 
             case 7: // 3 Warriors + 8 Bandit Leaders + 5 Cyclops
                 timeBetweenEnemies = 1.0f;
-                list = FillWave(availableEnemies[13], 3); // Warrior
+                list = FillWave(availableEnemies[20], 3); // Warrior
                 AddEnemies(list, availableEnemies[6], 8); // Bandit Leader
                 AddEnemies(list, availableEnemies[17], 5); // Cyclops
+                AddEnemies(list, availableEnemies[20], 2);
                 break;
 
             default:
@@ -570,7 +573,7 @@ public class SpawnManager : MonoBehaviour
             case 2:
                 // Wave 2: 20 Wargs + 5 Trolls
                 timeBetweenEnemies = 0.6f;
-                list = FillWave(availableEnemies[14], 20);   // Warg (Index 14)
+                list = FillWave(availableEnemies[14], 20);// Warg (Index 14)
                 AddEnemies(list, availableEnemies[3], 5);    // Troll (Index 3)
                 break;
 
@@ -589,9 +592,9 @@ public class SpawnManager : MonoBehaviour
                 break;
 
             case 5:
-                // Wave 5: 25 Goblins + 15 Bandit Elders
+                // Wave 5: 15 Mad Goblins + 15 Bandit Elders
                 timeBetweenEnemies = 0.5f;
-                list = FillWave(availableEnemies[0], 25);    // Goblin (Index 0)
+                list = FillWave(availableEnemies[19], 15);    // Mad Goblin (Index 19)
                 AddEnemies(list, availableEnemies[5], 15);   // Bandit Elder (Index 5)
                 break;
 
@@ -611,11 +614,12 @@ public class SpawnManager : MonoBehaviour
                 break;
 
             case 8:
-                // Wave 8: 5 Warriors + 8 Cyclops + 10 Bandit Leaders
-                list = FillWave(availableEnemies[13], 3);    // Warrior (Index 13)
-                AddEnemies(list, availableEnemies[17], 8);// Cyclops (Index 17)
-                AddEnemies(list, availableEnemies[13], 2);
+                // Wave 8: 7 Warriors + 8 Cyclops + 10 Bandit Leaders
+                list = FillWave(availableEnemies[20], 3);    // Warrior (Index 13)
+                AddEnemies(list, availableEnemies[21], 8);// Cyclops (Index 17)
+                AddEnemies(list, availableEnemies[20], 2);
                 AddEnemies(list, availableEnemies[6], 10);   // Bandit Leader (Index 6)
+                AddEnemies(list, availableEnemies[20], 2);
                 break;
 
             default:
@@ -728,7 +732,9 @@ public class SpawnManager : MonoBehaviour
                 break;
 
             case 10:
+                timeBetweenEnemies = 5f;
 
+                AddEnemies(list, availableEnemies[19], 1);
                 AddEnemies(list, availableEnemies[9], 1);
                 break;
 

@@ -50,26 +50,31 @@ public class SlotManager : MonoBehaviour
         if (buildMenu && mainCanvas)
         {
             localBuildMenu = Instantiate(buildMenu, mainCanvas.transform,false);
+            localBuildMenu.transform.SetAsFirstSibling();
             localBuildMenu.SetActive(false);
         }
         if (upgradeSellMenu && mainCanvas)
         {
             localUpgradeSellMenu = Instantiate(upgradeSellMenu, mainCanvas.transform,false);
+            localUpgradeSellMenu.transform.SetAsFirstSibling();
             localUpgradeSellMenu.SetActive(false);
         }
         if (chooseMagicMenu && mainCanvas)
         {
             localChooseMagicMenu = Instantiate(chooseMagicMenu, mainCanvas.transform,false);
+            localChooseMagicMenu.transform.SetAsFirstSibling();
             localChooseMagicMenu.SetActive(false);
         }
         if (sellMenu && mainCanvas)
         {
             localSellMenu = Instantiate(sellMenu, mainCanvas.transform,false);
+            localSellMenu.transform.SetAsFirstSibling();
             localSellMenu.SetActive(false);
         }
         if (unlockMenu && mainCanvas)
         {
             localUnlockMenu = Instantiate(unlockMenu, mainCanvas.transform,false);
+            localUnlockMenu.transform.SetAsFirstSibling();
             localUnlockMenu.SetActive(false);
         }
     }
@@ -297,8 +302,15 @@ public class SlotManager : MonoBehaviour
 
     public void OnSelectElement(string elementType)
     {
+       
+
         var script = tower.GetComponent<MagicTower>();
         int cost = 200;
+        if(script.currentElement == elementType)
+        {
+            CloseCurrentMenu();
+            return;
+        }
 
         if (cost <= CurrencyManager.Instance.currentGold)
         {

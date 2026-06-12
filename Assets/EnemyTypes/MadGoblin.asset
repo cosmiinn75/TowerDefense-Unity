@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: be2fd02a984bc7b4ba69dbc336ad3416, type: 3}
-  m_Name: CyclopsNoRes
+  m_Name: MadGoblin
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
-  enemyName: Cyclops
-  speed: 4
-  health: 3000
-  enemyPrefab: {fileID: 4726751785336576692, guid: 4b033ee5862367d41b3b4010de5cd175, type: 3}
-  goldReward: 120
+  enemyName: Goblin
+  speed: 10
+  health: 250
+  enemyPrefab: {fileID: 839762897476769452, guid: 5a9b349f2ca53d54e968494263afd95e, type: 3}
+  goldReward: 20
   enemyColor: {r: 1, g: 1, b: 1, a: 1}
   isArmored: 0
   hasMagicResistance: 0
