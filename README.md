@@ -1,6 +1,7 @@
 # 🛡️ Kingdom Defense: Tactical Evolution
 
-**Kingdom Defense: Tactical Evolution** is a strategic Tower Defense game built in **Unity 6** and **C#**.  
+**Kingdom Defense: Tactical Evolution** is a strategic Tower Defense game built in **Unity 6** and **C#**.
+
 The game features a full 10-level campaign, tower placement, upgrades, enemy waves, elemental effects, enemy resistances, unlockable tower slots, and a World Map progression system.
 
 🎮 **Play the game here:**  
@@ -32,13 +33,15 @@ https://cosmiinn75.itch.io/kingdom-defense-tactical-evolution
 - **Language:** C#
 - **UI:** Unity UI, TextMeshPro
 - **Deployment:** WebGL / itch.io
-- **Architecture concepts used:**
-  - Scriptable Objects
-  - Coroutines
-  - Singleton Managers
-  - Data-driven enemy configuration
-  - Runtime stat modification
-  - Scene and progression management
+
+### Architecture concepts used
+
+- Scriptable Objects
+- Coroutines
+- Singleton Managers
+- Data-driven enemy configuration
+- Runtime stat modification
+- Scene and progression management
 
 ---
 
@@ -107,7 +110,8 @@ Enemies can also have resistances that reduce or block certain effects, adding m
 
 ### World Map Progression
 
-The game includes a World Map that tracks player progression.  
+The game includes a World Map that tracks player progression.
+
 Completed levels unlock the next stage, while locked levels display a padlock icon to guide the player through the campaign.
 
 ---
@@ -130,12 +134,21 @@ These menus are connected to scene transitions, audio settings, player progressi
 
 ## 📸 Screenshots
 
-```markdown
+### Main Menu
+
 ![Main Menu](Screenshots/main-menu.png)
+
+### World Map
+
 ![World Map](Screenshots/world-map.png)
+
+### Gameplay
+
 ![Gameplay](Screenshots/gameplay.png)
+
+### Level Completed
+
 ![Level Completed](Screenshots/level-completed.png)
-```
 
 ---
 
@@ -226,4 +239,4 @@ A detailed development log is available in [`DEVLOG.md`](DEVLOG.md).
 
 ## 👤 Developer
 
-Developed by **Cosmin** as a Unity/C# learning project focused on gameplay programming, UI systems, game architecture, and publishing a complete playable project.
+Developed by **Cosmin** as a Unity/C# project focused on gameplay programming, UI systems, game architecture, playtesting, and publishing a complete playable WebGL game.
