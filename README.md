@@ -130,8 +130,6 @@ These menus are connected to scene transitions, audio settings, player progressi
 
 ## 📸 Screenshots
 
-Add screenshots here:
-
 ```markdown
 ![Main Menu](Screenshots/main-menu.png)
 ![World Map](Screenshots/world-map.png)
