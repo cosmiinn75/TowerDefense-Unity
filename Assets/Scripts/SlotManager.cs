@@ -169,18 +169,31 @@ public class SlotManager : MonoBehaviour
         else
         {
             MagicTower magicTower = tower.GetComponent<MagicTower>();
+
             if (magicTower != null)
             {
+                if (currentLevel == 1)
+                {
+                    if (string.IsNullOrEmpty(magicTower.currentElement) || magicTower.currentElement == "Generic")
+                    {
+                        OpenChooseMagicMenu();
+                    }
+                    else
+                    {
+                        OpenUpgradeSellMenu();
+                    }
+
+                    return;
+                }
 
                 if (currentLevel == 2)
                 {
                     OpenChooseMagicMenu();
-                }
-                else
-                {
-                    OpenUpgradeSellMenu();
+                    return;
                 }
 
+                OpenUpgradeSellMenu();
+                return;
             }
             else if (currentLevel == 2)
             {
@@ -191,11 +204,6 @@ public class SlotManager : MonoBehaviour
                 OpenUpgradeSellMenu();
             }
 
-        }
-
-        if (currentMenu != null)
-        {
-            ResetMenuTimer();
         }
 
     }
@@ -231,6 +239,14 @@ public class SlotManager : MonoBehaviour
             if (currentUnderConstruction != null) Destroy(currentUnderConstruction);
             PlayBuySound();
             tower = Instantiate(prefabToBuild, transform.position, Quaternion.identity);
+
+            MagicTower magic = tower.GetComponent<MagicTower>();
+
+            if(magic != null)
+            {
+                magic.currentElement = "Generic";
+            }
+
             isPlaced = true;
             myRenderer.enabled = false; 
             CloseCurrentMenu();
@@ -245,7 +261,7 @@ public class SlotManager : MonoBehaviour
 
     public void OnUpgrade()
     {
-        if (currentLevel >= towerType.Count - 1) return; //If there isn't an available upgrade
+        if (currentLevel >= towerType.Count - 1) return;
 
         GameObject nextLevelPrefab = towerType[currentLevel + 1];
         Tower towerScript = nextLevelPrefab.GetComponent<Tower>();
@@ -253,13 +269,32 @@ public class SlotManager : MonoBehaviour
         if (towerScript.Cost <= CurrencyManager.Instance.currentGold)
         {
             CurrencyManager.Instance.TrySpendGold((int)towerScript.Cost);
+
+            string savedElement = "";
+            MagicTower oldMagic = tower.GetComponent<MagicTower>();
+            if (oldMagic != null)
+            {
+                savedElement = oldMagic.currentElement;
+            }
+
             Destroy(tower);
             currentLevel++;
             PlayBuySound();
             tower = Instantiate(towerType[currentLevel], transform.position, Quaternion.identity);
 
+      
+            MagicTower newMagic = tower.GetComponent<MagicTower>();
+            if (newMagic != null && !string.IsNullOrEmpty(savedElement) && savedElement != "Generic")
+            {
+                newMagic.ChangeElement(savedElement);
+            }
+            else if (newMagic != null)
+            {
+                newMagic.currentElement = "Generic";
+            }
+
             if (currentUpgradeSellMenu != null)
-                currentUpgradeSellMenu.UpdateUI(GetNextUpgradeCost()); // Shows next cost
+                currentUpgradeSellMenu.UpdateUI(GetNextUpgradeCost());
 
             CloseCurrentMenu();
         }
@@ -268,7 +303,6 @@ public class SlotManager : MonoBehaviour
             NotEnoughGold();
             return;
         }
-   
     }
 
     public void OnSell()
@@ -305,7 +339,7 @@ public class SlotManager : MonoBehaviour
        
 
         var script = tower.GetComponent<MagicTower>();
-        int cost = 200;
+        int cost = (currentLevel == 1) ? 0 : 200;
         if(script.currentElement == elementType)
         {
             CloseCurrentMenu();
@@ -385,7 +419,10 @@ public class SlotManager : MonoBehaviour
     public void OpenChooseMagicMenu()
     {
         PositionAndShowMenu(localChooseMagicMenu);
-        currentMenu.GetComponent<ChooseMagicMenu>().SetSlot(this);
+        var menuScript = currentMenu.GetComponent<ChooseMagicMenu>();
+        menuScript.SetSlot(this);
+        int cost = (currentLevel == 1) ? 0 : 200;
+        menuScript.UpdateCostTexts(cost);
     }
     public void SetUpgradeSellMenu(UpgradeSellMenu menu) { currentUpgradeSellMenu = menu; }
     public int GetNextUpgradeCost()
@@ -420,11 +457,19 @@ public class SlotManager : MonoBehaviour
     }
     private void PositionAndShowMenu(GameObject menu)
     {
+        if (currentMenu != null && currentMenu != menu)
+        {
+            currentMenu.SetActive(false);
+        }
+
         currentMenu = menu;
         currentMenu.transform.position = transform.position;
+
         Vector3 localPos = currentMenu.transform.localPosition;
         localPos.z = -5f;
         currentMenu.transform.localPosition = localPos;
+
         currentMenu.SetActive(true);
+        ResetMenuTimer();
     }
 }

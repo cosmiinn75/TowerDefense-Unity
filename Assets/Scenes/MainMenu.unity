@@ -293,7 +293,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 13, y: -350}
+  m_AnchoredPosition: {x: 13, y: -403}
   m_SizeDelta: {x: 900, y: 150}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &143689915
@@ -316,17 +316,22 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Armor: Cannon damage is reduced by 25%.
+  m_text: 'Some enemies have resistance icons above them.
 
-    Magic: Magic damage is reduced
-    by 40%.
+    Armor: Cannon damage
+    is reduced by 25%.
 
-    Slow: Slow effects are reduced by 50%.
+    Magic: Magic damage is reduced by 40%.
 
-    Poison: Poison damage
-    is reduced by 60%.
+    Slow: Slow
+    effects are reduced by 50%.
 
-    Stun: Stun effects are blocked.'
+    Poison: Poison damage is reduced by 60%.
+
+    Stun:
+    Stun effects are blocked.
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 38e7d14261e492844962c9856102c683, type: 2}
   m_sharedMaterial: {fileID: 8148728901442759320, guid: 38e7d14261e492844962c9856102c683, type: 2}
@@ -623,7 +628,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: -36}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &238968411
@@ -856,7 +861,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &264046252
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1564,9 +1569,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55ed1442906cca2419ab7b23ab749824, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::VolumeSliderSync
-  masterSlider: {fileID: 680139844}
-  musicSlider: {fileID: 818322692}
-  sfxSlider: {fileID: 1237032294}
+  masterSlider: {fileID: 1116482151}
+  musicSlider: {fileID: 731149022}
+  sfxSlider: {fileID: 773446055}
 --- !u!4 &491476300
 Transform:
   m_ObjectHideFlags: 0
@@ -1794,17 +1799,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 608462698}
   m_CullTransparentMesh: 1
---- !u!114 &680139844 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6735887380733522271, guid: 6b0b2957c57acf34487684bf7b130ce6, type: 3}
-  m_PrefabInstance: {fileID: 4958115172572014583}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider
 --- !u!1 &706842994
 GameObject:
   m_ObjectHideFlags: 0
@@ -2095,6 +2089,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ButtonSoundClick
   levelIndex: 0
+--- !u!114 &731149022 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3738826180696835921, guid: 6b0b2957c57acf34487684bf7b130ce6, type: 3}
+  m_PrefabInstance: {fileID: 4958115172572014583}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider
 --- !u!1 &731472084
 GameObject:
   m_ObjectHideFlags: 0
@@ -2364,8 +2369,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Magic: Deals high magical damage. It is expensive, but very strong and
-    unlocks elemental states at level 3.'
+  m_text: 'Magic: Deals high magical damage. At level 2, it can choose an elemental
+    state for free.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 38e7d14261e492844962c9856102c683, type: 2}
   m_sharedMaterial: {fileID: 8148728901442759320, guid: 38e7d14261e492844962c9856102c683, type: 2}
@@ -2445,6 +2450,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 772644410}
   m_CullTransparentMesh: 1
+--- !u!114 &773446055 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3473695789932004166, guid: 6b0b2957c57acf34487684bf7b130ce6, type: 3}
+  m_PrefabInstance: {fileID: 4958115172572014583}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider
 --- !u!1 &795868388
 GameObject:
   m_ObjectHideFlags: 0
@@ -2582,17 +2598,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 795868388}
   m_CullTransparentMesh: 1
---- !u!114 &818322692 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3738826180696835921, guid: 6b0b2957c57acf34487684bf7b130ce6, type: 3}
-  m_PrefabInstance: {fileID: 4958115172572014583}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider
 --- !u!1 &843614681
 GameObject:
   m_ObjectHideFlags: 0
@@ -3691,6 +3696,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1062591890}
   m_CullTransparentMesh: 1
+--- !u!114 &1116482151 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6735887380733522271, guid: 6b0b2957c57acf34487684bf7b130ce6, type: 3}
+  m_PrefabInstance: {fileID: 4958115172572014583}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider
 --- !u!1 &1116873310
 GameObject:
   m_ObjectHideFlags: 0
@@ -4043,11 +4059,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1163185310}
   m_CullTransparentMesh: 1
---- !u!1 &1223920821 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1420079393640149515, guid: 6b0b2957c57acf34487684bf7b130ce6, type: 3}
-  m_PrefabInstance: {fileID: 4958115172572014583}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1223920822 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8116115698444739398, guid: 6b0b2957c57acf34487684bf7b130ce6, type: 3}
@@ -4128,17 +4139,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1229131382}
   m_CullTransparentMesh: 1
---- !u!114 &1237032294 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3473695789932004166, guid: 6b0b2957c57acf34487684bf7b130ce6, type: 3}
-  m_PrefabInstance: {fileID: 4958115172572014583}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Slider
 --- !u!1 &1262079440
 GameObject:
   m_ObjectHideFlags: 0
@@ -4173,7 +4173,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 13, y: -428}
+  m_AnchoredPosition: {x: 13, y: -448}
   m_SizeDelta: {x: 900, y: 150}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1262079442
@@ -4198,13 +4198,16 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Upgrade towers to increase their power.
 
+    
 
-    Higher level towers deal
-    more damage and become more useful against stronger enemies.
+    Higher level towers
+    deal more damage and become more useful against stronger enemies.
 
+    
 
-    Magic towers
-    unlock elemental states at level 3.'
+    Magic
+    towers unlock elemental states at level 2. The first choice is free, but the
+    element is locked until level 3.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 38e7d14261e492844962c9856102c683, type: 2}
   m_sharedMaterial: {fileID: 8148728901442759320, guid: 38e7d14261e492844962c9856102c683, type: 2}
@@ -4313,10 +4316,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42e4f0d8186a93b49891b05539920f89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  settingsMenu: {fileID: 1223920821}
+  settingsMenu: {fileID: 1592967785}
   resetMenu: {fileID: 2016761504}
   resetButton: {fileID: 238968413}
   tutorialMenu: {fileID: 1647888078}
+  tutorialManager: {fileID: 1647888082}
+  worldMapSceneName: WorldMap
 --- !u!4 &1381777331
 Transform:
   m_ObjectHideFlags: 0
@@ -4487,6 +4492,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1591295729}
   m_CullTransparentMesh: 1
+--- !u!1 &1592967785 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1420079393640149515, guid: 6b0b2957c57acf34487684bf7b130ce6, type: 3}
+  m_PrefabInstance: {fileID: 4958115172572014583}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1608024510
 GameObject:
   m_ObjectHideFlags: 0
@@ -4925,7 +4935,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1647888079
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6875,8 +6885,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1381777330}
         m_TargetAssemblyTypeName: MainMenuManager, Assembly-CSharp
-        m_MethodName: OnMenu
-        m_Mode: 5
+        m_MethodName: OnWorldMap
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -7016,6 +7026,26 @@ PrefabInstance:
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1008547359}
+    - target: {fileID: 6909089771733713266, guid: 6b0b2957c57acf34487684bf7b130ce6, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6909089771733713266, guid: 6b0b2957c57acf34487684bf7b130ce6, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -3790718082548705231, guid: e895cae23ce32d34890b1a72584f7def, type: 3}
+    - target: {fileID: 6909089771733713266, guid: 6b0b2957c57acf34487684bf7b130ce6, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7804694220410965843, guid: 6b0b2957c57acf34487684bf7b130ce6, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 7804694220410965843, guid: 6b0b2957c57acf34487684bf7b130ce6, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 76
+      objectReference: {fileID: 0}
     - target: {fileID: 8116115698444739398, guid: 6b0b2957c57acf34487684bf7b130ce6, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -7117,37 +7147,9 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8886108406252723196, guid: 6b0b2957c57acf34487684bf7b130ce6, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8886108406252723196, guid: 6b0b2957c57acf34487684bf7b130ce6, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8886108406252723196, guid: 6b0b2957c57acf34487684bf7b130ce6, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1381777330}
-    - target: {fileID: 8886108406252723196, guid: 6b0b2957c57acf34487684bf7b130ce6, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
-      objectReference: {fileID: 1008547359}
-    - target: {fileID: 8886108406252723196, guid: 6b0b2957c57acf34487684bf7b130ce6, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8886108406252723196, guid: 6b0b2957c57acf34487684bf7b130ce6, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnBack
-      objectReference: {fileID: 0}
-    - target: {fileID: 8886108406252723196, guid: 6b0b2957c57acf34487684bf7b130ce6, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: MainMenuManager, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 8886108406252723196, guid: 6b0b2957c57acf34487684bf7b130ce6, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

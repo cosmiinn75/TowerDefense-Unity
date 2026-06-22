@@ -25,12 +25,43 @@ public class SpawnManager : MonoBehaviour
     [Header("UI Menu")]
     public GameObject waveText;
     public GameObject bossHealthUI;
+    public GameObject startButton;
+
+    private Coroutine autoStartRoutine;
+    private bool waveStarted = false;
+    private float autoStartDelay = 10f;
 
     void Start() {
         waveText.SetActive(false);
-        StartCoroutine(SpawnWave());
-        timeBetweenEnemies = defaultTimeBetweenEnemies;
         
+        timeBetweenEnemies = defaultTimeBetweenEnemies;
+        autoStartRoutine = StartCoroutine(AutoStartCountdown());
+    }
+    IEnumerator AutoStartCountdown() {
+        yield return new WaitForSeconds(autoStartDelay);
+        StartWaveSequence();
+    }
+
+
+    void StartWaveSequence() { 
+    
+        if(!waveStarted)
+        {
+            waveStarted = true;
+            if (startButton != null) {
+                startButton.SetActive(false);
+            }
+            StartCoroutine(SpawnWave());
+        }
+    }
+    public void OnStartButton()
+    {
+        if(autoStartRoutine != null)
+        {
+            StopCoroutine(autoStartRoutine);
+            autoStartRoutine = null;
+        }
+        StartWaveSequence();
     }
 
     IEnumerator SpawnWave()
@@ -101,7 +132,7 @@ public class SpawnManager : MonoBehaviour
             }
         }
     }
-
+    
     private List<EnemyData> LoadLevelData(int level)
     {
         return level switch
