@@ -1,3 +1,6 @@
+
+Check out the game here : https://cosmiinn75.itch.io/kingdom-defense-tactical-evolution
+
 🛡️ Kingdom Defense: Tactical Evolution
 A strategic Tower Defense game built in Unity 6, featuring modular enemy scaling and a scriptable wave management system.
 Note: Paid graphics/audio assets have been excluded via .gitignore to comply with store licenses.
