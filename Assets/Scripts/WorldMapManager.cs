@@ -10,9 +10,10 @@ public class WorldMapManager : MonoBehaviour
     [Header("UI Elements")]
     [SerializeField] private Button[] levelButtons;
     [SerializeField] private GameObject startLevelPanel;
-    [SerializeField]  private TextMeshProUGUI levelText;
+    [SerializeField] private TextMeshProUGUI levelText;
     [SerializeField] private Image filledStarImage;
     [SerializeField] private Button backArrow;
+
     [Header("Map")]
     [SerializeField] private ScrollRect mapScrollRect;
     [SerializeField] private RectTransform mapContent;
@@ -21,7 +22,8 @@ public class WorldMapManager : MonoBehaviour
 
     [Header("Animation")]
     [SerializeField] private float animationDuration = 1f;
-    [SerializeField] private AnimationCurve animationCurve =
+    [SerializeField]
+    private AnimationCurve animationCurve =
         AnimationCurve.EaseInOut(0, 0, 1, 1);
 
     public int lastLevelIndex;
@@ -33,10 +35,12 @@ public class WorldMapManager : MonoBehaviour
 
     private void Start()
     {
+  
         if (AudioManager.Instance != null)
         {
             AudioManager.Instance.PlayMusic(AudioManager.Instance.backgroundClip);
         }
+
         startLevelPanel.SetActive(false);
 
         OnMapInitialized += SetLastLevelIndex;
@@ -45,11 +49,14 @@ public class WorldMapManager : MonoBehaviour
         for (int i = 0; i < levelButtons.Length; i++)
         {
             int levelNum = i + 1;
+
             levelButtons[i].onClick.AddListener(() =>
             {
                 OpenStartLevelPanel(levelNum);
             });
         }
+
+        KeepAllLevelButtonsClickable();
 
         StartCoroutine(InitializeMap());
     }
@@ -59,10 +66,28 @@ public class WorldMapManager : MonoBehaviour
         yield return null;
         yield return new WaitForEndOfFrame();
 
-        int lastSavedLevel =
-            PlayerPrefs.GetInt("LastAccessedLevel", 1);
+        int levelToFocus = 1;
 
-        OnMapInitialized?.Invoke(lastSavedLevel);
+
+        if (GameSession.Progress != null)
+        {
+            levelToFocus = GameSession.Progress.maxLevelUnlocked;
+        }
+
+        levelToFocus = Mathf.Clamp(levelToFocus, 1, levelPositions.Length);
+
+        OnMapInitialized?.Invoke(levelToFocus);
+    }
+
+    private void KeepAllLevelButtonsClickable()
+    {
+        for (int i = 0; i < levelButtons.Length; i++)
+        {
+            if (levelButtons[i] != null)
+            {
+                levelButtons[i].interactable = true;
+            }
+        }
     }
 
     public void SetLastLevelIndex(int level)
@@ -86,9 +111,7 @@ public class WorldMapManager : MonoBehaviour
     {
         Canvas.ForceUpdateCanvases();
 
-        Vector2 targetPos =
-            CalculateCenteredPosition(target);
-
+        Vector2 targetPos = CalculateCenteredPosition(target);
         Vector2 startPos = mapContent.anchoredPosition;
 
         float elapsed = 0f;
@@ -141,20 +164,19 @@ public class WorldMapManager : MonoBehaviour
 
     public void OpenStartLevelPanel(int levelNum)
     {
-        int maxLevel =
-            MainGameManager.Instance != null
-                ? MainGameManager.Instance.maxLevelReached
-                : 1;
+        int maxLevelUnlocked = GetMaxLevelUnlocked();
 
-        if (levelNum > maxLevel)
+
+        if (levelNum > maxLevelUnlocked)
+        {
             return;
+        }
 
         selectedLevelIndex = levelNum;
 
-        string key = "StarsUnlocked" + levelNum;
 
-        filledStarImage.fillAmount =
-            PlayerPrefs.GetFloat(key, 0);
+        int stars = GetStarsForLevel(levelNum);
+        filledStarImage.fillAmount = StarsToFillAmount(stars);
 
         levelText.text = $"Level {levelNum}";
 
@@ -168,14 +190,17 @@ public class WorldMapManager : MonoBehaviour
     {
         Time.timeScale = 1f;
 
-        PlayerPrefs.SetInt(
-            "LastAccessedLevel",
-            selectedLevelIndex);
 
-        PlayerPrefs.Save();
+        GameSession.SelectedLevelNumber = selectedLevelIndex;
 
-        SceneTransitionerManager.Instance?.LoadScene(
-            "Level" + selectedLevelIndex);
+        if (SceneTransitionerManager.Instance != null)
+        {
+            SceneTransitionerManager.Instance.LoadScene("Level" + selectedLevelIndex);
+        }
+        else
+        {
+            SceneManager.LoadScene("Level" + selectedLevelIndex);
+        }
     }
 
     public void OnBack()
@@ -183,7 +208,46 @@ public class WorldMapManager : MonoBehaviour
         backArrow.gameObject.SetActive(true);
         startLevelPanel.SetActive(false);
     }
-    public void OnMainMenu() {
+
+    public void OnMainMenu()
+    {
         SceneManager.LoadScene("MainMenu");
+    }
+
+    private int GetMaxLevelUnlocked()
+    {
+        if (GameSession.Progress == null)
+        {
+            return 1;
+        }
+
+        return GameSession.Progress.maxLevelUnlocked;
+    }
+
+    private int GetStarsForLevel(int levelNum)
+    {
+        if (GameSession.Progress == null || GameSession.Progress.levels == null)
+        {
+            return 0;
+        }
+
+        foreach (LevelProgressResponse level in GameSession.Progress.levels)
+        {
+            if (level.levelNumber == levelNum)
+            {
+                return level.stars;
+            }
+        }
+
+        return 0;
+    }
+
+    private float StarsToFillAmount(int stars)
+    {
+        if (stars >= 3) return 1f;
+        if (stars == 2) return 0.67f;
+        if (stars == 1) return 0.34f;
+
+        return 0f;
     }
 }

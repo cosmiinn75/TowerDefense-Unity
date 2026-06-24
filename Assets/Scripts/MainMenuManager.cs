@@ -1,4 +1,4 @@
-using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -10,13 +10,17 @@ public class MainMenuManager : Menu
     [SerializeField] private Button resetButton;
     [SerializeField] private GameObject tutorialMenu;
     [SerializeField] private TutorialManager tutorialManager;
+    [SerializeField] private GameObject audioMenu;
+    [SerializeField] private TextMeshProUGUI usernameText;
 
     [SerializeField] private string worldMapSceneName = "WorldMap";
+    [SerializeField] private string loginSceneName = "Login";
 
     private bool openWorldMapAfterTutorial = false;
 
     private void Start()
     {
+        usernameText.text = "Username: " + GameSession.Username;
         if (AudioManager.Instance != null)
         {
             AudioManager.Instance.PlayMusic(AudioManager.Instance.backgroundClip);
@@ -25,6 +29,7 @@ public class MainMenuManager : Menu
         settingsMenu.SetActive(false);
         resetMenu.SetActive(false);
         tutorialMenu.SetActive(false);
+        audioMenu.SetActive(false);
 
         tutorialManager.OnTutorialClosed += HandleTutorialClosed;
     }
@@ -40,6 +45,28 @@ public class MainMenuManager : Menu
 
         LoadWorldMap();
     }
+
+    public void SignOut()
+    {
+        PlayerPrefs.DeleteKey("jwt_token");
+        PlayerPrefs.DeleteKey("username");
+        PlayerPrefs.Save();
+
+        GameSession.Token = "";
+        GameSession.Username = "";
+        GameSession.Progress = null;
+        GameSession.SelectedLevelNumber = 0;
+
+        Time.timeScale = 1f;
+
+        if(SceneTransitionerManager.Instance != null)
+        {
+            SceneTransitionerManager.Instance.LoadScene(loginSceneName);
+            return;
+        }
+        SceneManager.LoadScene(loginSceneName);
+    }
+
 
     public void OnTutorial()
     {
@@ -58,6 +85,11 @@ public class MainMenuManager : Menu
 
     private void LoadWorldMap()
     {
+        if(SceneTransitionerManager.Instance != null)
+        {
+            SceneTransitionerManager.Instance.LoadScene(worldMapSceneName);
+            return;
+        }
         SceneManager.LoadScene(worldMapSceneName);
     }
 
@@ -67,7 +99,7 @@ public class MainMenuManager : Menu
         resetButton.interactable = false;
     }
 
-    public void OnBack()
+    public void OnBackSettings()
     {
         settingsMenu.SetActive(false);
         resetButton.interactable = true;
@@ -82,4 +114,17 @@ public class MainMenuManager : Menu
     {
         resetMenu.SetActive(true);
     }
+
+    public void OnAudio()
+    {
+        settingsMenu.SetActive(false);
+        audioMenu.SetActive(true);
+    }
+
+    public void OnBackAudio()
+    {
+        settingsMenu.SetActive(true);
+        audioMenu.SetActive(false);
+    }
+
 }
