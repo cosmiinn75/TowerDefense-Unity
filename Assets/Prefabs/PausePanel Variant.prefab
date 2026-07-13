@@ -776,6 +776,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3908151880581741748, guid: 0556cddafd861ca4e8f630dba3324657, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 4094138009709521327}
+    - target: {fileID: 3908151880581741748, guid: 0556cddafd861ca4e8f630dba3324657, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnBackFromTutorial
+      objectReference: {fileID: 0}
+    - target: {fileID: 3908151880581741748, guid: 0556cddafd861ca4e8f630dba3324657, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PauseManager, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 4223500689779202101, guid: 0556cddafd861ca4e8f630dba3324657, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

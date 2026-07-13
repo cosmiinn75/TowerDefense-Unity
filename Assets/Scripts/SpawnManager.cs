@@ -29,7 +29,7 @@ public class SpawnManager : MonoBehaviour
 
     private Coroutine autoStartRoutine;
     private bool waveStarted = false;
-    private float autoStartDelay = 10f;
+    private float autoStartDelay = 15f;
 
     void Start() {
         waveText.SetActive(false);
@@ -38,7 +38,7 @@ public class SpawnManager : MonoBehaviour
         autoStartRoutine = StartCoroutine(AutoStartCountdown());
     }
     IEnumerator AutoStartCountdown() {
-        yield return new WaitForSeconds(autoStartDelay);
+        yield return new WaitForSecondsRealtime(autoStartDelay);
         StartWaveSequence();
     }
 

@@ -1,3 +1,4 @@
+using UnityEditor.MemoryProfiler;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -24,6 +25,15 @@ public class PauseManager : Menu
         pauseMenu.SetActive(true);
         optionsMenu.SetActive(false);
         tutorialMenu.SetActive(true);
+    }
+
+
+    public void OnBackFromTutorial()
+    {
+        if (tutorialMenu != null)
+        {
+            tutorialMenu.SetActive(false);
+        }
     }
     public void OnBack() {
 
