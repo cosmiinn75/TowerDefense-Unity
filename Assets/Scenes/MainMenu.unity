@@ -2035,7 +2035,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1420079393640149515, guid: 6b0b2957c57acf34487684bf7b130ce6, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1586525181165476673, guid: 6b0b2957c57acf34487684bf7b130ce6, type: 3}
       propertyPath: m_AnchorMax.x
@@ -4988,6 +4988,7 @@ MonoBehaviour:
   tutorialManager: {fileID: 1647888082}
   audioMenu: {fileID: 1592967785}
   usernameText: {fileID: 419482716}
+  signOutButton: {fileID: 68840619}
   worldMapSceneName: WorldMap
   loginSceneName: LoginScene
 --- !u!4 &1381777331
@@ -7606,6 +7607,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   baseURL: http://localhost:8080
+  maxCampaignLevel: 10
 --- !u!1 &2101141041
 GameObject:
   m_ObjectHideFlags: 0

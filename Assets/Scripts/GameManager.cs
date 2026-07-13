@@ -29,13 +29,20 @@ public class GameManager : MonoBehaviour
 
     [HideInInspector] public bool isPaused = false;
 
+    [Header("Stars")]
     public GameObject stars;
 
+    [Header("Level")]
     public int currentLevelIndex;
-
 
     [Header("Backend")]
     [SerializeField] private string baseURL = "http://localhost:8080";
+
+    [Header("Progress Save State")]
+    [HideInInspector] public bool canLeaveWinScreen = true;
+
+    private const string JwtTokenKey = "jwt_token";
+    private const string IsGuestKey = "is_guest";
 
     private bool progressSaveStarted;
 
@@ -50,8 +57,6 @@ public class GameManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-
-
             currentLevelIndex = GetCurrentLevelNumber();
         }
         else
@@ -62,10 +67,14 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        speedText.text = "1.0x";
+        SyncGuestStateFromPlayerPrefs();
+
+        if (speedText != null)
+        {
+            speedText.text = "1.0x";
+        }
 
         win = false;
-
 
         if (AudioManager.Instance != null)
         {
@@ -73,53 +82,99 @@ public class GameManager : MonoBehaviour
             AudioManager.Instance.PlayMusic(AudioManager.Instance.inGameClip);
         }
 
-        winLosePanel.SetActive(false);
-        winPanel.SetActive(false);
-        losePanel.SetActive(false);
-        pausePanel.SetActive(false);
+        if (winLosePanel != null)
+        {
+            winLosePanel.SetActive(false);
+        }
+
+        if (winPanel != null)
+        {
+            winPanel.SetActive(false);
+        }
+
+        if (losePanel != null)
+        {
+            losePanel.SetActive(false);
+        }
+
+        if (pausePanel != null)
+        {
+            pausePanel.SetActive(false);
+        }
 
         isPaused = false;
         Time.timeScale = 1f;
         gameOver = false;
+
         progressSaveStarted = false;
+        canLeaveWinScreen = true;
+    }
+
+    private void SyncGuestStateFromPlayerPrefs()
+    {
+        bool savedGuestMode = PlayerPrefs.GetInt(IsGuestKey, 0) == 1;
+
+        if (savedGuestMode)
+        {
+            GameSession.IsGuest = true;
+            GameSession.Token = "";
+            GameSession.Username = "Guest";
+            GameSession.Progress = null;
+        }
     }
 
     public void OpenWinLosePanel()
     {
-        winLosePanel.SetActive(true);
+        if (winLosePanel != null)
+        {
+            winLosePanel.SetActive(true);
+        }
 
         if (win)
         {
-
             int earnedStars = Stars();
 
-            winPanel.SetActive(true);
+            if (winPanel != null)
+            {
+                winPanel.SetActive(true);
+            }
 
-            // SOUND UNCHANGED:
             if (AudioManager.Instance != null)
             {
                 AudioManager.Instance.PlaySFX(AudioManager.Instance.winClip);
             }
 
-
             if (!progressSaveStarted)
             {
                 progressSaveStarted = true;
-                StartCoroutine(SaveLevelResultToBackend(currentLevelIndex, earnedStars));
+                canLeaveWinScreen = false;
+
+                Debug.Log("Started saving progress.");
+
+                if (GameSession.IsGuest)
+                {
+                    SaveLevelResultToPlayerPrefs(currentLevelIndex, earnedStars);
+                    FinishProgressSave();
+                }
+                else
+                {
+                    StartCoroutine(SaveLevelResultToBackend(currentLevelIndex, earnedStars));
+                }
             }
         }
         else
         {
-        
             if (AudioManager.Instance != null)
             {
                 AudioManager.Instance.PlaySFX(AudioManager.Instance.loseClip);
             }
 
-            losePanel.SetActive(true);
+            if (losePanel != null)
+            {
+                losePanel.SetActive(true);
+            }
         }
     }
-
 
     private int Stars()
     {
@@ -175,7 +230,6 @@ public class GameManager : MonoBehaviour
         return 0f;
     }
 
-
     private int GetCurrentLevelNumber()
     {
         if (GameSession.SelectedLevelNumber > 0)
@@ -199,19 +253,38 @@ public class GameManager : MonoBehaviour
         return 1;
     }
 
+    private void SaveLevelResultToPlayerPrefs(int levelNumber, int earnedStars)
+    {
+        if (MainGameManager.Instance != null)
+        {
+            MainGameManager.Instance.SaveGuestLevelResult(levelNumber, earnedStars);
+            Debug.Log("Guest progress saved locally.");
+            return;
+        }
+
+        Debug.LogWarning("MainGameManager missing. Guest progress was not saved.");
+    }
 
     private IEnumerator SaveLevelResultToBackend(int levelNumber, int earnedStars)
     {
+        if (GameSession.IsGuest)
+        {
+            Debug.Log("Guest mode active. Skipping backend progress save.");
+            FinishProgressSave();
+            yield break;
+        }
+
         string token = GameSession.Token;
 
         if (string.IsNullOrWhiteSpace(token))
         {
-            token = PlayerPrefs.GetString("jwt_token", "");
+            token = PlayerPrefs.GetString(JwtTokenKey, "");
         }
 
         if (string.IsNullOrWhiteSpace(token))
         {
             Debug.LogError("Cannot save progress. Missing JWT token.");
+            FinishProgressSave();
             yield break;
         }
 
@@ -239,11 +312,12 @@ public class GameManager : MonoBehaviour
         if (request.result != UnityWebRequest.Result.Success)
         {
             Debug.LogError(
-                "Failed to save progress: "
-                + request.responseCode + " "
-                + request.downloadHandler.text
+                "Failed to save progress: " +
+                request.responseCode + " " +
+                request.downloadHandler.text
             );
 
+            FinishProgressSave();
             yield break;
         }
 
@@ -253,10 +327,10 @@ public class GameManager : MonoBehaviour
         if (updatedProgress == null || updatedProgress.levels == null)
         {
             Debug.LogError("Invalid progress response: " + request.downloadHandler.text);
+            FinishProgressSave();
             yield break;
         }
 
-     
         GameSession.Progress = updatedProgress;
 
         if (MainGameManager.Instance != null)
@@ -265,6 +339,14 @@ public class GameManager : MonoBehaviour
         }
 
         Debug.Log("Progress saved. Max unlocked level: " + updatedProgress.maxLevelUnlocked);
+
+        FinishProgressSave();
+    }
+
+    private void FinishProgressSave()
+    {
+        canLeaveWinScreen = true;
+        Debug.Log("Finished saving progress. Player can now leave win screen.");
     }
 
     public void OnPause(InputValue inputValue)
@@ -288,7 +370,10 @@ public class GameManager : MonoBehaviour
                 pauseManager.OnBack();
             }
 
-            pausePanel.SetActive(isPaused);
+            if (pausePanel != null)
+            {
+                pausePanel.SetActive(isPaused);
+            }
 
             if (isPaused)
             {
@@ -312,7 +397,11 @@ public class GameManager : MonoBehaviour
                 currentSpeed = 1f;
             }
 
-            speedText.text = currentSpeed.ToString() + "x";
+            if (speedText != null)
+            {
+                speedText.text = currentSpeed.ToString("0.00") + "x";
+            }
+
             Time.timeScale = currentSpeed;
         }
     }

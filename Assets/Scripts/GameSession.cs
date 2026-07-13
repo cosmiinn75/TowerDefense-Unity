@@ -8,6 +8,22 @@ public static class GameSession
     public static PlayerProgressResponse Progress;
 
     public static int SelectedLevelNumber;
+
+    public static bool IsGuest = false;
+
+
+    public static bool UseBackend
+    {
+        get
+        {
+#if UNITY_WEBGL && !UNITY_EDITOR
+            return false;
+#else
+            return true;
+#endif
+        }
+    }
+
 }
 
 [Serializable]

@@ -122,9 +122,20 @@ public class SpawnManager : MonoBehaviour
         if (waveText != null)
         {
             waveText.SetActive(true);
-            TextMeshProUGUI tmp = waveText.GetComponent<TextMeshProUGUI>();
-            if (tmp != null) tmp.text = "Wave " + currentWave.ToString();
 
+            TextMeshProUGUI tmp = waveText.GetComponent<TextMeshProUGUI>();
+
+            if (tmp != null)
+            {
+                if (currentWave == waveLevel)
+                {
+                    tmp.text = "Final Wave";
+                }
+                else
+                {
+                    tmp.text = "Wave " + currentWave;
+                }
+            }
 
             if (waveText.TryGetComponent<TextFadeAnimation>(out var anim))
             {
@@ -132,7 +143,6 @@ public class SpawnManager : MonoBehaviour
             }
         }
     }
-    
     private List<EnemyData> LoadLevelData(int level)
     {
         return level switch

@@ -17,6 +17,10 @@ public class BackendManager : MonoBehaviour
     [SerializeField] private TMP_InputField passwordInput;
     [SerializeField] private TextMeshProUGUI statusText;
 
+    private const string JwtTokenKey = "jwt_token";
+    private const string UsernameKey = "username";
+    private const string IsGuestKey = "is_guest";
+
     [Serializable]
     public class AuthRequest
     {
@@ -40,38 +44,99 @@ public class BackendManager : MonoBehaviour
     private void Start()
     {
         SetStatus("");
+
+        if (!GameSession.UseBackend)
+        {
+            EnterGuestMode();
+            LoadMainMenu();
+            return;
+        }
+
+
+        bool savedGuestMode = PlayerPrefs.GetInt(IsGuestKey, 0) == 1;
+
+        if (savedGuestMode)
+        {
+            GameSession.IsGuest = true;
+            GameSession.Token = "";
+            GameSession.Username = "";
+            GameSession.Progress = null;
+            GameSession.SelectedLevelNumber = 0;
+
+            Debug.Log("Guest mode detected. Skipping auto-login.");
+            return;
+        }
+
         StartCoroutine(TryAutoLogin());
+    }
+
+    private void EnterGuestMode()
+    {
+        GameSession.IsGuest = true;
+        GameSession.Token = "";
+        GameSession.Username = "Guest";
+        GameSession.Progress = null;
+        GameSession.SelectedLevelNumber = 0;
+
+        PlayerPrefs.SetInt(IsGuestKey, 1);
+        PlayerPrefs.DeleteKey(JwtTokenKey);
+        PlayerPrefs.DeleteKey(UsernameKey);
+        PlayerPrefs.Save();
+
+        Debug.Log("Backend disabled. Entering guest mode.");
     }
 
     public void Login()
     {
+        if (!GameSession.UseBackend)
+        {
+            SetStatus("Backend disabled in WebGL build.");
+            return;
+        }
+
         StartCoroutine(AuthCoroutine("/api/auth/login", false));
     }
 
     public void Register()
     {
+        if (!GameSession.UseBackend)
+        {
+            SetStatus("Backend disabled in WebGL build.");
+            return;
+        }
+
         StartCoroutine(AuthCoroutine("/api/auth/register", true));
+    }
+
+    public void OnPlayAsGuest()
+    {
+        EnterGuestMode();
+        LoadMainMenu();
     }
 
     private IEnumerator TryAutoLogin()
     {
-        string savedToken = PlayerPrefs.GetString("jwt_token", "");
-        string savedUsername = PlayerPrefs.GetString("username", "");
+        string savedToken = PlayerPrefs.GetString(JwtTokenKey, "");
+        string savedUsername = PlayerPrefs.GetString(UsernameKey, "");
+
         if (string.IsNullOrWhiteSpace(savedToken))
         {
             yield break;
         }
 
+        GameSession.IsGuest = false;
         GameSession.Token = savedToken;
         GameSession.Username = savedUsername;
-        SetStatus("Loading account");
+
+        SetStatus("Loading account...");
+
         UnityWebRequest request = UnityWebRequest.Get(baseURL + "/api/player/progress");
         request.SetRequestHeader("Authorization", "Bearer " + savedToken);
+
         yield return request.SendWebRequest();
 
         if (request.result != UnityWebRequest.Result.Success)
         {
-   
             if (request.responseCode == 0)
             {
                 Debug.LogWarning("Backend is offline. Keeping saved token.");
@@ -79,39 +144,26 @@ public class BackendManager : MonoBehaviour
                 yield break;
             }
 
-        
             if (request.responseCode == 401 || request.responseCode == 403)
             {
-                PlayerPrefs.DeleteKey("jwt_token");
-                PlayerPrefs.DeleteKey("username");
-                PlayerPrefs.Save();
-
-                GameSession.Token = "";
-                GameSession.Username = "";
-                GameSession.Progress = null;
-                GameSession.SelectedLevelNumber = 0;
-
+                ClearLoggedUserSession();
                 SetStatus("");
                 yield break;
             }
 
             SetStatus("Something went wrong.");
+            Debug.LogError("Auto-login failed: " + request.responseCode + " " + request.downloadHandler.text);
             yield break;
         }
+
         PlayerProgressResponse progress =
-      JsonUtility.FromJson<PlayerProgressResponse>(request.downloadHandler.text);
+            JsonUtility.FromJson<PlayerProgressResponse>(request.downloadHandler.text);
 
         if (progress == null || progress.levels == null)
         {
             Debug.LogError("Invalid progress response: " + request.downloadHandler.text);
 
-            PlayerPrefs.DeleteKey("jwt_token");
-            PlayerPrefs.Save();
-
-            GameSession.Token = "";
-            GameSession.Progress = null;
-            GameSession.SelectedLevelNumber = 0;
-
+            ClearLoggedUserSession();
             SetStatus("");
             yield break;
         }
@@ -125,17 +177,17 @@ public class BackendManager : MonoBehaviour
 
         Debug.Log("Auto-login successful. Max unlocked level: " + progress.maxLevelUnlocked);
 
-        SceneManager.LoadScene("MainMenu");
+        LoadMainMenu();
     }
 
     private IEnumerator AuthCoroutine(string endpoint, bool isRegister)
     {
-        string username = usernameInput.text;
+        string username = usernameInput.text.Trim();
         string password = passwordInput.text;
 
         if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
         {
-            SetStatus("");
+            SetStatus("Username and password are required.");
             yield break;
         }
 
@@ -187,18 +239,98 @@ public class BackendManager : MonoBehaviour
             yield break;
         }
 
-        PlayerPrefs.SetString("jwt_token", response.token);
-        PlayerPrefs.SetString("username", username);
-        PlayerPrefs.Save();
-
+        GameSession.IsGuest = false;
         GameSession.Token = response.token;
         GameSession.Username = username;
+        GameSession.Progress = null;
+        GameSession.SelectedLevelNumber = 0;
+
+        PlayerPrefs.SetInt(IsGuestKey, 0);
+        PlayerPrefs.SetString(JwtTokenKey, response.token);
+        PlayerPrefs.SetString(UsernameKey, username);
+        PlayerPrefs.Save();
 
         SetStatus(isRegister ? "Account created. Loading progress..." : "Login successful. Loading progress...");
 
-        Debug.Log("Token saved: " + response.token);
+        Debug.Log("Token saved.");
 
         yield return StartCoroutine(LoadProgressAndEnterGame());
+    }
+
+    private IEnumerator LoadProgressAndEnterGame()
+    {
+        if (GameSession.IsGuest)
+        {
+            Debug.Log("Guest mode active. Skipping backend progress loading.");
+            LoadMainMenu();
+            yield break;
+        }
+
+        string token = GetToken();
+
+        if (string.IsNullOrWhiteSpace(token))
+        {
+            SetStatus("Missing token.");
+            yield break;
+        }
+
+        UnityWebRequest request = UnityWebRequest.Get(baseURL + "/api/player/progress");
+        request.SetRequestHeader("Authorization", "Bearer " + token);
+
+        yield return request.SendWebRequest();
+
+        if (request.result != UnityWebRequest.Result.Success)
+        {
+            SetStatus("Invalid progress data.");
+            Debug.LogError("Invalid progress response: " + request.responseCode + " " + request.downloadHandler.text);
+            yield break;
+        }
+
+        PlayerProgressResponse progress =
+            JsonUtility.FromJson<PlayerProgressResponse>(request.downloadHandler.text);
+
+        if (progress == null || progress.levels == null)
+        {
+            SetStatus("Invalid progress data.");
+            Debug.LogError("Invalid progress response: " + request.downloadHandler.text);
+            yield break;
+        }
+
+        GameSession.Progress = progress;
+
+        if (MainGameManager.Instance != null)
+        {
+            MainGameManager.Instance.SyncFromBackendProgress();
+        }
+
+        Debug.Log("Progress loaded. Max level: " + progress.maxLevelUnlocked);
+
+        LoadMainMenu();
+    }
+
+    private void LoadMainMenu()
+    {
+        if (SceneTransitionerManager.Instance != null)
+        {
+            SceneTransitionerManager.Instance.LoadScene("MainMenu");
+            return;
+        }
+
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    private void ClearLoggedUserSession()
+    {
+        PlayerPrefs.DeleteKey(JwtTokenKey);
+        PlayerPrefs.DeleteKey(UsernameKey);
+        PlayerPrefs.SetInt(IsGuestKey, 0);
+        PlayerPrefs.Save();
+
+        GameSession.IsGuest = false;
+        GameSession.Token = "";
+        GameSession.Username = "";
+        GameSession.Progress = null;
+        GameSession.SelectedLevelNumber = 0;
     }
 
     private bool IsValidUsername(string username)
@@ -234,7 +366,6 @@ public class BackendManager : MonoBehaviour
         }
         catch
         {
-        
         }
 
         string lowerResponse = responseText.ToLower();
@@ -289,7 +420,12 @@ public class BackendManager : MonoBehaviour
 
     public string GetToken()
     {
-        return PlayerPrefs.GetString("jwt_token", "");
+        if (GameSession.IsGuest)
+        {
+            return "";
+        }
+
+        return PlayerPrefs.GetString(JwtTokenKey, "");
     }
 
     private void SetStatus(string message)
@@ -305,39 +441,6 @@ public class BackendManager : MonoBehaviour
         }
     }
 
-    private IEnumerator LoadProgressAndEnterGame()
-    {
-        string token = GetToken();
-
-        if (string.IsNullOrWhiteSpace(token)){
-            SetStatus("Missing token.");
-            yield break;
-        }
-
-        UnityWebRequest request = UnityWebRequest.Get(baseURL + "/api/player/progress");
-        request.SetRequestHeader("Authorization", "Bearer " + token);
-        yield return request.SendWebRequest();
-
-        if(request.result != UnityWebRequest.Result.Success)
-        {
-            SetStatus("Invalid progress data.");
-            Debug.LogError("Invalid progress response: " + request.downloadHandler.text);
-            yield break;
-        }
-        PlayerProgressResponse progress = JsonUtility.FromJson<PlayerProgressResponse>(request.downloadHandler.text);
-        if (progress == null || progress.levels == null)
-        {
-            SetStatus("Invalid progress data.");
-            Debug.LogError("Invalid progress response: " + request.downloadHandler.text);
-            yield break;
-        }
-        GameSession.Progress = progress;
-
-        Debug.Log("Progress loaded. Max level: " + progress.maxLevelUnlocked);
-
-        SceneManager.LoadScene("MainMenu");
-    }
-
     public void ExitGame()
     {
         Debug.Log("Exiting game...");
@@ -348,5 +451,4 @@ public class BackendManager : MonoBehaviour
         UnityEditor.EditorApplication.isPlaying = false;
 #endif
     }
-
 }
