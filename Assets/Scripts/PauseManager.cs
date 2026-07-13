@@ -5,17 +5,25 @@ public class PauseManager : Menu
 {
     public GameObject pauseMenu;
     public GameObject optionsMenu;
-
+    public GameObject tutorialMenu;
     private void Start()
     {
         pauseMenu.SetActive(true);
         optionsMenu.SetActive(false);
+        tutorialMenu.SetActive(false);
     }
    
     public void OnSettings()
     {
         pauseMenu.SetActive(false);
+        tutorialMenu.SetActive(false);
         optionsMenu.SetActive(true);
+    }
+    public void OnTutorial()
+    {
+        pauseMenu.SetActive(true);
+        optionsMenu.SetActive(false);
+        tutorialMenu.SetActive(true);
     }
     public void OnBack() {
 
